@@ -12,12 +12,14 @@
   \sffamily
 	\foreach \x in {0,...,31}
 		\node at (\x+0.5,20.5) {\scriptsize \x};
-	\foreach \x in {0,...,31}
-		\node at (\x+0.5,13.5) {\scriptsize \x};
+%	\foreach \x in {0,...,31}
+%		\node at (\x+0.5,13.5) {\scriptsize \x};
 	\foreach \x in {0,...,32}
-		\draw[thick] (\x,13) -- (\x,21);
+		\draw[thick] (\x,20) -- (\x,21);
+%	\foreach \x in {0,...,32}
+%		\draw[thick] (\x,13) -- (\x,14);
 	\node[thick] (bit1) at (-0.5,20.5) {\scriptsize bit};
-	\node[thick] (bit2) at (-0.5,13.5) {\scriptsize bit};
+%	\node[thick] (bit2) at (-0.5,13.5) {\scriptsize bit};
 	\draw [<->, thick] (-0.5, 19.9) -- (-0.5,15.1);
 	\draw [thick] (-1, 20) -- (-0.1,20);
 	\draw [thick] (-1, 15) -- (-0.1,15);
