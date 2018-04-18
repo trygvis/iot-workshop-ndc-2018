@@ -1,0 +1,12 @@
+personal_ws-1.1 en 11 
+TCP
+IoT
+OSI
+allbordercolors
+MTU
+hypersetup
+pdfborderstyle
+DNS
+UDP
+colorlinks
+RTT

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Trygve Laugstøl &lt;trygvis@trygvis.io&gt;">
+  <title>IoT Workshop</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./bower_components/reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="./bower_components/reveal.js/css/theme/black.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? './bower_components/reveal.js/css/print/pdf.css' : './bower_components/reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="./bower_components/reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">IoT Workshop</h1>
+  <p class="author">Trygve Laugstøl &lt;trygvis@trygvis.io&gt;</p>
+</section>
+
+<section><section id="what-is-iot" class="title-slide slide level1"><h1>What is IoT</h1></section><section id="what-is-iot-1" class="slide level2">
+<h2>What is IoT</h2>
+<ul>
+<li>Not “a computer connected to the internet”
+<ul>
+<li>Then it is really just another computer connected to the internet</li>
+</ul></li>
+<li>Must be something else
+<ul>
+<li>It is simply devices that are resource constrained
+<ul>
+<li>Usually in more than one way</li>
+</ul></li>
+</ul></li>
+<li>Autonomous operation, the connection might not be permanent</li>
+</ul>
+</section><section id="iot-is-just-a-concept" class="slide level2">
+<h2>IoT is just a concept</h2>
+<ul>
+<li><em>The Internet of Things (IoT) is the network of physical devices, vehicles, home appliances and other items embedded with electronics, software, sensors, actuators, and connectivity which enables these objects to connect and exchange data.</em><a href="#/fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
+</ul>
+</section><section id="what-differentiates-a-computer-from-an-iot-device" class="slide level2">
+<h2>What differentiates a computer from an IoT device?</h2>
+<ul>
+<li>Constrained in (one or more of):
+<ul>
+<li>Memory</li>
+<li>CPU</li>
+<li>Network bandwidth and/or latency</li>
+<li>Storage</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="going-back-to-basics" class="title-slide slide level1"><h1>Going back to basics</h1></section><section id="what-is-the-internet-again" class="slide level2">
+<h2>What is the internet again?</h2>
+</section><section id="osi-model" class="slide level2">
+<h2>OSI model</h2>
+<ol type="1">
+<li>Physical Layer</li>
+<li>Data Link Layer</li>
+<li>Network Layer</li>
+<li>Transport Layer</li>
+<li>Session Layer</li>
+<li>Presentation Layer</li>
+<li>Application Layer</li>
+</ol>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/OSI_model">Wikipedia: OSI model</a></li>
+<li><a href="https://en.wikipedia.org/wiki/OSI_model#Examples">Wikipedia: OSI model#Examples</a></li>
+</ul>
+<aside class="notes">
+<p>Følges ikke veldig slavisk</p>
+</aside>
+</section><section id="layer-1-physical-layer" class="slide level2">
+<h2>Layer 1: Physical Layer</h2>
+<ul>
+<li>10BASE5, 10BASE2</li>
+<li>10BASE-T / 100BASE-TX / 1000BASE-TX</li>
+<li>802.11a/b/g/n PHY</li>
+<li>RS-232</li>
+</ul>
+<aside class="notes">
+<p>Huber og switcher (som gjør en slags routing) er ikke en av disse lagene. Mere en implementasjonsdetalj. RS-232 sin signallering brukes i <em>alle</em> MCUer, mange har flere porter tilgjengelige. Kun signallering, ikke spenningsnivåer. Mange støtter veldig høye datarater (&gt;= 1Mbit/s)</p>
+</aside>
+</section><section id="layer-2-data-link-layer" class="slide level2">
+<h2>Layer 2: Data Link Layer</h2>
+<ul>
+<li>Ethernet</li>
+<li>WiFi</li>
+<li>Bluetooth</li>
+<li>Token Ring</li>
+</ul>
+</section><section id="layer-3-network-layer" class="slide level2">
+<h2>Layer 3: Network Layer</h2>
+<ul>
+<li>IP</li>
+<li>ICMP</li>
+<li>IPX</li>
+</ul>
+</section><section id="layer-4-transport-layer" class="slide level2">
+<h2>Layer 4: Transport Layer</h2>
+<ul>
+<li>TCP</li>
+<li>UDP</li>
+</ul>
+</section><section id="layer-5-session-layer" class="slide level2">
+<h2>Layer 5: Session Layer</h2>
+<ul>
+<li>“sockets”</li>
+<li>NetBIOS</li>
+</ul>
+</section><section id="layer-6-presentation-layer" class="slide level2">
+<h2>Layer 6: Presentation Layer</h2>
+<ul>
+<li>SSL</li>
+</ul>
+<aside class="notes">
+<p>This layer is not really much used in the IP stack</p>
+</aside>
+</section><section id="layer-7-application-layer" class="slide level2">
+<h2>Layer 7: Application Layer</h2>
+<ul>
+<li>HTTP</li>
+<li>MQTT</li>
+<li>DNS</li>
+<li>(everything else..)</li>
+</ul>
+</section><section id="details-ip" class="slide level2">
+<h2>Details: IP</h2>
+<p><img data-src="images/ip-header.svg" /></p>
+</section><section id="details-ip-1" class="slide level2">
+<h2>Details: IP</h2>
+<p><embed data-src="images/ip-header.pdf" /></p>
+</section><section id="details-ip-2" class="slide level2">
+<h2>Details: IP</h2>
+<p><embed data-src="images/IP-Header_eng.pdf" /></p>
+</section></section>
+<section><section id="notes" class="title-slide slide level1"><h1>Notes</h1></section><section id="assignments" class="slide level2">
+<h2>Assignments</h2>
+<ul>
+<li>Measure round trip time/latency. Measure UDP, TCP. Measure when the packet size is greater than the MTU</li>
+</ul>
+</section></section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Wikipedia “Internet of Things”<a href="#/fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+    </div>
+  </div>
+
+  <script src="./bower_components/reveal.js/lib/js/head.min.js"></script>
+  <script src="./bower_components/reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: './bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: './bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: './bower_components/reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
