@@ -28,6 +28,7 @@
   <script src="./bower_components/reveal.js/lib/js/html5shiv.js"></script>
   <![endif]-->
   
+  
 </head>
 <body>
   <div class="reveal">
@@ -59,8 +60,8 @@
 <ul>
 <li><em>The Internet of Things (IoT) is the network of physical devices, vehicles, home appliances and other items embedded with electronics, software, sensors, actuators, and connectivity which enables these objects to connect and exchange data.</em><a href="#/fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
 </ul>
-</section><section id="what-differentiates-a-computer-from-an-iot-device" class="slide level2">
-<h2>What differentiates a computer from an IoT device?</h2>
+</section><section id="what-is-an-iot-device" class="slide level2">
+<h2>What is an IoT Device?</h2>
 <ul>
 <li>Constrained in (one or more of):
 <ul>
@@ -70,6 +71,9 @@
 <li>Storage</li>
 </ul></li>
 </ul>
+<aside class="notes">
+<p>What differentiates a computer from an IoT device?</p>
+</aside>
 </section></section>
 <section><section id="going-back-to-basics" class="title-slide slide level1"><h1>Going back to basics</h1></section><section id="what-is-the-internet-again" class="slide level2">
 <h2>What is the internet again?</h2>
@@ -89,7 +93,7 @@
 <li><a href="https://en.wikipedia.org/wiki/OSI_model#Examples">Wikipedia: OSI model#Examples</a></li>
 </ul>
 <aside class="notes">
-<p>Følges ikke veldig slavisk</p>
+<p>Does not match the TCP/IP stack very closely.</p>
 </aside>
 </section><section id="layer-1-physical-layer" class="slide level2">
 <h2>Layer 1: Physical Layer</h2>
@@ -100,7 +104,9 @@
 <li>RS-232</li>
 </ul>
 <aside class="notes">
-<p>Huber og switcher (som gjør en slags routing) er ikke en av disse lagene. Mere en implementasjonsdetalj. RS-232 sin signallering brukes i <em>alle</em> MCUer, mange har flere porter tilgjengelige. Kun signallering, ikke spenningsnivåer. Mange støtter veldig høye datarater (&gt;= 1Mbit/s)</p>
+<p>Ethernet: Hubs and switches (that act on this level) is not on it’s own layer. It is more of a implementation detail in the architecture diagram.</p>
+<p>RS-232 signaling is used in <em>all</em> MCUs, many have several ports available. It is extremely flexible, both used for implementing applications and debugging. Frequently an easy way to hack embedded devices. “USB dongles”, “USB TTL” all use RS-232 signaling.</p>
+<p>Note that this only applies to its logical signals, not voltage levels. The signaling does not specify any max data rate, very high rates (&gt;= 1Mbps) is often supported.</p>
 </aside>
 </section><section id="layer-2-data-link-layer" class="slide level2">
 <h2>Layer 2: Data Link Layer</h2>
@@ -147,13 +153,13 @@
 </ul>
 </section><section id="details-ip" class="slide level2">
 <h2>Details: IP</h2>
-<p><img data-src="images/ip-header.svg" /></p>
+<p>!ifdef(REVEAL) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<sub> <img data-src="images/ip-header.svg" /> </sub>~~~~~~~~~~~~~~~~~~~~~~~~~~~~<sub> !ifdef(BEAMER) </sub>~~~~~~~~~~~~~~~~~~~~~~~~~~~~<sub> <embed data-src="images/ip-header.pdf" /> </sub>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+<aside class="notes">
+<p>Note that the “total length” field is 16 bits, 2 bytes, it’s maximum value is 64k, 65536.</p>
+</aside>
 </section><section id="details-ip-1" class="slide level2">
 <h2>Details: IP</h2>
-<p><embed data-src="images/ip-header.pdf" /></p>
-</section><section id="details-ip-2" class="slide level2">
-<h2>Details: IP</h2>
-<p><embed data-src="images/IP-Header_eng.pdf" /></p>
+<p><embed data-src="images/IP-Header_eng.pdf" /> !comment ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<sub> </sub>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
 </section></section>
 <section><section id="notes" class="title-slide slide level1"><h1>Notes</h1></section><section id="assignments" class="slide level2">
 <h2>Assignments</h2>

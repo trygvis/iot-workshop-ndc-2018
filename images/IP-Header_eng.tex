@@ -4,14 +4,18 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,fit,positioning,shapes.symbols,chains,shapes.geometric,shapes.arrows,calc}
 
+\usepackage{fontspec}
+\setsansfont{Verdana}
+
 \begin{document}
   \begin{tikzpicture}[scale=0.47]
+  \sffamily
 	\foreach \x in {0,...,31}
 		\node at (\x+0.5,20.5) {\scriptsize \x};
 	\foreach \x in {0,...,31}
 		\node at (\x+0.5,13.5) {\scriptsize \x};
 	\foreach \x in {0,...,32}
-		\draw[thick, blue] (\x,13) -- (\x,21);
+		\draw[thick] (\x,13) -- (\x,21);
 	\node[thick] (bit1) at (-0.5,20.5) {\scriptsize bit};
 	\node[thick] (bit2) at (-0.5,13.5) {\scriptsize bit};
 	\draw [<->, thick] (-0.5, 19.9) -- (-0.5,15.1);

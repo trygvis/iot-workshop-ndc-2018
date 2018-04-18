@@ -1,12 +1,33 @@
-personal_ws-1.1 en 11 
+personal_ws-1.1 en 32 
+ip
+Mbps
+fontspec
+Verdana
+setsansfont
+SSL
 TCP
 IoT
 OSI
+pdf
+BEAMER
+usepackage
+svg
+IPX
+Laugstøl
+ifdef
+MQTT
 allbordercolors
 MTU
 hypersetup
+NetBIOS
 pdfborderstyle
+TTL
 DNS
 UDP
+ICMP
 colorlinks
 RTT
+PHY
+Trygve
+eng
+MCUs

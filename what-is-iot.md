@@ -26,13 +26,17 @@ header-includes:
 
 * *The Internet of Things (IoT) is the network of physical devices, vehicles, home appliances and other items embedded with electronics, software, sensors, actuators, and connectivity which enables these objects to connect and exchange data.*^[Wikipedia "Internet of Things"]
 
-## What differentiates a computer from an IoT device?
+## What is an IoT Device?
 
 * Constrained in (one or more of):
     * Memory
     * CPU
     * Network bandwidth and/or latency
     * Storage
+
+::: notes
+What differentiates a computer from an IoT device?
+:::
 
 # Going back to basics
 
@@ -54,7 +58,7 @@ header-includes:
 
 ::: notes
 
-Følges ikke veldig slavisk
+Does not match the TCP/IP stack very closely.
 
 :::
 
@@ -67,8 +71,17 @@ Følges ikke veldig slavisk
 
 ::: notes
 
-Huber og switcher (som gjør en slags routing) er ikke en av disse lagene. Mere en implementasjonsdetalj.
-RS-232 sin signallering brukes i *alle* MCUer, mange har flere porter tilgjengelige. Kun signallering, ikke spenningsnivåer. Mange støtter veldig høye datarater (>= 1Mbit/s)
+Ethernet: Hubs and switches (that act on this level) is not on it's own
+layer. It is more of a implementation detail in the architecture diagram.
+
+RS-232 signaling is used in *all* MCUs, many have several ports
+available. It is extremely flexible, both used for implementing
+applications and debugging. Frequently an easy way to hack embedded
+devices. "USB dongles", "USB TTL" all use RS-232 signaling.
+
+Note that this only applies to its logical signals, not voltage
+levels. The signaling does not specify any max data rate, very high rates
+(>= 1Mbps) is often supported.
 
 :::
 
@@ -115,15 +128,27 @@ This layer is not really much used in the IP stack
 
 ## Details: IP
 
+!ifdef(REVEAL)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ![](images/ip-header.svg)
-
-## Details: IP
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!ifdef(BEAMER)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ![](images/ip-header.pdf)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::: notes
+
+Note that the "total length" field is 16 bits, 2 bytes, it's maximum value is 64k, 65536.
+
+:::
 
 ## Details: IP
 
 ![](images/IP-Header_eng.pdf)
+!comment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Notes
 

@@ -4,13 +4,15 @@ SLIDE_THEME=boxes
 PDFS=$(P)-text.pdf $(P)-slides.pdf
 HTMLS=$(P)-reveal.html
 
-RUN_PANDOC_BEAMER=pandoc -f markdown -t beamer --highlight-style=pygments -V theme:$(SLIDES_THEME)\
+RUN_PP_BEAMER=pp -DBEAMER
+RUN_PANDOC_BEAMER=pandoc -f markdown -t beamer --highlight-style=pygments -V theme:$(SLIDE_THEME) \
 				  --pdf-engine=xelatex
 RUN_PANDOC_REVEALJS=pandoc -f markdown -t revealjs -s -V revealjs-url=./bower_components/reveal.js
+RUN_PANDOC_TEXT=pandoc -f markdown --pdf-engine=xelatex
 
 all: $(PDFS) $(HTMLS)
 
-slides: $(P)-slides.pdf
+slides: $(P)-slides.pdf $(P)-slides.tex
 html: $(P)-reveal.html
 .PHONY: html slides
 
@@ -28,17 +30,23 @@ spell: .$(P).md.spell
 $(P).md: Makefile
 	@touch $@
 
-%-text.pdf: %.md
-	pandoc -f markdown -o $@ $<
+%.beamer.md: %.md
+	$(RUN_PP_BEAMER) < $< > $@
 
-%-slides.pdf: %.md
+%-text.pdf: %.beamer.md
+	$(RUN_PANDOC_TEXT) -o $@ $<
+
+%-slides.pdf: %.beamer.md
+	$(RUN_PANDOC_BEAMER) -o $@ $<
+
+%-slides.tex: %.beamer.md
 	$(RUN_PANDOC_BEAMER) -o $@ $<
 
 %-reveal.html: %.md
 	$(RUN_PANDOC_REVEALJS) -o $@ $<
 
 images/%.pdf: images/%.tex | Makefile
-	pdflatex -output-directory=images $<
+	xelatex -output-directory=images $<
 #	pdfcrop $@
 #	mv $(patsubst %.pdf,%-crop.pdf,$@) $@
 
