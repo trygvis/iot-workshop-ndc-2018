@@ -4,20 +4,33 @@ SLIDE_THEME=boxes
 PDFS=$(P)-text.pdf $(P)-slides.pdf
 HTMLS=$(P)-reveal.html
 
-RUN_PP_BEAMER=pp -DBEAMER
-RUN_PANDOC_BEAMER=pandoc -f markdown -t beamer --highlight-style=pygments -V theme:$(SLIDE_THEME) \
-				  --pdf-engine=xelatex
+ifeq (1,$(QUICK))
+PP_DEFS+=QUICK
+PDF_ENGINE   = pdflatex
+PANDOC_ARGS += --no-highlight
+else
+PDF_ENGINE   = xelatex
+PANDOC_ARGS += --highlight-style=pygments
+endif
+
+RUN_PP_BEAMER=pp -DBEAMER $(patsubst %,-D%,$(PP_DEFS))
+RUN_PP_REVEALJS=pp -DREVEALJS $(patsubst %,-D%,$(PP_DEFS))
+RUN_PANDOC_BEAMER=pandoc -f markdown -t beamer $(PANDOC_ARGS) -V theme:$(SLIDE_THEME) \
+				  --pdf-engine=$(PDF_ENGINE)
 RUN_PANDOC_REVEALJS=pandoc -f markdown -t revealjs -s -V revealjs-url=./bower_components/reveal.js
-RUN_PANDOC_TEXT=pandoc -f markdown --pdf-engine=xelatex
+RUN_PANDOC_TEXT=pandoc -f markdown --pdf-engine=$(PDF_ENGINE)
 
-all: $(PDFS) $(HTMLS)
+all: toc.md $(PDFS) $(HTMLS)
 
-slides: $(P)-slides.pdf $(P)-slides.tex
+slides: $(P)-slides.tex $(P)-slides.pdf
 html: $(P)-reveal.html
 .PHONY: html slides
 
 clean:
 	rm -f $(PDFS) $(HTMLS)
+
+toc.md: $(P).md
+	grep '^#' $< | sed -e 's,^# ,* ,' -e 's,^## ,    * ,' > $@
 
 spell: .$(P).md.spell
 
@@ -42,15 +55,18 @@ $(P).md: Makefile
 %-slides.tex: %.beamer.md
 	$(RUN_PANDOC_BEAMER) -o $@ $<
 
-%-reveal.html: %.md
+%.revealjs.md: %.md
+	$(RUN_PP_REVEALJS) < $< > $@
+
+%-reveal.html: %.revealjs.md
 	$(RUN_PANDOC_REVEALJS) -o $@ $<
 
-images/%.pdf: images/%.tex | Makefile
-	xelatex -output-directory=images $<
-#	pdfcrop $@
-#	mv $(patsubst %.pdf,%-crop.pdf,$@) $@
+images/%.pdf: images/%.tex | images/pp-template Makefile
+	images/pp-template < $< > $(patsubst %.tex,%-full.tex,$<)
+	xelatex -output-directory=images $(patsubst %.tex,%-full.tex,$<)
+	mv $(patsubst %.pdf,%-full.pdf,$@) $@
 
 # Dependencies
-$(P).md: images/IP-Header_eng.pdf
+$(P).md: images/IP-Header_eng.tex
 $(P).md: images/ip-header.pdf
 $(P).md: images/ip-header.svg

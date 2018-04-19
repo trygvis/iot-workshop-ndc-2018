@@ -29,6 +29,7 @@
   <![endif]-->
   
   
+  
 </head>
 <body>
   <div class="reveal">
@@ -62,6 +63,12 @@
 </ul>
 </section><section id="what-is-an-iot-device" class="slide level2">
 <h2>What is an IoT Device?</h2>
+<aside class="notes">
+<p>As for their definition.</p>
+<p>What differentiates a computer from an IoT device?</p>
+</aside>
+</section><section id="what-is-an-iot-device-1" class="slide level2">
+<h2>What is an IoT Device?</h2>
 <ul>
 <li>Constrained in (one or more of):
 <ul>
@@ -71,9 +78,116 @@
 <li>Storage</li>
 </ul></li>
 </ul>
+</section><section id="typical-iot-chips---bluetooth-45" class="slide level2">
+<h2>Typical IoT chips - Bluetooth 4/5</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Chip</th>
+<th style="text-align: left;">CPU</th>
+<th>Freq</th>
+<th style="text-align: left;">RAM</th>
+<th style="text-align: left;">Flash</th>
+<th style="text-align: left;">Price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">nRF52810</td>
+<td style="text-align: left;">Cortex-M4</td>
+<td>64 M</td>
+<td style="text-align: left;">Hz 24k</td>
+<td style="text-align: left;">192k</td>
+<td style="text-align: left;">$1.88</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High perf</td>
+<td style="text-align: left;">ormance,</td>
+<td>entry</td>
+<td style="text-align: left;">-level Bl</td>
+<td style="text-align: left;">uetooth</td>
+<td style="text-align: left;">4/ANT/2.4GHz SoC</td>
+</tr>
+</tbody>
+</table>
+<p>nRF52832 Cortex-M4F 32k 256k $2.54 64k 512k $2.59 High performance Bluetooth 4/ANT/2.4GHz SoC</p>
+<p>nRF52840 Cortex-M4F 256k 1024k $3.85 Advanced multi-protocol System-on-Chip Supporting: Bluetooth 5, ANT/ANT+, 802.15.4 and 2.4GHz proprietary</p>
 <aside class="notes">
-<p>What differentiates a computer from an IoT device?</p>
+<p>All quantities are 1000 pieces</p>
+<p>nRF51: https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?k=nrf51822</p>
+<p>nRF52832: these have different packagings, not only difference price</p>
+<p>https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?FV=1c0001%2Cffe0036f&amp;quantity=3000&amp;ColumnSort=1000011&amp;page=1&amp;k=nrf52832&amp;pageSize=500&amp;pkeyword=nrf52810</p>
 </aside>
+</section><section id="typical-iot-chips---wi-fi" class="slide level2">
+<h2>Typical IoT chips - Wi-Fi</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Chip</th>
+<th style="text-align: left;">CPU</th>
+<th style="text-align: left;">Freq</th>
+<th style="text-align: left;">ROM</th>
+<th style="text-align: left;">RAM</th>
+<th style="text-align: left;">Price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ESP8266</td>
+<td style="text-align: left;">Tensilica L106</td>
+<td style="text-align: left;">160 MHz</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">~50 kB</td>
+<td style="text-align: left;">&lt; $1</td>
+</tr>
+</tbody>
+</table>
+<p>ESP32 - dual cpu, Wi-Fi, Bluetooth 4 ESP32-D0WDQ6 2x Xtensa @ 160MHz $ 4.53 @ 10</p>
+<aside class="notes">
+<p>The ESP8266’s RAM depends on which firmware stack is used. Physical is probably 128k or most likely 64k.</p>
+</aside>
+</section><section id="esp8266-details---power-usage" class="slide level2">
+<h2>ESP8266 details - Power usage</h2>
+<table style="width:61%;">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>State</th>
+<th style="text-align: right;">Current usage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Off</td>
+<td style="text-align: right;">0.5 µA</td>
+</tr>
+<tr class="even">
+<td>Deep sleep with RTC</td>
+<td style="text-align: right;">20 µA</td>
+</tr>
+<tr class="odd">
+<td>Light sleep (with Wi-Fi)</td>
+<td style="text-align: right;">1 mA</td>
+</tr>
+<tr class="even">
+<td>Sleep with peripherials</td>
+<td style="text-align: right;">15 mA</td>
+</tr>
+<tr class="odd">
+<td>TX</td>
+<td style="text-align: right;">170 mA</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Datasheet page 18</p>
+</aside>
+</section><section id="esp8266-details---arduino" class="slide level2">
+<h2>ESP8266 details - Arduino</h2>
+<p>https://github.com/esp8266/Arduino</p>
 </section></section>
 <section><section id="going-back-to-basics" class="title-slide slide level1"><h1>Going back to basics</h1></section><section id="what-is-the-internet-again" class="slide level2">
 <h2>What is the internet again?</h2>
@@ -147,30 +261,71 @@
 <h2>Layer 7: Application Layer</h2>
 <ul>
 <li>HTTP</li>
-<li>MQTT</li>
 <li>DNS</li>
+<li>MQTT</li>
+<li>CoAP</li>
 <li>(everything else..)</li>
 </ul>
 </section><section id="details-ip" class="slide level2">
 <h2>Details: IP</h2>
-<p>!ifdef(REVEAL) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<sub> <img data-src="images/ip-header.svg" /> </sub>~~~~~~~~~~~~~~~~~~~~~~~~~~~~<sub> !ifdef(BEAMER) </sub>~~~~~~~~~~~~~~~~~~~~~~~~~~~~<sub> <embed data-src="images/ip-header.pdf" /> </sub>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
 <aside class="notes">
 <p>Note that the “total length” field is 16 bits, 2 bytes, it’s maximum value is 64k, 65536.</p>
 </aside>
 </section><section id="details-ip-1" class="slide level2">
 <h2>Details: IP</h2>
-<p><embed data-src="images/IP-Header_eng.pdf" /> !comment ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<sub> </sub>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
+
+</section></section>
+<section><section id="lecture-esp8266-aka-nodemcu-aka-esp-12" class="title-slide slide level1"><h1>Lecture: ESP8266 aka NodeMCU aka ESP-12</h1></section></section>
+<section><section id="lecture-mqtt" class="title-slide slide level1"><h1>Lecture: MQTT</h1></section><section id="mqtt" class="slide level2">
+<h2>MQTT</h2>
+<ul>
+<li><em>Message Queuing Telemetry Transport</em></li>
+<li><a href="https://en.wikipedia.org/wiki/MQTT">Wikipedia: MQTT</a></li>
+</ul>
+</section><section id="mqtt-implementations" class="slide level2">
+<h2>MQTT Implementations</h2>
+<ul>
+<li>Mosquitto</li>
+<li>Eclipse Paho</li>
+<li>Redis with MQTT connector</li>
+</ul>
+</section><section id="mqtt-cloud-connectors" class="slide level2">
+<h2>MQTT Cloud Connectors</h2>
+<ul>
+<li>Cloud
+<ul>
+<li>Amazon IoT</li>
+<li>Google Cloud IoT</li>
+<li>Microsoft Azure IoT</li>
+<li>CloudMQTT</li>
+</ul></li>
+<li>DIY
+<ul>
+<li>ThingMQ</li>
+<li>HiveMQ</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>In between are:</p>
+<ul>
+<li>self hosted</li>
+<li>Generic bridges</li>
+</ul>
+</aside>
 </section></section>
 <section><section id="notes" class="title-slide slide level1"><h1>Notes</h1></section><section id="assignments" class="slide level2">
 <h2>Assignments</h2>
 <ul>
-<li>Measure round trip time/latency. Measure UDP, TCP. Measure when the packet size is greater than the MTU</li>
+<li><p>Measure round trip time/latency. Measure UDP, TCP. Measure when the packet size is greater than the MTU</p></li>
+<li><p>Measure ISR timing</p></li>
 </ul>
 </section></section>
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Wikipedia “Internet of Things”<a href="#/fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p> Wikipedia “Internet of Things”<a href="#/fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </section>
     </div>

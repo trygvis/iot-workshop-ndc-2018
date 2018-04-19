@@ -1,0 +1,12 @@
+#!/bin/bash
+echo '\documentclass[preview]{standalone}
+\usepackage{blindtext}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,fit,positioning,shapes.symbols,chains,shapes.geometric,shapes.arrows,calc}
+
+\usepackage{fontspec}
+\setsansfont{Verdana}
+\begin{document}'
+cat -
+echo '\end{document}'

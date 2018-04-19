@@ -5,8 +5,14 @@ header-includes:
   - \hypersetup{colorlinks=true,
             allbordercolors={0 0 0},
             pdfborderstyle={/S/U/W 1}}
+  - \usepackage{tikz}
+	\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,fit,positioning,shapes.symbols,chains,shapes.geometric,shapes.arrows,calc}
+!ifndef(QUICK)
+~~~~~~
   - \usepackage{fontspec}
 	\setsansfont{Verdana}
+~~~~~~
+
 ---
 
 # What is IoT
@@ -24,7 +30,21 @@ header-includes:
 
 ## IoT is just a concept
 
-* *The Internet of Things (IoT) is the network of physical devices, vehicles, home appliances and other items embedded with electronics, software, sensors, actuators, and connectivity which enables these objects to connect and exchange data.*^[Wikipedia "Internet of Things"]
+* *The Internet of Things (IoT) is the network of physical devices,
+  vehicles, home appliances and other items embedded with
+  electronics, software, sensors, actuators, and connectivity which
+  enables these objects to connect and exchange data.*^[
+  Wikipedia "Internet of Things"]
+
+## What is an IoT Device?
+
+::: notes
+
+As for their definition.
+
+What differentiates a computer from an IoT device?
+
+:::
 
 ## What is an IoT Device?
 
@@ -34,9 +54,75 @@ header-includes:
     * Network bandwidth and/or latency
     * Storage
 
+## Typical IoT chips - Bluetooth 4/5
+
+!comment
+~~~
+~~~
+Chip     CPU      Freq RAM      Flash  Price
+-------- -------- ---- -------- ------ ------
+nRF52810 Cortex-M4 64 MHz    24k   192k  $1.88
+High performance, entry-level Bluetooth 4/ANT/2.4GHz SoC
+
+nRF52832 Cortex-M4F          32k   256k  $2.54
+                             64k   512k  $2.59
+High performance Bluetooth 4/ANT/2.4GHz SoC
+
+nRF52840 Cortex-M4F         256k  1024k  $3.85
+Advanced multi-protocol System-on-Chip Supporting: Bluetooth 5, ANT/ANT+, 802.15.4 and 2.4GHz proprietary
+
 ::: notes
-What differentiates a computer from an IoT device?
+
+All quantities are 1000 pieces
+
+nRF51: https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?k=nrf51822
+
+nRF52832: these have different packagings, not only difference price
+
+https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?FV=1c0001%2Cffe0036f&quantity=3000&ColumnSort=1000011&page=1&k=nrf52832&pageSize=500&pkeyword=nrf52810
+
 :::
+
+## Typical IoT chips - Wi-Fi
+
+Chip    CPU            Freq     ROM   RAM    Price
+-----   -------        -------  ----- ------ ------
+ESP8266 Tensilica L106 160 MHz    N/A ~50 kB   < $1
+
+ESP32 - dual cpu, Wi-Fi, Bluetooth 4
+ESP32-D0WDQ6 2x Xtensa @ 160MHz  $ 4.53 @ 10
+
+::: notes
+
+The ESP8266's RAM depends on which firmware stack is used. Physical is probably 128k or most likely 64k.
+
+:::
+
+## ESP8266 details - Power usage
+
++--------------------------+----------------+
+| State                    | Current usage  |
++==========================+===============:+
+| Off					   | 0.5 µA         |
++--------------------------+----------------+
+| Deep sleep with RTC	   | 20 µA          |
++--------------------------+----------------+
+| Light sleep (with Wi-Fi) | 1 mA           |
++--------------------------+----------------+
+| Sleep with peripherials  | 15 mA          |
++--------------------------+----------------+
+| TX					   | 170 mA         |
++--------------------------+----------------+
+
+::: notes
+
+Datasheet page 18
+
+:::
+
+## ESP8266 details - Arduino
+
+https://github.com/esp8266/Arduino
 
 # Going back to basics
 
@@ -122,8 +208,9 @@ This layer is not really much used in the IP stack
 ## Layer 7: Application Layer
 
 * HTTP
-* MQTT
 * DNS
+* MQTT
+* CoAP
 * (everything else..)
 
 ## Details: IP
@@ -134,7 +221,7 @@ This layer is not really much used in the IP stack
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 !ifdef(BEAMER)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-![](images/ip-header.pdf)
+!ifndef(QUICK)(![](images/ip-header.pdf))
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::: notes
@@ -145,10 +232,48 @@ Note that the "total length" field is 16 bits, 2 bytes, it's maximum value is 64
 
 ## Details: IP
 
-![](images/IP-Header_eng.pdf)
+!ifndef(QUICK)(!include(images/IP-Header_eng.tex))
+
 !comment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+![](images/IP-Header_eng.pdf)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Lecture: ESP8266 aka NodeMCU aka ESP-12
+
+# Lecture: MQTT
+
+## MQTT
+
+* *Message Queuing Telemetry Transport*
+* [Wikipedia: MQTT](https://en.wikipedia.org/wiki/MQTT)
+
+## MQTT Implementations
+
+* Mosquitto
+* Eclipse Paho
+* Redis with MQTT connector
+
+## MQTT Cloud Connectors
+
+* Cloud
+	* Amazon IoT
+	* Google Cloud IoT
+	* Microsoft Azure IoT
+	* CloudMQTT
+
+* DIY
+	* ThingMQ
+	* HiveMQ
+
+::: notes
+
+In between are:
+
+* self hosted
+* Generic bridges
+
+:::
 
 # Notes
 
@@ -156,3 +281,5 @@ Note that the "total length" field is 16 bits, 2 bytes, it's maximum value is 64
 
 * Measure round trip time/latency. Measure UDP, TCP. Measure when the
   packet size is greater than the MTU
+
+* Measure ISR timing
