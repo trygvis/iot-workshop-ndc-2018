@@ -178,6 +178,13 @@ TX\strut
 
 \end{frame}
 
+\begin{frame}{ESP8266 details - Arduino}
+\protect\hypertarget{esp8266-details---arduino}{}
+
+https://github.com/esp8266/Arduino
+
+\end{frame}
+
 \hypertarget{going-back-to-basics}{%
 \section{Going back to basics}\label{going-back-to-basics}}
 
@@ -354,6 +361,15 @@ maximum value is 64k, 65536.}
 
 \end{frame}
 
+\hypertarget{lecture-esp8266-aka-nodemcu-aka-esp-12}{%
+\section{Lecture: ESP8266 aka NodeMCU aka
+ESP-12}\label{lecture-esp8266-aka-nodemcu-aka-esp-12}}
+
+\begin{frame}{ESP8266 software layers}
+\protect\hypertarget{esp8266-software-layers}{}
+
+\end{frame}
+
 \hypertarget{lecture-mqtt}{%
 \section{Lecture: MQTT}\label{lecture-mqtt}}
 
@@ -368,10 +384,253 @@ maximum value is 64k, 65536.}
   \href{https://en.wikipedia.org/wiki/MQTT}{Wikipedia: MQTT}
 \end{itemize}
 
+\note{MQTT is \emph{the} standard for IoT applications (and lots of
+other useful stuff to). Using HTTP is just silly.
+
+Supports SSL, and requires TCP.
+
+Has UDP-like semantics with “fire and forget” but on a higher level (the
+message always have to be delivered and ACKed by the broker, not it’s
+final recipient.
+
+Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke
+(før standardisering).}
+
 \end{frame}
 
-\begin{frame}{MQTT Implementations}
-\protect\hypertarget{mqtt-implementations}{}
+\begin{frame}{MQTT - The protocol}
+\protect\hypertarget{mqtt---the-protocol}{}
+
+Agents have one of two roles:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Client}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Publishes \emph{messages}
+  \item
+    Subscribes / unsubscribes to \emph{topics}
+  \end{itemize}
+\item
+  \emph{Broker} (aka Server)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Handles network connections
+  \item
+    Keeps subscription state
+  \item
+    Manages client
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Disconnects
+    \item
+      \emph{(last) will}
+    \end{itemize}
+  \item
+    Persistence
+  \end{itemize}
+\end{itemize}
+
+\note{http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html
+
+Subscriptions are not permanent. The connection is (unlike HTTP)
+stateful.
+
+Some messages may be persistent, but only one per topic. You will often
+end up with a “proper” mq on the backend if queuing is needed.}
+
+\end{frame}
+
+\begin{frame}[fragile]{MQTT - The protocol - MQTT Topic}
+\protect\hypertarget{mqtt---the-protocol---mqtt-topic}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Topic name: \texttt{foo/bar/baz}
+\item
+  Topic filter
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{foo/bar/?}
+  \item
+    \texttt{foo/\#}
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{MQTT - The protocol - MQTT Topic}
+\protect\hypertarget{mqtt---the-protocol---mqtt-topic-1}{}
+
+The temperature sensor:
+
+\begin{itemize}
+\tightlist
+\item
+  Publishes on:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\$device-id/temperature}
+  \item
+    \texttt{myapp/\$device-id/humidity}
+  \item
+    \texttt{myapp/\$device-id/altert}
+  \end{itemize}
+\item
+  Subscribes to:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\$device-id/command}
+  \end{itemize}
+\end{itemize}
+
+The central application:
+
+\begin{itemize}
+\tightlist
+\item
+  Subscribes to:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\#/temperature}
+  \item
+    \texttt{myapp/\#/humidity}
+  \end{itemize}
+\item
+  Publishes on:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\$device-id/command}
+  \end{itemize}
+\end{itemize}
+
+\note{Typical first round of implementation.
+
+Commands can be: * load new firmware (maybe an URL and firmware
+signature). * Set new calibration values * Change reading interval,
+altert levels (autonomous operation)}
+
+\end{frame}
+
+\begin{frame}{MQTT - The protocol - MQTT Packet}
+\protect\hypertarget{mqtt---the-protocol---mqtt-packet}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Very small
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  Packet type + flags
+\item
+  Packet identifier
+\item
+  Payload
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Size
+  \item
+    Payload
+  \end{itemize}
+\end{itemize}
+
+\note{Only packet type + flags (1 byte) is required, everything else is
+optional.
+
+The size field is variable length encoded, 0-127 bytes is 1 byte,
+128-16383 use 2 bytes etc, up to 4 bytes for 256MB payload.}
+
+\end{frame}
+
+\begin{frame}[fragile]{MQTT - The protocol - MQTT Topic - more}
+\protect\hypertarget{mqtt---the-protocol---mqtt-topic---more}{}
+
+Enten må den holdes rett etter “\#\# MQTT - The protocol - MQTT Topic”
+ellers kanskje flyttes etter “patterns”.
+
+The central application is split:
+
+\begin{itemize}
+\tightlist
+\item
+  An aggregating agent:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\#/temperature}
+  \item
+    \texttt{myapp/\#/humidity}
+  \end{itemize}
+\item
+  Emailing agent
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\$device-id/altert}
+  \end{itemize}
+\item
+  Publishes on:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\$device-id/command}
+  \end{itemize}
+\end{itemize}
+
+\note{}
+
+\end{frame}
+
+\begin{frame}{MQTT - Patterns}
+\protect\hypertarget{mqtt---patterns}{}
+
+Må utvides
+
+Explain:
+
+\begin{itemize}
+\tightlist
+\item
+  Message sizes with MQTT
+\item
+  “will” messages
+\item
+  Push vs pull, central applications can push to clients
+\item
+  mostly mqtt, some http
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{MQTT - Implementations}
+\protect\hypertarget{mqtt---implementations}{}
 
 \begin{itemize}
 \tightlist
@@ -379,7 +638,15 @@ maximum value is 64k, 65536.}
   Mosquitto
 \item
   Eclipse Paho
+\item
+  RabbitMQ
+\item
+  ActiveMQ
 \end{itemize}
+
+\note{RabbitMQ has a separate connector that must be installed Not sure
+about ActiveMQ but it is at least a part of the project so it is
+releases at the same time.}
 
 \end{frame}
 
@@ -414,20 +681,48 @@ maximum value is 64k, 65536.}
   \end{itemize}
 \end{itemize}
 
+\note{In between are:
+
+\begin{itemize}
+\tightlist
+\item
+  self hosted
+\item
+  Generic bridges
+\end{itemize}}
+
 \end{frame}
 
 \hypertarget{notes}{%
 \section{Notes}\label{notes}}
 
-\begin{frame}{Assignments}
-\protect\hypertarget{assignments}{}
+\hypertarget{assignments}{%
+\section{Assignments}\label{assignments}}
+
+\begin{frame}{Assignment 1: Blink a led}
+\protect\hypertarget{assignment-1-blink-a-led}{}
+
+\end{frame}
+
+\begin{frame}{Assignment 2: Connect to Wi-Fi}
+\protect\hypertarget{assignment-2-connect-to-wi-fi}{}
+
+\end{frame}
+
+\begin{frame}{Assignment 3: Connect to MQTT broker}
+\protect\hypertarget{assignment-3-connect-to-mqtt-broker}{}
+
+\end{frame}
+
+\begin{frame}{Assignment 4: Network play time}
+\protect\hypertarget{assignment-4-network-play-time}{}
 
 \begin{itemize}
 \item
   Measure round trip time/latency. Measure UDP, TCP. Measure when the
   packet size is greater than the MTU
 \item
-  Measure ISR timing
+  Notice variations in RTT
 \end{itemize}
 
 \end{frame}

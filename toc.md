@@ -20,9 +20,21 @@
     * Details: IP
     * Details: IP
 * Lecture: ESP8266 aka NodeMCU aka ESP-12
+    * ESP8266 software layers
 * Lecture: MQTT
     * MQTT
-    * MQTT Implementations
+    * MQTT - The protocol
+    * MQTT - The protocol - MQTT Topic
+    * MQTT - The protocol - MQTT Topic
+    * MQTT - The protocol - MQTT Packet
+    * MQTT - The protocol - MQTT Topic - more
+    * MQTT - The protocol
+    * MQTT - Patterns
+    * MQTT - Implementations
     * MQTT Cloud Connectors
 * Notes
-    * Assignments
+* Assignments
+    * Assignment 1: Blink a led
+    * Assignment 2: Connect to Wi-Fi
+    * Assignment 3: Connect to MQTT broker
+    * Assignment 4: Network play time

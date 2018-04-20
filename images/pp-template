@@ -3,7 +3,23 @@ echo '\documentclass[preview]{standalone}
 \usepackage{blindtext}
 \usepackage[utf8]{inputenc}
 \usepackage{tikz}
-\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,fit,positioning,shapes.symbols,chains,shapes.geometric,shapes.arrows,calc}
+\usetikzlibrary{
+  angles,
+  arrows,
+  backgrounds,
+  calc,
+  chains,
+  decorations,
+  decorations.pathmorphing,
+  decorations.pathreplacing,
+  decorations.text,
+  fit,
+  positioning,
+  quotes,
+  shapes.arrows,
+  shapes.geometric,
+  shapes.symbols,
+}
 
 \usepackage{fontspec}
 \setsansfont{Verdana}

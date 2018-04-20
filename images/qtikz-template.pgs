@@ -7,21 +7,23 @@
 
 \usepackage{tikz}
 
-\usetikzlibrary{arrows,
-decorations,
-decorations.pathmorphing,
-decorations.pathreplacing,
-decorations.text,
-backgrounds,
-fit,
-positioning,
-shapes.symbols,
-chains,
-shapes.geometric,
-shapes.arrows,
-angles,
-quotes,
-calc}
+\usetikzlibrary{
+  angles,
+  arrows,
+  backgrounds,
+  calc,
+  chains,
+  decorations,
+  decorations.pathmorphing,
+  decorations.pathreplacing,
+  decorations.text,
+  fit,
+  positioning,
+  quotes,
+  shapes.arrows,
+  shapes.geometric,
+  shapes.symbols,
+}
 
 \begin{document}
 

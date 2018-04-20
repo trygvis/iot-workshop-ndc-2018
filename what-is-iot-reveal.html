@@ -277,20 +277,149 @@
 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
 
 </section></section>
-<section><section id="lecture-esp8266-aka-nodemcu-aka-esp-12" class="title-slide slide level1"><h1>Lecture: ESP8266 aka NodeMCU aka ESP-12</h1></section></section>
+<section><section id="lecture-esp8266-aka-nodemcu-aka-esp-12" class="title-slide slide level1"><h1>Lecture: ESP8266 aka NodeMCU aka ESP-12</h1></section><section id="esp8266-software-layers" class="slide level2">
+<h2>ESP8266 software layers</h2>
+
+</section></section>
 <section><section id="lecture-mqtt" class="title-slide slide level1"><h1>Lecture: MQTT</h1></section><section id="mqtt" class="slide level2">
 <h2>MQTT</h2>
 <ul>
 <li><em>Message Queuing Telemetry Transport</em></li>
 <li><a href="https://en.wikipedia.org/wiki/MQTT">Wikipedia: MQTT</a></li>
 </ul>
-</section><section id="mqtt-implementations" class="slide level2">
-<h2>MQTT Implementations</h2>
+<aside class="notes">
+<p>MQTT is <em>the</em> standard for IoT applications (and lots of other useful stuff to). Using HTTP is just silly.</p>
+<p>Supports SSL, and requires TCP.</p>
+<p>Has UDP-like semantics with “fire and forget” but on a higher level (the message always have to be delivered and ACKed by the broker, not it’s final recipient.</p>
+<p>Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke (før standardisering).</p>
+</aside>
+</section><section id="mqtt---the-protocol" class="slide level2">
+<h2>MQTT - The protocol</h2>
+<p>Agents have one of two roles:</p>
+<ul>
+<li><em>Client</em>
+<ul>
+<li>Publishes <em>messages</em></li>
+<li>Subscribes / unsubscribes to <em>topics</em></li>
+</ul></li>
+<li><em>Broker</em> (aka Server)
+<ul>
+<li>Handles network connections</li>
+<li>Keeps subscription state</li>
+<li>Manages client
+<ul>
+<li>Disconnects</li>
+<li><em>(last) will</em></li>
+</ul></li>
+<li>Persistence</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html</p>
+<p>Subscriptions are not permanent. The connection is (unlike HTTP) stateful.</p>
+<p>Some messages may be persistent, but only one per topic. You will often end up with a “proper” mq on the backend if queuing is needed.</p>
+</aside>
+</section><section id="mqtt---the-protocol---mqtt-topic" class="slide level2">
+<h2>MQTT - The protocol - MQTT Topic</h2>
+<ul>
+<li>Topic name: <code>foo/bar/baz</code></li>
+<li>Topic filter
+<ul>
+<li><code>foo/bar/?</code></li>
+<li><code>foo/#</code></li>
+</ul></li>
+</ul>
+</section><section id="mqtt---the-protocol---mqtt-topic-1" class="slide level2">
+<h2>MQTT - The protocol - MQTT Topic</h2>
+<p>The temperature sensor:</p>
+<ul>
+<li>Publishes on:
+<ul>
+<li><code>myapp/$device-id/temperature</code></li>
+<li><code>myapp/$device-id/humidity</code></li>
+<li><code>myapp/$device-id/altert</code></li>
+</ul></li>
+<li>Subscribes to:
+<ul>
+<li><code>myapp/$device-id/command</code></li>
+</ul></li>
+</ul>
+<p>The central application:</p>
+<ul>
+<li>Subscribes to:
+<ul>
+<li><code>myapp/#/temperature</code></li>
+<li><code>myapp/#/humidity</code></li>
+</ul></li>
+<li>Publishes on:
+<ul>
+<li><code>myapp/$device-id/command</code></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>Typical first round of implementation.</p>
+<p>Commands can be: * load new firmware (maybe an URL and firmware signature). * Set new calibration values * Change reading interval, altert levels (autonomous operation)</p>
+</aside>
+</section><section id="mqtt---the-protocol---mqtt-packet" class="slide level2">
+<h2>MQTT - The protocol - MQTT Packet</h2>
+<ul>
+<li>Size oriented</li>
+<li>Flags indicate type of remaining bytes
+<ul>
+<li>Packet type</li>
+<li>Topic name</li>
+<li>Payload</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>Only packet type + flags (1 byte) is required, everything else is optional.</p>
+<p>The size field is variable length encoded, 0-127 bytes is 1 byte, 128-16383 use 2 bytes etc, up to 4 bytes for 256MB payload.</p>
+</aside>
+</section><section id="mqtt---the-protocol---mqtt-topic---more" class="slide level2">
+<h2>MQTT - The protocol - MQTT Topic - more</h2>
+<p>Enten må den holdes rett etter “## MQTT - The protocol - MQTT Topic” ellers kanskje flyttes etter “patterns”.</p>
+<p>The central application is split:</p>
+<ul>
+<li>An aggregating agent:
+<ul>
+<li><code>myapp/#/temperature</code></li>
+<li><code>myapp/#/humidity</code></li>
+</ul></li>
+<li>Emailing agent
+<ul>
+<li><code>myapp/$device-id/altert</code></li>
+</ul></li>
+<li>Publishes on:
+<ul>
+<li><code>myapp/$device-id/command</code></li>
+</ul></li>
+</ul>
+<aside class="notes">
+
+</aside>
+</section><section id="mqtt---the-protocol-1" class="slide level2">
+<h2>MQTT - The protocol</h2>
+</section><section id="mqtt---patterns" class="slide level2">
+<h2>MQTT - Patterns</h2>
+<p>Må utvides</p>
+<p>Explain:</p>
+<ul>
+<li>Message sizes with MQTT</li>
+<li>“will” messages</li>
+<li>Push vs pull, central applications can push to clients</li>
+<li>mostly mqtt, some http</li>
+</ul>
+</section><section id="mqtt---implementations" class="slide level2">
+<h2>MQTT - Implementations</h2>
 <ul>
 <li>Mosquitto</li>
 <li>Eclipse Paho</li>
-<li>Redis with MQTT connector</li>
+<li>RabbitMQ</li>
+<li>ActiveMQ</li>
 </ul>
+<aside class="notes">
+<p>RabbitMQ has a separate connector that must be installed Not sure about ActiveMQ but it is at least a part of the project so it is releases at the same time.</p>
+</aside>
 </section><section id="mqtt-cloud-connectors" class="slide level2">
 <h2>MQTT Cloud Connectors</h2>
 <ul>
@@ -315,11 +444,18 @@
 </ul>
 </aside>
 </section></section>
-<section><section id="notes" class="title-slide slide level1"><h1>Notes</h1></section><section id="assignments" class="slide level2">
-<h2>Assignments</h2>
+<section><section id="notes" class="title-slide slide level1"><h1>Notes</h1></section></section>
+<section><section id="assignments" class="title-slide slide level1"><h1>Assignments</h1></section><section id="assignment-1-blink-a-led" class="slide level2">
+<h2>Assignment 1: Blink a led</h2>
+</section><section id="assignment-2-connect-to-wi-fi" class="slide level2">
+<h2>Assignment 2: Connect to Wi-Fi</h2>
+</section><section id="assignment-3-connect-to-mqtt-broker" class="slide level2">
+<h2>Assignment 3: Connect to MQTT broker</h2>
+</section><section id="assignment-4-network-play-time" class="slide level2">
+<h2>Assignment 4: Network play time</h2>
 <ul>
 <li><p>Measure round trip time/latency. Measure UDP, TCP. Measure when the packet size is greater than the MTU</p></li>
-<li><p>Measure ISR timing</p></li>
+<li><p>Notice variations in RTT</p></li>
 </ul>
 </section></section>
 <section class="footnotes">
