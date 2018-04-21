@@ -28,7 +28,8 @@
     * MQTT - The protocol - MQTT Topic
     * MQTT - The protocol - MQTT Packet
     * MQTT - The protocol - MQTT Topic - more
-    * MQTT - The protocol
+    * MQTT - The protocol - Retained message
+    * MQTT - The protocol - Will message
     * MQTT - Patterns
     * MQTT - Implementations
     * MQTT Cloud Connectors

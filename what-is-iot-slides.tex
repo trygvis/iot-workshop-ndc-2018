@@ -361,9 +361,8 @@ maximum value is 64k, 65536.}
 
 \end{frame}
 
-\hypertarget{lecture-esp8266-aka-nodemcu-aka-esp-12}{%
-\section{Lecture: ESP8266 aka NodeMCU aka
-ESP-12}\label{lecture-esp8266-aka-nodemcu-aka-esp-12}}
+\hypertarget{lecture-esp8266}{%
+\section{Lecture: ESP8266}\label{lecture-esp8266}}
 
 \begin{frame}{ESP8266 software layers}
 \protect\hypertarget{esp8266-software-layers}{}
@@ -423,7 +422,7 @@ Agents have one of two roles:
   \item
     Handles network connections
   \item
-    Keeps subscription state
+    Keeps subscriptions
   \item
     Manages client
 
@@ -435,11 +434,14 @@ Agents have one of two roles:
       \emph{(last) will}
     \end{itemize}
   \item
-    Persistence
+    Persistence of retained messages
   \end{itemize}
 \end{itemize}
 
-\note{http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html
+\note{network connections: this includes removing closed sockets,
+client’s that doesn’t respons to timeouts and duplicate clients.
+
+http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html
 
 Subscriptions are not permanent. The connection is (unlike HTTP)
 stateful.
@@ -537,22 +539,16 @@ altert levels (autonomous operation)}
 \begin{itemize}
 \tightlist
 \item
-  Very small
-\end{itemize}
-
-\begin{itemize}
-\tightlist
+  Size oriented
 \item
-  Packet type + flags
-\item
-  Packet identifier
-\item
-  Payload
+  Flags indicate type of remaining bytes
 
   \begin{itemize}
   \tightlist
   \item
-    Size
+    Packet type
+  \item
+    Topic name
   \item
     Payload
   \end{itemize}
@@ -608,6 +604,114 @@ The central application is split:
 
 \end{frame}
 
+\begin{frame}[fragile]{MQTT - The protocol - Retained message}
+\protect\hypertarget{mqtt---the-protocol---retained-message}{}
+
+Message is kept by the server even after disconnect
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{CONNECT}
+\item
+  \texttt{PUBLISH}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{RETAIN}
+  \item
+    \texttt{\$app/\$device/temperature}
+  \item
+    \texttt{22.3}
+  \end{itemize}
+\item
+  \texttt{DISCONNECT}
+\end{itemize}
+
+Later on:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{SUBSCRIBE}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{\$app/\#/temperature}
+  \end{itemize}
+\item
+  \texttt{PUBLISH}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{\$app/\$device/temperature}
+  \item
+    \texttt{22.3}
+  \end{itemize}
+\end{itemize}
+
+\note{The last PUBLISH is an incoming message}
+
+\end{frame}
+
+\begin{frame}[fragile]{MQTT - The protocol - Will message}
+\protect\hypertarget{mqtt---the-protocol---will-message}{}
+
+Message sent when you disconnect
+
+Client \#1:
+
+\begin{enumerate}
+[1.]
+\tightlist
+\item
+  \texttt{CONNECT}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{WILL\ TOPIC:\ \$app/\$device/online}
+  \item
+    \texttt{WILL\ PAYLOAD:\ 0}
+  \end{itemize}
+\item
+  \texttt{PUBLISH}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{\$app/\$device/online}
+  \item
+    \texttt{1}
+  \end{itemize}
+\item
+  \texttt{DISCONNECT}
+\end{enumerate}
+
+\ldots{}
+
+Broker
+
+\begin{enumerate}
+[1.]
+\tightlist
+\item
+  \texttt{PUBLISH}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{\$app/\$device/online}
+  \item
+    \texttt{0}
+  \end{itemize}
+\end{enumerate}
+
+\end{frame}
+
 \begin{frame}{MQTT - Patterns}
 \protect\hypertarget{mqtt---patterns}{}
 
@@ -618,13 +722,15 @@ Explain:
 \begin{itemize}
 \tightlist
 \item
-  Message sizes with MQTT
-\item
-  “will” messages
-\item
   Push vs pull, central applications can push to clients
 \item
   mostly mqtt, some http
+\item
+  Client id - sparker ut gamle koblinger
+\item
+  Keep alive / ping meldinger
+\item
+  Alternative transporter - websockets(!)
 \end{itemize}
 
 \end{frame}
@@ -667,7 +773,7 @@ releases at the same time.}
   \item
     Microsoft Azure IoT
   \item
-    CloudMQTT
+    CloudMQTT (at Heroku)
   \end{itemize}
 \item
   DIY

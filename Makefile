@@ -1,6 +1,6 @@
 P=what-is-iot
 # Madrid Pittsburgh boxes
-SLIDE_THEME=boxes
+SLIDE_THEME?=boxes
 PDFS=$(P)-text.pdf $(P)-slides.pdf
 HTMLS=$(P)-reveal.html
 
@@ -49,10 +49,10 @@ $(P).md: Makefile
 %-text.pdf: %.beamer.md
 	$(RUN_PANDOC_TEXT) -o $@ $<
 
-%-slides.pdf: %.beamer.md
+%-slides.pdf: %.beamer.md .var/SLIDE_THEME
 	$(RUN_PANDOC_BEAMER) -o $@ $<
 
-%-slides.tex: %.beamer.md
+%-slides.tex: %.beamer.md .var/SLIDE_THEME
 	$(RUN_PANDOC_BEAMER) -o $@ $<
 
 %.revealjs.md: %.md
@@ -65,6 +65,17 @@ images/%.pdf: images/%.tex | images/pp-template Makefile
 	images/pp-template < $< > $(patsubst %.tex,%-full.tex,$<)
 	xelatex -output-directory=images $(patsubst %.tex,%-full.tex,$<)
 	mv $(patsubst %.pdf,%-full.pdf,$@) $@
+
+
+VARS=SLIDE_THEME
+
+define refresh =
+.var/$(1)::
+	@mkdir -p .var
+	@./refresh $$@ $(1) $($(1))
+endef
+
+$(foreach var,$(VARS),$(eval $(call refresh,$(var))))
 
 # Dependencies
 $(P).md: images/IP-Header_eng.tex

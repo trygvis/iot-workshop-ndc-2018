@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+file=$1
+key=$2
+value=$3
+
+if [[ -r $file ]]
+then
+  old=$(<"$file")
+fi
+
+if [[ $value != $old ]]
+then
+  echo $value > $file
+  echo Changed: $key
+fi

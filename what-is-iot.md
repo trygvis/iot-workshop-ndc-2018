@@ -239,7 +239,9 @@ Note that the "total length" field is 16 bits, 2 bytes, it's maximum value is 64
 ![](images/IP-Header_eng.pdf)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Lecture: ESP8266 aka NodeMCU aka ESP-12
+# Lecture: ESP8266
+
+!comment(aka NodeMCU aka ESP-12)
 
 ## ESP8266 software layers
 
@@ -274,13 +276,15 @@ Agents have one of two roles:
 
 * *Broker* (aka Server)
     * Handles network connections
-    * Keeps subscription state
+    * Keeps subscriptions
     * Manages client
         * Disconnects
         * *(last) will*
-    * Persistence
+    * Persistence of retained messages
 
 ::: notes
+
+network connections: this includes removing closed sockets, client's that doesn't respons to timeouts and duplicate clients.
 
 http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html
 
@@ -364,16 +368,62 @@ The central application is split:
 
 :::
 
+## MQTT - The protocol - Retained message
+
+Message is kept by the server even after disconnect
+
+* `CONNECT`
+* `PUBLISH`
+    * `RETAIN`
+    * `$app/$device/temperature`
+    * `22.3`
+* `DISCONNECT`
+
+Later on:
+
+* `SUBSCRIBE`
+    * `$app/#/temperature`
+* `PUBLISH`
+    * `$app/$device/temperature`
+    * `22.3`
+
+::: notes
+
+The last PUBLISH is an incoming message
+
+:::
+
+## MQTT - The protocol - Will message
+
+Message sent when you disconnect
+
+Client #1:
+
+1. `CONNECT`
+    * `WILL TOPIC: $app/$device/online`
+    * `WILL PAYLOAD: 0`
+1. `PUBLISH`
+    * `$app/$device/online`
+    * `1`
+1. `DISCONNECT`
+
+Broker
+
+1. *To all subscribers* `PUBLISH`
+    * `$app/$device/online`
+    * `0`
+
 ## MQTT - Patterns
 
 Må utvides
 
 Explain:
 
-* Message sizes with MQTT
-* "will" messages
 * Push vs pull, central applications can push to clients
 * mostly mqtt, some http
+* Client id - sparker ut gamle koblinger
+* Keep alive / ping meldinger
+* Alternative transporter - websockets(!)
 
 ## MQTT - Implementations
 
@@ -395,7 +445,7 @@ Not sure about ActiveMQ but it is at least a part of the project so it is releas
     * Amazon IoT
     * Google Cloud IoT
     * Microsoft Azure IoT
-    * CloudMQTT
+    * CloudMQTT (at Heroku)
 
 * DIY
     * ThingMQ
@@ -409,9 +459,6 @@ In between are:
 * Generic bridges
 
 :::
-
-
-# Notes
 
 # Assignments
 

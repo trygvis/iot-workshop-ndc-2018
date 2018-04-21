@@ -29,7 +29,6 @@
   <![endif]-->
   
   
-  
 </head>
 <body>
   <div class="reveal">
@@ -273,13 +272,9 @@
 </aside>
 </section><section id="details-ip-1" class="slide level2">
 <h2>Details: IP</h2>
-
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
-
 </section></section>
 <section><section id="lecture-esp8266-aka-nodemcu-aka-esp-12" class="title-slide slide level1"><h1>Lecture: ESP8266 aka NodeMCU aka ESP-12</h1></section><section id="esp8266-software-layers" class="slide level2">
 <h2>ESP8266 software layers</h2>
-
 </section></section>
 <section><section id="lecture-mqtt" class="title-slide slide level1"><h1>Lecture: MQTT</h1></section><section id="mqtt" class="slide level2">
 <h2>MQTT</h2>
@@ -305,16 +300,17 @@
 <li><em>Broker</em> (aka Server)
 <ul>
 <li>Handles network connections</li>
-<li>Keeps subscription state</li>
+<li>Keeps subscriptions</li>
 <li>Manages client
 <ul>
 <li>Disconnects</li>
 <li><em>(last) will</em></li>
 </ul></li>
-<li>Persistence</li>
+<li>Persistence of retained messages</li>
 </ul></li>
 </ul>
 <aside class="notes">
+<p>network connections: this includes removing closed sockets, client’s that doesn’t respons to timeouts and duplicate clients.</p>
 <p>http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html</p>
 <p>Subscriptions are not permanent. The connection is (unlike HTTP) stateful.</p>
 <p>Some messages may be persistent, but only one per topic. You will often end up with a “proper” mq on the backend if queuing is needed.</p>
@@ -397,17 +393,70 @@
 <aside class="notes">
 
 </aside>
-</section><section id="mqtt---the-protocol-1" class="slide level2">
-<h2>MQTT - The protocol</h2>
+</section><section id="mqtt---the-protocol---retained-message" class="slide level2">
+<h2>MQTT - The protocol - Retained message</h2>
+<p>Message is kept by the server even after disconnect</p>
+<ul>
+<li><code>CONNECT</code></li>
+<li><code>PUBLISH</code>
+<ul>
+<li><code>RETAIN</code></li>
+<li><code>$app/$device/temperature</code></li>
+<li><code>22.3</code></li>
+</ul></li>
+<li><code>DISCONNECT</code></li>
+</ul>
+<p>Later on:</p>
+<ul>
+<li><code>SUBSCRIBE</code>
+<ul>
+<li><code>$app/#/temperature</code></li>
+</ul></li>
+<li><code>PUBLISH</code>
+<ul>
+<li><code>$app/$device/temperature</code></li>
+<li><code>22.3</code></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>The last PUBLISH is an incoming message</p>
+</aside>
+</section><section id="mqtt---the-protocol---will-message" class="slide level2">
+<h2>MQTT - The protocol - Will message</h2>
+<p>Message sent when you disconnect</p>
+<p>Client #1:</p>
+<ol type="1">
+<li><code>CONNECT</code>
+<ul>
+<li><code>WILL TOPIC: $app/$device/online</code></li>
+<li><code>WILL PAYLOAD: 0</code></li>
+</ul></li>
+<li><code>PUBLISH</code>
+<ul>
+<li><code>$app/$device/online</code></li>
+<li><code>1</code></li>
+</ul></li>
+<li><code>DISCONNECT</code></li>
+</ol>
+<p>…</p>
+<p>Broker</p>
+<ol type="1">
+<li><code>PUBLISH</code>
+<ul>
+<li><code>$app/$device/online</code></li>
+<li><code>0</code></li>
+</ul></li>
+</ol>
 </section><section id="mqtt---patterns" class="slide level2">
 <h2>MQTT - Patterns</h2>
 <p>Må utvides</p>
 <p>Explain:</p>
 <ul>
-<li>Message sizes with MQTT</li>
-<li>“will” messages</li>
 <li>Push vs pull, central applications can push to clients</li>
 <li>mostly mqtt, some http</li>
+<li>Client id - sparker ut gamle koblinger</li>
+<li>Keep alive / ping meldinger</li>
+<li>Alternative transporter - websockets(!)</li>
 </ul>
 </section><section id="mqtt---implementations" class="slide level2">
 <h2>MQTT - Implementations</h2>
@@ -428,7 +477,7 @@
 <li>Amazon IoT</li>
 <li>Google Cloud IoT</li>
 <li>Microsoft Azure IoT</li>
-<li>CloudMQTT</li>
+<li>CloudMQTT (at Heroku)</li>
 </ul></li>
 <li>DIY
 <ul>
