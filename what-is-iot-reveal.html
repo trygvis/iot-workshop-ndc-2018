@@ -29,6 +29,7 @@
   <![endif]-->
   
   
+  
 </head>
 <body>
   <div class="reveal">
@@ -76,7 +77,20 @@
 <li>Network bandwidth and/or latency</li>
 <li>Storage</li>
 </ul></li>
+<li>Connected
+<ul>
+<li>Bluetooth</li>
+<li>Wi-Fi</li>
+<li>NB-IoT</li>
+<li>LTE Cat-M <!-- --></li>
+<li>IR</li>
+<li>UART</li>
+<li>CAN</li>
+</ul></li>
 </ul>
+<aside class="notes">
+
+</aside>
 </section><section id="typical-iot-chips---bluetooth-45" class="slide level2">
 <h2>Typical IoT chips - Bluetooth 4/5</h2>
 <table>
@@ -272,9 +286,13 @@
 </aside>
 </section><section id="details-ip-1" class="slide level2">
 <h2>Details: IP</h2>
+
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
+
 </section></section>
-<section><section id="lecture-esp8266-aka-nodemcu-aka-esp-12" class="title-slide slide level1"><h1>Lecture: ESP8266 aka NodeMCU aka ESP-12</h1></section><section id="esp8266-software-layers" class="slide level2">
+<section><section id="lecture-esp8266" class="title-slide slide level1"><h1>Lecture: ESP8266</h1></section><section id="esp8266-software-layers" class="slide level2">
 <h2>ESP8266 software layers</h2>
+
 </section></section>
 <section><section id="lecture-mqtt" class="title-slide slide level1"><h1>Lecture: MQTT</h1></section><section id="mqtt" class="slide level2">
 <h2>MQTT</h2>
@@ -438,10 +456,9 @@
 </ul></li>
 <li><code>DISCONNECT</code></li>
 </ol>
-<p>…</p>
 <p>Broker</p>
 <ol type="1">
-<li><code>PUBLISH</code>
+<li><em>To all subscribers</em> <code>PUBLISH</code>
 <ul>
 <li><code>$app/$device/online</code></li>
 <li><code>0</code></li>
@@ -493,7 +510,6 @@
 </ul>
 </aside>
 </section></section>
-<section><section id="notes" class="title-slide slide level1"><h1>Notes</h1></section></section>
 <section><section id="assignments" class="title-slide slide level1"><h1>Assignments</h1></section><section id="assignment-1-blink-a-led" class="slide level2">
 <h2>Assignment 1: Blink a led</h2>
 </section><section id="assignment-2-connect-to-wi-fi" class="slide level2">

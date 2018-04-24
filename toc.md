@@ -19,7 +19,7 @@
     * Layer 7: Application Layer
     * Details: IP
     * Details: IP
-* Lecture: ESP8266 aka NodeMCU aka ESP-12
+* Lecture: ESP8266
     * ESP8266 software layers
 * Lecture: MQTT
     * MQTT
@@ -33,7 +33,6 @@
     * MQTT - Patterns
     * MQTT - Implementations
     * MQTT Cloud Connectors
-* Notes
 * Assignments
     * Assignment 1: Blink a led
     * Assignment 2: Connect to Wi-Fi

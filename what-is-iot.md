@@ -53,6 +53,21 @@ What differentiates a computer from an IoT device?
     * CPU
     * Network bandwidth and/or latency
     * Storage
+* Connected
+    * Bluetooth
+    * Wi-Fi
+    * NB-IoT
+    * LTE Cat-M
+<!-- -->
+    * IR
+    * UART
+    * CAN
+
+::: notes
+
+
+
+:::
 
 ## Typical IoT chips - Bluetooth 4/5
 

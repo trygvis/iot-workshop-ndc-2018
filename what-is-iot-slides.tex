@@ -77,7 +77,29 @@ What differentiates a computer from an IoT device?}
   \item
     Storage
   \end{itemize}
+\item
+  Connected
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Bluetooth
+  \item
+    Wi-Fi
+  \item
+    NB-IoT
+  \item
+    LTE Cat-M 
+  \item
+    IR
+  \item
+    UART
+  \item
+    CAN
+  \end{itemize}
 \end{itemize}
+
+\note{}
 
 \end{frame}
 
@@ -691,15 +713,13 @@ Client \#1:
   \texttt{DISCONNECT}
 \end{enumerate}
 
-\ldots{}
-
 Broker
 
 \begin{enumerate}
 [1.]
 \tightlist
 \item
-  \texttt{PUBLISH}
+  \emph{To all subscribers} \texttt{PUBLISH}
 
   \begin{itemize}
   \tightlist
@@ -798,9 +818,6 @@ releases at the same time.}
 \end{itemize}}
 
 \end{frame}
-
-\hypertarget{notes}{%
-\section{Notes}\label{notes}}
 
 \hypertarget{assignments}{%
 \section{Assignments}\label{assignments}}
