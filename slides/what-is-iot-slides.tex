@@ -373,6 +373,8 @@ The signaling does not specify any max data rate, very high rates
 \begin{frame}{Details: IP}
 \protect\hypertarget{details-ip}{}
 
+\includegraphics{images/ip-header.pdf}
+
 \note{Note that the “total length” field is 16 bits, 2 bytes, it’s
 maximum value is 64k, 65536.}
 
@@ -381,13 +383,149 @@ maximum value is 64k, 65536.}
 \begin{frame}{Details: IP}
 \protect\hypertarget{details-ip-1}{}
 
+\begin{center}
+\iffalse
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+\fi
+
+\begin{tikzpicture}[scale=0.30]
+    \sffamily
+    \foreach \x in {0,7,8,15,16,31} % {0,...,32}
+        \node at (\x+0.5,20.5) {\scriptsize \x};
+%   \foreach \x in {0,...,31}
+%       \node at (\x+0.5,13.5) {\scriptsize \x};
+    \foreach \x in {0,8,16,32} % {0,...,32}
+        \draw[thick] (\x,20) -- (\x,21);
+    \foreach \x in {0,...,32}
+        \draw[thick] (\x,14) -- (\x,20);
+%   \foreach \x in {0,...,32}
+%       \draw[thick] (\x,13) -- (\x,14);
+    \node[thick] (bit1) at (-0.6,20.5) {\scriptsize bit};
+%   \node[thick] (bit2) at (-0.6,13.5) {\scriptsize bit};
+        
+\iffalse
+    \draw [<->, thick] (-0.6, 19.9) -- (-0.6,15.1);
+    \draw [thick] (-1, 20) -- (-0.1,20);
+    \draw [thick] (-1, 15) -- (-0.1,15);
+    \node[fill=white] at (-1.1,17.5) {\tiny 20 bytes};
+\fi
+    \foreach \y/\v in {0,4,8,12,16,20}
+        \node at (-0.6,{19.5-(\v / 4)}) {\scriptsize \v};
+
+    \filldraw[thick,draw=black, fill=white] (0,20) rectangle (4,19); \node (mode) at (2,19.5) {\scriptsize version};
+    \filldraw[thick,draw=black, fill=white] (4,20) rectangle (8,19); \node (mode) at (6,19.5) {\scriptsize len};
+%   \draw[thick, draw=black, fill=white] (8,20) rectangle (16,19); \node (stratum) at (11.5,19.5) {\scriptsize type of service (TOS)};
+    \draw[thick, draw=black, fill=white] (8,20) rectangle (16,19); \node (stratum) at (11.5,19.5) {\scriptsize TOS};
+    \draw[thick, draw=black, fill=white] (16,20) rectangle (32,19); \node (li) at (24,19.5) {\scriptsize full length of packet};
+    \filldraw[thick,draw=black, fill=white] (0,19) rectangle (16,18); \node (mode) at (8,18.5) {\scriptsize identification};
+%   \draw[thick, draw=black] (16,19) rectangle (19,18); \filldraw[white] (16.5,18.43) rectangle (19,18.88); \node [](li) at (17.5,18.67) {\tiny IP flags}; \node at (16.5,18.25) {\tiny x};\node at (17.5,18.25) {\tiny D};\node at (18.5,18.25) {\tiny M};
+    \draw[thick, draw=black] (16,19) rectangle (19,18); \filldraw[white] (16.5,18.43) rectangle (19,18.88); \node at (16.5,18.5) {\scriptsize X};\node at (17.5,18.5) {\scriptsize D};\node at (18.5,18.5) {\scriptsize M};
+    \draw[thick, draw=black, fill=white] (19,19) rectangle (32,18); \node (li) at (24,18.5) {\scriptsize fragment Offset};
+    \filldraw[thick,draw=black, fill=white] (0,18) rectangle (8,17); \node (mode) at (4,17.5) {\scriptsize time to live (TTL)};
+    \draw[thick, draw=black, fill=white] (8,18) rectangle (16,17); \node (stratum) at (11.5,17.5) {\scriptsize protocol};
+    \draw[thick, draw=black, fill=white] (16,18) rectangle (32,17); \node (li) at (24,17.5) {\scriptsize header checksum};
+    \filldraw[thick,draw=black, fill=white] (0,17) rectangle (32,16); \node (mode) at (16,16.5) {\scriptsize source IP address};
+    \filldraw[thick,draw=black, fill=white] (0,16) rectangle (32,15); \node (mode) at (16,15.5) {\scriptsize destination IP address};
+    \draw[thick,draw=black, fill=white] (0,15) rectangle (31.5,14);
+    \draw[fill=white, draw=white] (31.4,14.96) rectangle (31.6,14.05);
+    \draw[thick]  (31.5,14.97)  decorate [decoration=saw] { -- (31.5,14.02)};
+    \node (mode) at (16,14.5) {\scriptsize IP options (variable length)};
+\end{tikzpicture}
+
+\end{center}
+
 \end{frame}
 
 \hypertarget{lecture-esp8266}{%
 \section{Lecture: ESP8266}\label{lecture-esp8266}}
 
+\begin{frame}{NodeMCU hardware}
+\protect\hypertarget{nodemcu-hardware}{}
+
+\includegraphics{images/NodeMCU-–-Board-de-desarrollo-con-módulo-ESP8266-WiFi-y-Lua-4.jpg}
+
+\end{frame}
+
+\begin{frame}{NodeMCU hardware}
+\protect\hypertarget{nodemcu-hardware-1}{}
+
+\begin{center}
+\begin{tikzpicture}
+
+\path
+    (0, 0) node(flash)[draw, rectangle, 
+    minimum height=1cm, minimum width=2cm] {Flash}
+
+    (0, 1.5) node(esp8266)[draw, rectangle, 
+    minimum height=1cm, minimum width=2cm] {ESP8266}
+
+    (3.5, 1.5) node(cp201x)[draw, rectangle, 
+    minimum height=0.75cm, minimum width=1cm]
+    {CP201x}
+
+    (5.5, 1.5) node(usb)[]
+    {USB}
+;
+
+\draw[-] (esp8266) -- node[node font=\footnotesize, right]{QSPI} (flash);
+\draw[-] (esp8266) -- node[node font=\footnotesize, above]{UART} (cp201x) -- (usb);
+
+\node[rectangle, draw, fit=(esp8266) (flash), inner sep=2 mm,
+    label={[name=esp12_label,anchor=south]ESP-12}]
+    (esp12){};
+
+\node[rectangle, draw, thick, fit=(esp12_label) (esp12) (cp201x), inner sep=3 mm,
+    label={[anchor=north]south:NodeMCU}]
+    (nodemcu){};
+
+\end{tikzpicture}
+
+\end{center}
+
+\end{frame}
+
 \begin{frame}{ESP8266 software layers}
 \protect\hypertarget{esp8266-software-layers}{}
+
+\begin{center}
+\begin{tikzpicture}
+
+\node (rect_hw) [rectangle, draw, anchor=south west,
+    minimum width=6 cm, minimum height=1 cm,
+    label={[anchor=south]center:ESP8266 Hardware}] at (0, 0) {};
+
+\draw[thick] (-0.5, 1.25) -- (6.5, 1.25) ;
+
+\node  [rectangle, draw, anchor=south west,
+    minimum width=4 cm, minimum height=1 cm,
+    label={[anchor=south]center:ESP SDK}] at (0, 1.5) {};
+
+\node [rectangle, draw, anchor=south west,
+    minimum width=2 cm, minimum height=1 cm,
+    label={[align=center, text width=1cm]center:GCC  libc}] at (4, 1.5) {};
+
+\node [rectangle, draw, anchor=south west,
+    minimum width=6 cm, minimum height=1 cm,
+    label={[anchor=south]center:ESP interface}] at (0, 2.5) {};
+
+\node [rectangle, draw, anchor=south west,
+    minimum width=2 cm, minimum height=1 cm,
+    label={[align=center, text width= 2cm]center:Generic Arduino}] at (0, 3.5) {};
+
+\node [rectangle, draw, anchor=south west,
+    minimum width=2 cm, minimum height=1 cm,
+    label={[align=center, text width= 2cm]center:Ethernet}] at (2, 3.5) {};
+
+\node [rectangle, draw, anchor=south west,
+    minimum width=2 cm, minimum height=1 cm,
+    label={[align=center, text width= 2cm]center:ESP APIs}] at (4, 3.5) {};
+
+\draw [decorate, decoration={brace,amplitude=5pt, raise=-4pt}] (-0.5,2.5) -- (-0.5,4.5) node [black,midway,rotate=90, above] {Arduino};
+
+
+\end{tikzpicture}
+
+\end{center}
 
 \end{frame}
 

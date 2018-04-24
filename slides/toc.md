@@ -20,6 +20,7 @@
     * Details: IP
     * Details: IP
 * Lecture: ESP8266
+    * NodeMCU hardware
     * ESP8266 software layers
 * Lecture: MQTT
     * MQTT

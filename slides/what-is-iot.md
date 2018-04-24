@@ -247,7 +247,11 @@ Note that the "total length" field is 16 bits, 2 bytes, it's maximum value is 64
 
 ## Details: IP
 
-!ifndef(QUICK)(!include(images/IP-Header_eng.tex))
+!ifndef(QUICK)(
+\begin{center}
+!include(images/IP-Header_eng.tex)
+\end{center}
+)
 
 !comment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -258,9 +262,27 @@ Note that the "total length" field is 16 bits, 2 bytes, it's maximum value is 64
 
 !comment(aka NodeMCU aka ESP-12)
 
+## NodeMCU hardware
+
+!ifndef(QUICK)(
+![](images/NodeMCU-–-Board-de-desarrollo-con-módulo-ESP8266-WiFi-y-Lua-4.jpg)
+)
+
+## NodeMCU hardware
+
+!ifndef(QUICK)(
+\begin{center}
+!include(images/nodemcu.pgf)
+\end{center}
+)
+
 ## ESP8266 software layers
 
-!ifndef(QUICK)(!include(images/esp+arduino-sdks.pgf))
+!ifndef(QUICK)(
+\begin{center}
+!include(images/esp+arduino-sdks.pgf)
+\end{center}
+)
 
 # Lecture: MQTT
 

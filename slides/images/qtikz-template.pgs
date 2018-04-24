@@ -1,12 +1,8 @@
+
 \documentclass[preview]{standalone}
 \usepackage{blindtext}
 \usepackage[utf8]{inputenc}
-
-\usepackage{fontspec}
-\setsansfont{Verdana}
-
 \usepackage{tikz}
-
 \usetikzlibrary{
   angles,
   arrows,
@@ -25,9 +21,9 @@
   shapes.symbols,
 }
 
+\usepackage{fontspec}
+\setsansfont{Verdana}
 \begin{document}
-
 <>
-
 \end{document}
 

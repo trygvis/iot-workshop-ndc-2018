@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+
+\path
+	(0, 0) node(flash)[draw, rectangle, 
+	minimum height=1cm, minimum width=2cm] {Flash}
+
+	(0, 1.5) node(esp8266)[draw, rectangle, 
+	minimum height=1cm, minimum width=2cm] {ESP8266}
+
+	(3.5, 1.5) node(cp201x)[draw, rectangle, 
+	minimum height=0.75cm, minimum width=1cm]
+	{CP201x}
+
+	(5.5, 1.5) node(usb)[]
+	{USB}
+;
+
+\draw[-] (esp8266) -- node[node font=\footnotesize, right]{QSPI} (flash);
+\draw[-] (esp8266) -- node[node font=\footnotesize, above]{UART} (cp201x) -- (usb);
+
+\node[rectangle, draw, fit=(esp8266) (flash), inner sep=2 mm,
+	label={[name=esp12_label,anchor=south]ESP-12}]
+	(esp12){};
+
+\node[rectangle, draw, thick, fit=(esp12_label) (esp12) (cp201x), inner sep=3 mm,
+	label={[anchor=north]south:NodeMCU}]
+	(nodemcu){};
+
+\end{tikzpicture}

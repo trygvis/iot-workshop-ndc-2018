@@ -34,8 +34,6 @@ toc.md: $(P).md
 
 spell: .$(P).md.spell
 
-.$(P).md.spell: $(P).md
-
 .%.spell: %
 	aspell --home-dir=. --personal=dictionary.txt --lang=en_US check $<
 	touch $@
@@ -43,8 +41,14 @@ spell: .$(P).md.spell
 $(P).md: Makefile
 	@touch $@
 
-%.beamer.md: %.md
+include $(P).beamer.md.d
+include $(P).revealjs.md.d
+
+%.beamer.md: %.md# %.beamer.md.d
 	$(RUN_PP_BEAMER) < $< > $@
+
+%.beamer.md.d: %.md
+	$(RUN_PP_BEAMER) -M $< < $< > $@
 
 %-text.pdf: %.beamer.md
 	$(RUN_PANDOC_TEXT) -o $@ $<
@@ -55,8 +59,11 @@ $(P).md: Makefile
 %-slides.tex: %.beamer.md .var/SLIDE_THEME
 	$(RUN_PANDOC_BEAMER) -o $@ $<
 
-%.revealjs.md: %.md
+%.revealjs.md: %.md# %.revealjs.md.d
 	$(RUN_PP_REVEALJS) < $< > $@
+
+%.revealjs.md.d: %.md
+	$(RUN_PP_REVEALJS) -M $< < $< > $@
 
 %-reveal.html: %.revealjs.md
 	$(RUN_PANDOC_REVEALJS) -o $@ $<
