@@ -53,38 +53,36 @@ What differentiates a computer from an IoT device?
     * CPU
     * Network bandwidth and/or latency
     * Storage
-* Connected
+* Has connectivity
     * Bluetooth
     * Wi-Fi
     * NB-IoT
     * LTE Cat-M
-<!-- -->
-    * IR
-    * UART
-    * CAN
+    * LoRA
+    * Proprietary radio
 
 ::: notes
 
+* IR
+* UART
+* CAN
 
+Sparkfun and Adafruit etc sell modules with all of these technologies.
 
 :::
 
-## Typical IoT chips - Bluetooth 4/5
+## IoT Devices - Bluetooth 4/5 chips
 
-!comment
-~~~
-~~~
 Chip     CPU      Freq RAM      Flash  Price
 -------- -------- ---- -------- ------ ------
 nRF52810 Cortex-M4 64 MHz    24k   192k  $1.88
-High performance, entry-level Bluetooth 4/ANT/2.4GHz SoC
-
 nRF52832 Cortex-M4F          32k   256k  $2.54
                              64k   512k  $2.59
-High performance Bluetooth 4/ANT/2.4GHz SoC
-
 nRF52840 Cortex-M4F         256k  1024k  $3.85
-Advanced multi-protocol System-on-Chip Supporting: Bluetooth 5, ANT/ANT+, 802.15.4 and 2.4GHz proprietary
+
+* nRF52810: High performance, entry-level Bluetooth 4/ANT/2.4GHz SoC
+* nRF52832: High performance Bluetooth 4/ANT/2.4GHz SoC
+* nRF52840: Advanced multi-protocol System-on-Chip Supporting: Bluetooth 5, ANT/ANT+, 802.15.4 and 2.4GHz proprietary
 
 ::: notes
 
@@ -96,9 +94,45 @@ nRF52832: these have different packagings, not only difference price
 
 https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?FV=1c0001%2Cffe0036f&quantity=3000&ColumnSort=1000011&page=1&k=nrf52832&pageSize=500&pkeyword=nrf52810
 
+nRF52810: High performance, entry-level Bluetooth 4/ANT/2.4GHz SoC
+nRF52832: High performance Bluetooth 4/ANT/2.4GHz SoC
+nRF52840: Advanced multi-protocol System-on-Chip Supporting: Bluetooth 5, ANT/ANT+, 802.15.4 and 2.4GHz proprietary
+
 :::
 
-## Typical IoT chips - Wi-Fi
+## IoT Devices - LoRA
+
+### Modules
+
+Module          Data Rate Price
+-----           --------- ------
+RN2483A-I/RM104           $12.05 @ 250
+CMWX1ZZABZ-078  SX1276    $10.74 @ 1000
+RF-LORA-868-SO  SX1272	  $16.55 @ 1000
+
+### Chips
+
+Chip            Price
+----            -------
+SX1281          $3.23
+SX1272          $4.25
+SX1276          $4.25
+SX1279          $4.74
+
+::: notes
+
+These modules require an external MCU, so does the chips.
+
+:::
+
+## IoT Devices - NB-IoT
+
+Module                         Price
+------                         -----
+uBlox SARA-N210                ~$10 @ 100
+Sierra Wireless HL7800_1103933 $15.72
+
+## IoT Devices - Wi-Fi
 
 Chip    CPU            Freq     ROM   RAM    Price
 -----   -------        -------  ----- ------ ------
@@ -305,7 +339,7 @@ Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke (før stand
 
 ## MQTT - The protocol
 
-Agents have one of two roles: 
+Agents have one of two roles:
 
 * *Client*
     * Publishes *messages*
@@ -500,6 +534,7 @@ In between are:
 # Assignments
 
 ## Assignment 1: Blink a led
+
 
 ## Assignment 2: Connect to Wi-Fi
 

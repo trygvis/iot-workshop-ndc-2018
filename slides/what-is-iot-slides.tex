@@ -78,7 +78,7 @@ What differentiates a computer from an IoT device?}
     Storage
   \end{itemize}
 \item
-  Connected
+  Has connectivity
 
   \begin{itemize}
   \tightlist
@@ -89,22 +89,30 @@ What differentiates a computer from an IoT device?}
   \item
     NB-IoT
   \item
-    LTE Cat-M 
+    LTE Cat-M
   \item
-    IR
+    LoRA
   \item
-    UART
-  \item
-    CAN
+    Proprietary radio
   \end{itemize}
 \end{itemize}
 
-\note{}
+\note{\begin{itemize}
+\tightlist
+\item
+  IR
+\item
+  UART
+\item
+  CAN
+\end{itemize}
+
+Sparkfun and Adafruit etc sell modules with all of these technologies.}
 
 \end{frame}
 
-\begin{frame}{Typical IoT chips - Bluetooth 4/5}
-\protect\hypertarget{typical-iot-chips---bluetooth-45}{}
+\begin{frame}{IoT Devices - Bluetooth 4/5 chips}
+\protect\hypertarget{iot-devices---bluetooth-45-chips}{}
 
 \begin{longtable}[]{@{}llllll@{}}
 \toprule
@@ -112,17 +120,22 @@ Chip & CPU & Freq & RAM & Flash & Price\tabularnewline
 \midrule
 \endhead
 nRF52810 & Cortex-M4 & 64 M & Hz 24k & 192k & \$1.88\tabularnewline
-High perf & ormance, & entry & -level Bl & uetooth & 4/ANT/2.4GHz
-SoC\tabularnewline
+nRF52832 & Cortex-M4 & F & 32k & 256k & \$2.54\tabularnewline
+& & & 64k & 512k & \$2.59\tabularnewline
+nRF52840 & Cortex-M4 & F & 256k & 1024k & \$3.85\tabularnewline
 \bottomrule
 \end{longtable}
 
-nRF52832 Cortex-M4F 32k 256k \$2.54 64k 512k \$2.59 High performance
-Bluetooth 4/ANT/2.4GHz SoC
-
-nRF52840 Cortex-M4F 256k 1024k \$3.85 Advanced multi-protocol
-System-on-Chip Supporting: Bluetooth 5, ANT/ANT+, 802.15.4 and 2.4GHz
-proprietary
+\begin{itemize}
+\tightlist
+\item
+  nRF52810: High performance, entry-level Bluetooth 4/ANT/2.4GHz SoC
+\item
+  nRF52832: High performance Bluetooth 4/ANT/2.4GHz SoC
+\item
+  nRF52840: Advanced multi-protocol System-on-Chip Supporting: Bluetooth
+  5, ANT/ANT+, 802.15.4 and 2.4GHz proprietary
+\end{itemize}
 
 \note{All quantities are 1000 pieces
 
@@ -131,12 +144,70 @@ https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?k=nrf51
 
 nRF52832: these have different packagings, not only difference price
 
-https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?FV=1c0001\%2Cffe0036f\&quantity=3000\&ColumnSort=1000011\&page=1\&k=nrf52832\&pageSize=500\&pkeyword=nrf52810}
+https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?FV=1c0001\%2Cffe0036f\&quantity=3000\&ColumnSort=1000011\&page=1\&k=nrf52832\&pageSize=500\&pkeyword=nrf52810
+
+nRF52810: High performance, entry-level Bluetooth 4/ANT/2.4GHz SoC
+nRF52832: High performance Bluetooth 4/ANT/2.4GHz SoC nRF52840: Advanced
+multi-protocol System-on-Chip Supporting: Bluetooth 5, ANT/ANT+,
+802.15.4 and 2.4GHz proprietary}
 
 \end{frame}
 
-\begin{frame}{Typical IoT chips - Wi-Fi}
-\protect\hypertarget{typical-iot-chips---wi-fi}{}
+\begin{frame}{IoT Devices - LoRA}
+\protect\hypertarget{iot-devices---lora}{}
+
+\begin{block}{Modules}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+Module & Data Rate & Price\tabularnewline
+\midrule
+\endhead
+RN2483A-I/RM104 & & \$12.05 @ 250\tabularnewline
+CMWX1ZZABZ-078 & SX1276 & \$10.74 @ 1000\tabularnewline
+RF-LORA-868-SO & SX1272 & \$16.55 @ 1000\tabularnewline
+\bottomrule
+\end{longtable}
+
+\end{block}
+
+\begin{block}{Chips}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Chip & Price\tabularnewline
+\midrule
+\endhead
+SX1281 & \$3.23\tabularnewline
+SX1272 & \$4.25\tabularnewline
+SX1276 & \$4.25\tabularnewline
+SX1279 & \$4.74\tabularnewline
+\bottomrule
+\end{longtable}
+
+\note{These modules require an external MCU, so does the chips.}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}{IoT Devices - NB-IoT}
+\protect\hypertarget{iot-devices---nb-iot}{}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Module & Price\tabularnewline
+\midrule
+\endhead
+uBlox SARA-N210 & \textasciitilde{}\$10 @ 100\tabularnewline
+Sierra Wireless HL7800\_1103933 & \$15.72\tabularnewline
+\bottomrule
+\end{longtable}
+
+\end{frame}
+
+\begin{frame}{IoT Devices - Wi-Fi}
+\protect\hypertarget{iot-devices---wi-fi}{}
 
 \begin{longtable}[]{@{}llllll@{}}
 \toprule
@@ -962,6 +1033,8 @@ releases at the same time.}
 
 \begin{frame}{Assignment 1: Blink a led}
 \protect\hypertarget{assignment-1-blink-a-led}{}
+
+\includegraphics{../arduino/assignment-1/solution/assignment-1_bb.pdf}
 
 \end{frame}
 

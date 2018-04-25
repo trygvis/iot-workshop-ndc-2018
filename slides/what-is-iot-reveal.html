@@ -40,7 +40,16 @@
   <p class="author">Trygve Laugstøl &lt;trygvis@trygvis.io&gt;</p>
 </section>
 
-<section><section id="what-is-iot" class="title-slide slide level1"><h1>What is IoT</h1></section><section id="what-is-iot-1" class="slide level2">
+<section><section id="what-is-iot" class="title-slide slide level1"><h1>What is IoT</h1></section><section id="wat-png" class="slide level2">
+<h2>wat png</h2>
+<p><img data-src="/home/trygvis/Dokumenter/Fritzing/bins/Untitled%20Sketch_bb.png" /></p>
+</section><section id="wat-pdf" class="slide level2">
+<h2>wat pdf</h2>
+<p><embed data-src="/home/trygvis/Dokumenter/Fritzing/bins/Untitled%20Sketch_bb.pdf" /></p>
+</section><section id="wat-svg" class="slide level2">
+<h2>wat svg</h2>
+<p><img data-src="/home/trygvis/Dokumenter/Fritzing/bins/Untitled%20Sketch_bb.svg" /></p>
+</section><section id="what-is-iot-1" class="slide level2">
 <h2>What is IoT</h2>
 <ul>
 <li>Not “a computer connected to the internet”
@@ -77,22 +86,26 @@
 <li>Network bandwidth and/or latency</li>
 <li>Storage</li>
 </ul></li>
-<li>Connected
+<li>Has connectivity
 <ul>
 <li>Bluetooth</li>
 <li>Wi-Fi</li>
 <li>NB-IoT</li>
-<li>LTE Cat-M <!-- --></li>
-<li>IR</li>
-<li>UART</li>
-<li>CAN</li>
+<li>LTE Cat-M</li>
+<li>LoRA</li>
+<li>Proprietary radio</li>
 </ul></li>
 </ul>
 <aside class="notes">
-
+<ul>
+<li>IR</li>
+<li>UART</li>
+<li>CAN</li>
+</ul>
+<p>Sparkfun and Adafruit etc sell modules with all of these technologies.</p>
 </aside>
-</section><section id="typical-iot-chips---bluetooth-45" class="slide level2">
-<h2>Typical IoT chips - Bluetooth 4/5</h2>
+</section><section id="iot-devices---bluetooth-45-chips" class="slide level2">
+<h2>IoT Devices - Bluetooth 4/5 chips</h2>
 <table>
 <thead>
 <tr class="header">
@@ -114,25 +127,124 @@
 <td style="text-align: left;">$1.88</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">High perf</td>
-<td style="text-align: left;">ormance,</td>
-<td>entry</td>
-<td style="text-align: left;">-level Bl</td>
-<td style="text-align: left;">uetooth</td>
-<td style="text-align: left;">4/ANT/2.4GHz SoC</td>
+<td style="text-align: left;">nRF52832</td>
+<td style="text-align: left;">Cortex-M4</td>
+<td>F</td>
+<td style="text-align: left;">32k</td>
+<td style="text-align: left;">256k</td>
+<td style="text-align: left;">$2.54</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td></td>
+<td style="text-align: left;">64k</td>
+<td style="text-align: left;">512k</td>
+<td style="text-align: left;">$2.59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nRF52840</td>
+<td style="text-align: left;">Cortex-M4</td>
+<td>F</td>
+<td style="text-align: left;">256k</td>
+<td style="text-align: left;">1024k</td>
+<td style="text-align: left;">$3.85</td>
 </tr>
 </tbody>
 </table>
-<p>nRF52832 Cortex-M4F 32k 256k $2.54 64k 512k $2.59 High performance Bluetooth 4/ANT/2.4GHz SoC</p>
-<p>nRF52840 Cortex-M4F 256k 1024k $3.85 Advanced multi-protocol System-on-Chip Supporting: Bluetooth 5, ANT/ANT+, 802.15.4 and 2.4GHz proprietary</p>
+<ul>
+<li>nRF52810: High performance, entry-level Bluetooth 4/ANT/2.4GHz SoC</li>
+<li>nRF52832: High performance Bluetooth 4/ANT/2.4GHz SoC</li>
+<li>nRF52840: Advanced multi-protocol System-on-Chip Supporting: Bluetooth 5, ANT/ANT+, 802.15.4 and 2.4GHz proprietary</li>
+</ul>
 <aside class="notes">
 <p>All quantities are 1000 pieces</p>
 <p>nRF51: https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?k=nrf51822</p>
 <p>nRF52832: these have different packagings, not only difference price</p>
 <p>https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?FV=1c0001%2Cffe0036f&amp;quantity=3000&amp;ColumnSort=1000011&amp;page=1&amp;k=nrf52832&amp;pageSize=500&amp;pkeyword=nrf52810</p>
+<p>nRF52810: High performance, entry-level Bluetooth 4/ANT/2.4GHz SoC nRF52832: High performance Bluetooth 4/ANT/2.4GHz SoC nRF52840: Advanced multi-protocol System-on-Chip Supporting: Bluetooth 5, ANT/ANT+, 802.15.4 and 2.4GHz proprietary</p>
 </aside>
-</section><section id="typical-iot-chips---wi-fi" class="slide level2">
-<h2>Typical IoT chips - Wi-Fi</h2>
+</section><section id="iot-devices---lora" class="slide level2">
+<h2>IoT Devices - LoRA</h2>
+<h3 id="modules">Modules</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Module</th>
+<th>Data Rate</th>
+<th style="text-align: left;">Price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RN2483A-I/RM104</td>
+<td></td>
+<td style="text-align: left;">$12.05 @ 250</td>
+</tr>
+<tr class="even">
+<td>CMWX1ZZABZ-078</td>
+<td>SX1276</td>
+<td style="text-align: left;">$10.74 @ 1000</td>
+</tr>
+<tr class="odd">
+<td>RF-LORA-868-SO</td>
+<td>SX1272</td>
+<td style="text-align: left;">$16.55 @ 1000</td>
+</tr>
+</tbody>
+</table>
+<h3 id="chips">Chips</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Chip</th>
+<th style="text-align: left;">Price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SX1281</td>
+<td style="text-align: left;">$3.23</td>
+</tr>
+<tr class="even">
+<td>SX1272</td>
+<td style="text-align: left;">$4.25</td>
+</tr>
+<tr class="odd">
+<td>SX1276</td>
+<td style="text-align: left;">$4.25</td>
+</tr>
+<tr class="even">
+<td>SX1279</td>
+<td style="text-align: left;">$4.74</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>These modules require an external MCU, so does the chips.</p>
+</aside>
+</section><section id="iot-devices---nb-iot" class="slide level2">
+<h2>IoT Devices - NB-IoT</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Module</th>
+<th>Price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>uBlox SARA-N210</td>
+<td>~$10 @ 100</td>
+</tr>
+<tr class="even">
+<td>Sierra Wireless HL7800_1103933</td>
+<td>$15.72</td>
+</tr>
+</tbody>
+</table>
+</section><section id="iot-devices---wi-fi" class="slide level2">
+<h2>IoT Devices - Wi-Fi</h2>
 <table>
 <thead>
 <tr class="header">
@@ -289,6 +401,9 @@
 
 </section></section>
 <section><section id="lecture-esp8266" class="title-slide slide level1"><h1>Lecture: ESP8266</h1></section><section id="nodemcu-hardware" class="slide level2">
+<h2>NodeMCU hardware</h2>
+<p><img data-src="images/NodeMCU-–-Board-de-desarrollo-con-módulo-ESP8266-WiFi-y-Lua-4.jpg" /></p>
+</section><section id="nodemcu-hardware-1" class="slide level2">
 <h2>NodeMCU hardware</h2>
 
 </section><section id="esp8266-software-layers" class="slide level2">
