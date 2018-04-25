@@ -63,6 +63,12 @@ What differentiates a computer from an IoT device?
 
 ::: notes
 
+Might not have:
+
+* RTC
+
+Extra features:
+
 * IR
 * UART
 * CAN
@@ -168,10 +174,6 @@ The ESP8266's RAM depends on which firmware stack is used. Physical is probably 
 Datasheet page 18
 
 :::
-
-## ESP8266 details - Arduino
-
-https://github.com/esp8266/Arduino
 
 # Going back to basics
 
@@ -317,6 +319,73 @@ Note that the "total length" field is 16 bits, 2 bytes, it's maximum value is 64
 !include(images/esp+arduino-sdks.pgf)
 \end{center}
 )
+
+## ESP8266 + Arduino
+
+* Standard Arduino IDE
+* ESP8266 Arduino core
+    * https://github.com/esp8266/Arduino
+
+## Arduino IDE
+
+!ifndef(QUICK)(
+![](images/arduino-ide.png)
+)
+
+## Arduino code structure
+
+~~~ .c++
+void setup() {
+    // Called once
+}
+
+void loop() {
+    // Called repeatedly
+}
+~~~
+
+::: notes
+
+MCU programming is often structured into:
+
+* Configure
+    * CPU
+    * GPIO ports
+    * MCU's peripherals
+    * The rest of the board
+    * Configure application and callbacks.
+* Sleep
+
+Arduino chooses to run the cpu at 100% instead of the sleep step..
+
+:::
+
+## Arduino file structure
+
+    foo/
+      foo.ino
+      config.h
+
+::: notes
+
+`foo.ino` must always be in a `foo` directory.
+
+config.h is created by "new tab".
+
+:::
+
+## Generic Arduino APIs
+
+// Pin: D0, D1, etc.
+// Mode: OUTPUT, INPUT, INPUT_PULLUP
+
+~~~c++
+pinMode(pin, mode);
+
+digitalWrite(pin, state);
+
+state = digitalRead(pin);
+~~~
 
 # Lecture: MQTT
 
@@ -534,7 +603,6 @@ In between are:
 # Assignments
 
 ## Assignment 1: Blink a led
-
 
 ## Assignment 2: Connect to Wi-Fi
 

@@ -1,5 +1,13 @@
-AS=01-blink-a-led
+AS=blink-a-led
 
-BASEDIR=$(CURDIR)
+PDFS=$(foreach A,$(AS),$(A)/$(A).pdf)
 
-include $(patsubst %,%/Makefile,$(AS))
+all: README.pdf $(PDFS)
+
+README.pdf: README.md
+$(eval $(foreach A,$(AS),$(A)/$(A).pdf: $(A)/$(A).md))
+
+%.pdf: %.md
+	cd $(dir $<); pandoc $(notdir $<) -o $(notdir $@)
+
+#$(patsubst )/%,%,$<) -o $(patsubst $(DIR)/%,%,$@)

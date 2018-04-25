@@ -1,8 +1,0 @@
-all: $(DIR)/$(A).pdf
-
-$(DIR)/$(A).pdf: $(DIR)/$(A).md
-	@echo pandoc $(A).md
-	@cd $(DIR); pandoc $(patsubst $(DIR)/%,%,$<) -o $(patsubst $(DIR)/%,%,$@)
-
-clean:
-	@rm -f $(DIR)/$(A).pdf

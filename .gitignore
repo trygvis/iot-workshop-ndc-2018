@@ -1,0 +1,14 @@
+.*
+!.gitignore
+*.bak
+*~
+
+*.log
+*.aux
+*.d
+
+env
+config.h
+
+*.beamer.md*
+*.revealjs.md*
