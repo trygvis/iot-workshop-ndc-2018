@@ -105,6 +105,107 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <p class="author">Trygve Laugstøl &lt;trygvis@trygvis.io&gt;</p>
 </section>
 
+<section><section id="nodemcu" class="title-slide slide level1"><h1>NodeMCU</h1></section><section id="nodemcu-hardware" class="slide level2">
+<h2>NodeMCU hardware</h2>
+<p><img data-src="images/NodeMCU-–-Board-de-desarrollo-con-módulo-ESP8266-WiFi-y-Lua-4.jpg" /></p>
+</section><section id="nodemcu-hardware-1" class="slide level2">
+<h2>NodeMCU hardware</h2>
+
+</section><section id="esp8266-software-layers" class="slide level2">
+<h2>ESP8266 software layers</h2>
+
+</section><section id="esp8266-arduino" class="slide level2">
+<h2>ESP8266 + Arduino</h2>
+<ul>
+<li>Standard Arduino IDE</li>
+<li>ESP8266 Arduino core
+<ul>
+<li>https://github.com/esp8266/Arduino</li>
+</ul></li>
+</ul>
+</section><section id="arduino-ide" class="slide level2">
+<h2>Arduino IDE</h2>
+<p><img data-src="images/arduino-ide.png" /></p>
+</section><section id="arduino-code-structure" class="slide level2">
+<h2>Arduino code structure</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode .c++"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="dt">void</span> setup() {</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="co">// Called once</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="dt">void</span> loop() {</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="co">// Called repeatedly</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">}</a></code></pre></div>
+<aside class="notes">
+<p>MCU programming is often structured into:</p>
+<ul>
+<li>Configure
+<ul>
+<li>CPU</li>
+<li>GPIO ports</li>
+<li>MCU’s peripherals</li>
+<li>The rest of the board</li>
+<li>Configure application and callbacks.</li>
+</ul></li>
+<li>Sleep</li>
+</ul>
+<p>Arduino chooses to run the cpu at 100% instead of the sleep step..</p>
+</aside>
+</section><section id="arduino-file-structure" class="slide level2">
+<h2>Arduino file structure</h2>
+<pre><code>foo/
+  foo.ino
+  config.h</code></pre>
+<aside class="notes">
+<p><code>foo.ino</code> must always be in a <code>foo</code> directory.</p>
+<p>config.h is created by “new tab”.</p>
+</aside>
+</section><section id="generic-arduino-apis" class="slide level2">
+<h2>Generic Arduino APIs</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">// Pin: D0, D1, etc.</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">// Mode: OUTPUT, INPUT, INPUT_PULLUP</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="dt">void</span> pinMode(<span class="dt">uint8_t</span> pin, <span class="dt">uint8_t</span> mode);</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">// State: HIGH, LOW, true/false, 1/0</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="dt">void</span> digitalWrite(<span class="dt">uint8_t</span> pin, <span class="dt">uint8_t</span> state);</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="dt">int</span> digitalRead(<span class="dt">uint8_t</span> pin);</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="dt">unsigned</span> <span class="dt">long</span> now millis();</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="dt">unsigned</span> <span class="dt">long</span> now micros();</a></code></pre></div>
+</section><section id="esp-arduino-apis" class="slide level2">
+<h2>ESP Arduino APIs</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">class</span> {</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="dt">void</span> restart();</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="dt">uint32_t</span> getFreeHeap();</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="dt">uint32_t</span> getChipId();</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">    ...</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">} ESP;</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">// Usage</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">ESP.restart();</a></code></pre></div>
+</section><section id="esp-arduino-apis-1" class="slide level2">
+<h2>ESP Arduino APIs</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">class</span> {</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">    String macAddress();</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">    <span class="dt">wl_status_t</span> status();</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="dt">int32_t</span> RSSI();</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">    IPAddress localIP();</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">    IPAddress subnetMask();</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">    IPAddress gatewayIP();</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">    IPAddress dnsIP(<span class="dt">uint8_t</span> dns_no = <span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">    ...</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">} WiFi;</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">// Usage:</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">Serial.println(WiFi.localIP().toString());</a></code></pre></div>
+<aside class="notes">
+<p>http://arduino-esp8266.readthedocs.io/en/latest/libraries.html</p>
+</aside>
+</section></section>
 <section><section id="what-is-iot" class="title-slide slide level1"><h1>What is IoT</h1></section><section id="what-is-iot-1" class="slide level2">
 <h2>What is IoT</h2>
 <ul>
@@ -455,108 +556,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section><section id="details-udp" class="slide level2">
 <h2>Details: UDP</h2>
 
-<p>TODO: add payload to “ip packets”</p>
-</section></section>
-<section><section id="lecture-esp8266" class="title-slide slide level1"><h1>Lecture: ESP8266</h1></section><section id="nodemcu-hardware" class="slide level2">
-<h2>NodeMCU hardware</h2>
-<p><img data-src="images/NodeMCU-–-Board-de-desarrollo-con-módulo-ESP8266-WiFi-y-Lua-4.jpg" /></p>
-</section><section id="nodemcu-hardware-1" class="slide level2">
-<h2>NodeMCU hardware</h2>
-
-</section><section id="esp8266-software-layers" class="slide level2">
-<h2>ESP8266 software layers</h2>
-
-</section><section id="esp8266-arduino" class="slide level2">
-<h2>ESP8266 + Arduino</h2>
-<ul>
-<li>Standard Arduino IDE</li>
-<li>ESP8266 Arduino core
-<ul>
-<li>https://github.com/esp8266/Arduino</li>
-</ul></li>
-</ul>
-</section><section id="arduino-ide" class="slide level2">
-<h2>Arduino IDE</h2>
-<p><img data-src="images/arduino-ide.png" /></p>
-</section><section id="arduino-code-structure" class="slide level2">
-<h2>Arduino code structure</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode .c++"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="dt">void</span> setup() {</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="co">// Called once</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="dt">void</span> loop() {</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="co">// Called repeatedly</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">}</a></code></pre></div>
-<aside class="notes">
-<p>MCU programming is often structured into:</p>
-<ul>
-<li>Configure
-<ul>
-<li>CPU</li>
-<li>GPIO ports</li>
-<li>MCU’s peripherals</li>
-<li>The rest of the board</li>
-<li>Configure application and callbacks.</li>
-</ul></li>
-<li>Sleep</li>
-</ul>
-<p>Arduino chooses to run the cpu at 100% instead of the sleep step..</p>
-</aside>
-</section><section id="arduino-file-structure" class="slide level2">
-<h2>Arduino file structure</h2>
-<pre><code>foo/
-  foo.ino
-  config.h</code></pre>
-<aside class="notes">
-<p><code>foo.ino</code> must always be in a <code>foo</code> directory.</p>
-<p>config.h is created by “new tab”.</p>
-</aside>
-</section><section id="generic-arduino-apis" class="slide level2">
-<h2>Generic Arduino APIs</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">// Pin: D0, D1, etc.</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">// Mode: OUTPUT, INPUT, INPUT_PULLUP</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="dt">void</span> pinMode(<span class="dt">uint8_t</span> pin, <span class="dt">uint8_t</span> mode);</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">// State: HIGH, LOW, true/false, 1/0</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="dt">void</span> digitalWrite(<span class="dt">uint8_t</span> pin, <span class="dt">uint8_t</span> state);</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="dt">int</span> digitalRead(<span class="dt">uint8_t</span> pin);</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="dt">unsigned</span> <span class="dt">long</span> now millis();</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="dt">unsigned</span> <span class="dt">long</span> now micros();</a></code></pre></div>
-</section><section id="esp-arduino-apis" class="slide level2">
-<h2>ESP Arduino APIs</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">class</span> {</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="dt">void</span> restart();</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="dt">uint32_t</span> getFreeHeap();</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="dt">uint32_t</span> getChipId();</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">    ...</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">} ESP;</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">// Usage</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">ESP.restart();</a></code></pre></div>
-</section><section id="esp-arduino-apis-1" class="slide level2">
-<h2>ESP Arduino APIs</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">class</span> {</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">    String macAddress();</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">    <span class="dt">wl_status_t</span> status();</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="dt">int32_t</span> RSSI();</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">    IPAddress localIP();</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">    IPAddress subnetMask();</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">    IPAddress gatewayIP();</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">    IPAddress dnsIP(<span class="dt">uint8_t</span> dns_no = <span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">    ...</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">} WiFi;</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">// Usage:</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">Serial.println(WiFi.localIP().toString());</a></code></pre></div>
-<aside class="notes">
-<p>http://arduino-esp8266.readthedocs.io/en/latest/libraries.html</p>
-</aside>
 </section></section>
 <section><section id="lecture-mqtt" class="title-slide slide level1"><h1>Lecture: MQTT</h1></section><section id="mqtt" class="slide level2">
 <h2>MQTT</h2>
@@ -570,6 +569,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Has UDP-like semantics with “fire and forget” but on a higher level (the message always have to be delivered and ACKed by the broker, not it’s final recipient.</p>
 <p>Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke (før standardisering).</p>
 </aside>
+</section><section id="device-and-application-architecture-with-mqtt" class="slide level2">
+<h2>Device and application architecture with MQTT</h2>
+
 </section><section id="mqtt---implementations" class="slide level2">
 <h2>MQTT - Implementations</h2>
 <ul>
@@ -647,9 +649,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Only packet type + flags (1 byte) is required, everything else is optional.</p>
 <p>The size field is variable length encoded, 0-127 bytes is 1 byte, 128-16383 use 2 bytes etc, up to 4 bytes for 256MB payload.</p>
 </aside>
-</section><section id="mqtt---the-protocol---keep-alive" class="slide level2">
-<h2>MQTT - The protocol - Keep alive</h2>
-<p>TODO</p>
+</section><section id="mqtt-connect" class="slide level2">
+<h2>MQTT Connect</h2>
+<ul>
+<li><code>CONNECT</code>
+<ul>
+<li><code>clientId</code></li>
+<li><code>username</code></li>
+<li><code>password</code></li>
+<li><code>keepAlive</code></li>
+</ul></li>
+</ul>
+<!-- -->
+<ul>
+<li>Keep alive
+<ul>
+<li><code>PINGREQ</code></li>
+<li><code>PINGRESP</code></li>
+</ul></li>
+</ul>
 </section><section id="mqtt---the-protocol---mqtt-topic" class="slide level2">
 <h2>MQTT - The protocol - MQTT Topic</h2>
 <ul>
@@ -713,12 +731,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>0</code></li>
 </ul></li>
 </ol>
-</section><section id="mqtt---the-protocol---client-id" class="slide level2">
-<h2>MQTT - The protocol - Client id</h2>
-<p>TODO</p>
-</section><section id="device-and-application-architecture-with-mqtt" class="slide level2">
-<h2>Device and application architecture with MQTT</h2>
-
 </section><section id="mqtt-topic" class="slide level2">
 <h2>MQTT Topic</h2>
 <p>The temperature sensor:</p>
@@ -806,9 +818,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>myapp/$device-id/command</code></li>
 </ul></li>
 </ul>
-<aside class="notes">
+</section><section id="mqtt-topic-architecture-1" class="slide level2">
+<h2>MQTT topic architecture</h2>
 
-</aside>
+</section><section id="mqtt-topic-architecture-2" class="slide level2">
+<h2>MQTT topic architecture</h2>
+
 </section><section id="mqtt---patterns" class="slide level2">
 <h2>MQTT - Patterns</h2>
 <ul>

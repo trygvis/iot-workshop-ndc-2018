@@ -16,10 +16,10 @@ endef
 $(eval $(foreach A,$(AS),$(call $(A_PATTERN),$(A))))
 
 clean:
-	@rm $(wildcard $(PDFS))
+	@rm -f $(wildcard $(PDFS))
 
 %.pdf: %.md
 	@echo pandoc $<
-	@cd $(dir $<); pandoc $(notdir $<) -o $(notdir $@)
+	@pandoc --resource-path=$(dir $<) -f markdown -o $@ < $<
 
 #$(patsubst )/%,%,$<) -o $(patsubst $(DIR)/%,%,$@)

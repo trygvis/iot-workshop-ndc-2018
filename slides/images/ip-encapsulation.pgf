@@ -1,0 +1,25 @@
+\begin{tikzpicture}[
+mybox/.style={
+	draw,
+	rectangle,
+	minimum height=1 cm,
+	anchor=west,
+	align=center,
+	font=\bfseries}
+]
+
+%\draw (0,0) rectangle (3cm, 1cm) {wat};
+
+\node at (0 cm, 0 cm) [mybox, minimum width=2cm, text width=1.7cm] {Frame header};
+\node at (2 cm, 0 cm) [mybox, minimum width=6cm] {Frame data};
+\node at (8 cm, 0 cm) [mybox, minimum width=2cm, text width=1.7cm] {Frame footer};
+
+\node at (2 cm, 1.1 cm) [mybox, minimum width=2cm] {IP header};
+\node at (4 cm, 1.1 cm) [mybox, minimum width=4cm] {IP Data};
+
+\node at (4 cm, 2.2 cm) [mybox, minimum width=2cm, text width=1.7 cm] {UDP header};
+\node at (6 cm, 2.2 cm) [mybox, minimum width=2cm, text width=1.7 cm] {UDP Data};
+
+\node at (6 cm, 3.3 cm) [mybox, minimum width=2cm, text width=1.7 cm] {Data};
+
+\end{tikzpicture}

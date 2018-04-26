@@ -15,6 +15,144 @@ header-includes:
 
 ---
 
+# NodeMCU
+
+!comment(aka NodeMCU aka ESP-12)
+
+## NodeMCU hardware
+
+!ifndef(QUICK)(
+![](images/NodeMCU-–-Board-de-desarrollo-con-módulo-ESP8266-WiFi-y-Lua-4.jpg)
+)
+
+## NodeMCU hardware
+
+!ifndef(QUICK)(
+\begin{center}
+!include(images/nodemcu.pgf)
+\end{center}
+)
+
+## ESP8266 software layers
+
+!ifndef(QUICK)(
+\begin{center}
+!include(images/esp+arduino-sdks.pgf)
+\end{center}
+)
+
+## ESP8266 + Arduino
+
+* Standard Arduino IDE
+* ESP8266 Arduino core
+    * https://github.com/esp8266/Arduino
+
+## Arduino IDE
+
+!ifndef(QUICK)(
+![](images/arduino-ide.png)
+)
+
+## Arduino code structure
+
+~~~ .c++
+void setup() {
+    // Called once
+}
+
+void loop() {
+    // Called repeatedly
+}
+~~~
+
+::: notes
+
+MCU programming is often structured into:
+
+* Configure
+    * CPU
+    * GPIO ports
+    * MCU's peripherals
+    * The rest of the board
+    * Configure application and callbacks.
+* Sleep
+
+Arduino chooses to run the cpu at 100% instead of the sleep step..
+
+:::
+
+## Arduino file structure
+
+    foo/
+      foo.ino
+      config.h
+
+::: notes
+
+`foo.ino` must always be in a `foo` directory.
+
+config.h is created by "new tab".
+
+:::
+
+## Generic Arduino APIs
+
+~~~c++
+// Pin: D0, D1, etc.
+// Mode: OUTPUT, INPUT, INPUT_PULLUP
+void pinMode(uint8_t pin, uint8_t mode);
+
+// State: HIGH, LOW, true/false, 1/0
+void digitalWrite(uint8_t pin, uint8_t state);
+int digitalRead(uint8_t pin);
+
+unsigned long now millis();
+unsigned long now micros();
+~~~
+
+## ESP Arduino APIs
+
+~~~c++
+class {
+    void restart();
+    uint32_t getFreeHeap();
+    uint32_t getChipId();
+
+    ...
+} ESP;
+
+// Usage
+ESP.restart();
+~~~
+
+## ESP Arduino APIs
+
+~~~c++
+class {
+    String macAddress();
+
+    wl_status_t status();
+    int32_t RSSI();
+
+    IPAddress localIP();
+    IPAddress subnetMask();
+    IPAddress gatewayIP();
+    IPAddress dnsIP(uint8_t dns_no = 0);
+
+    ...
+} WiFi;
+
+// Usage:
+
+Serial.println(WiFi.localIP().toString());
+~~~
+
+::: notes
+
+http://arduino-esp8266.readthedocs.io/en/latest/libraries.html
+
+:::
+
 # What is IoT
 
 ## What is IoT
@@ -179,31 +317,28 @@ Datasheet page 18
 
 ## What is the internet again?
 
-## OSI model
+## TCP/IP Layers
 
-1. Physical Layer
-1. Data Link Layer
-1. Network Layer
-1. Transport Layer
-1. Session Layer
-1. Presentation Layer
-1. Application Layer
+!ifndef(QUICK)(
+\begin{center}
+!include(images/tcpip.pgf)
+\end{center}
+)
 
+## Packet encapsulation
 
-* [Wikipedia: OSI model](https://en.wikipedia.org/wiki/OSI_model)
-* [Wikipedia: OSI model#Examples](https://en.wikipedia.org/wiki/OSI_model#Examples)
+!ifndef(QUICK)(
+\begin{center}
+!include(images/ip-encapsulation.pgf)
+\end{center}
+)
 
-::: notes
+## Network interface
 
-Does not match the TCP/IP stack very closely.
-
-:::
-
-## Layer 1: Physical Layer
-
-* 10BASE5, 10BASE2
-* 10BASE-T / 100BASE-TX / 1000BASE-TX
-* 802.11a/b/g/n PHY
+* Ethernet
+    * 10BASE5, 10BASE2, 10BASE-T / 100BASE-TX / 1000BASE-TX
+* Wi-Fi
+    * 802.11a/b/g/n
 * RS-232
 
 ::: notes
@@ -222,39 +357,17 @@ levels. The signaling does not specify any max data rate, very high rates
 
 :::
 
-
-## Layer 2: Data Link Layer
-
-* Ethernet
-* WiFi
-* Bluetooth
-* Token Ring
-
-## Layer 3: Network Layer
+## Internet
 
 * IP
 * ICMP
-* IPX
 
-## Layer 4: Transport Layer
+## Transport
 
 * TCP
 * UDP
-
-## Layer 5: Session Layer
-
-* "sockets"
-* NetBIOS
-
-## Layer 6: Presentation Layer
-
-* SSL
-
-::: notes
-
-This layer is not really much used in the IP stack
-
-:::
+* SCTP
+* QUIC
 
 ## Layer 7: Application Layer
 
@@ -299,144 +412,6 @@ Note that the "total length" field is 16 bits, 2 bytes, it's maximum value is 64
 !include(images/udp-packet.pgf)
 \end{center}
 )
-
-# Lecture: ESP8266
-
-!comment(aka NodeMCU aka ESP-12)
-
-## NodeMCU hardware
-
-!ifndef(QUICK)(
-![](images/NodeMCU-–-Board-de-desarrollo-con-módulo-ESP8266-WiFi-y-Lua-4.jpg)
-)
-
-## NodeMCU hardware
-
-!ifndef(QUICK)(
-\begin{center}
-!include(images/nodemcu.pgf)
-\end{center}
-)
-
-## ESP8266 software layers
-
-!ifndef(QUICK)(
-\begin{center}
-!include(images/esp+arduino-sdks.pgf)
-\end{center}
-)
-
-## ESP8266 + Arduino
-
-* Standard Arduino IDE
-* ESP8266 Arduino core
-    * https://github.com/esp8266/Arduino
-
-## Arduino IDE
-
-!ifndef(QUICK)(
-![](images/arduino-ide.png)
-)
-
-## Arduino code structure
-
-~~~ .c++
-void setup() {
-    // Called once
-}
-
-void loop() {
-    // Called repeatedly
-}
-~~~
-
-::: notes
-
-MCU programming is often structured into:
-
-* Configure
-    * CPU
-    * GPIO ports
-    * MCU's peripherals
-    * The rest of the board
-    * Configure application and callbacks.
-* Sleep
-
-Arduino chooses to run the cpu at 100% instead of the sleep step..
-
-:::
-
-## Arduino file structure
-
-    foo/
-      foo.ino
-      config.h
-
-::: notes
-
-`foo.ino` must always be in a `foo` directory.
-
-config.h is created by "new tab".
-
-:::
-
-## Generic Arduino APIs
-
-~~~c++
-// Pin: D0, D1, etc.
-// Mode: OUTPUT, INPUT, INPUT_PULLUP
-void pinMode(uint8_t pin, uint8_t mode);
-
-// State: HIGH, LOW, true/false, 1/0
-void digitalWrite(uint8_t pin, uint8_t state);
-int digitalRead(uint8_t pin);
-
-unsigned long now millis();
-unsigned long now micros();
-~~~
-
-## ESP Arduino APIs
-
-~~~c++
-class {
-    void restart();
-    uint32_t getFreeHeap();
-    uint32_t getChipId();
-
-    ...
-} ESP;
-
-// Usage
-ESP.restart();
-~~~
-
-## ESP Arduino APIs
-
-~~~c++
-class {
-    String macAddress();
-
-    wl_status_t status();
-    int32_t RSSI();
-
-    IPAddress localIP();
-    IPAddress subnetMask();
-    IPAddress gatewayIP();
-    IPAddress dnsIP(uint8_t dns_no = 0);
-
-    ...
-} WiFi;
-
-// Usage:
-
-Serial.println(WiFi.localIP().toString());
-~~~
-
-::: notes
-
-http://arduino-esp8266.readthedocs.io/en/latest/libraries.html
-
-:::
 
 # Lecture: MQTT
 

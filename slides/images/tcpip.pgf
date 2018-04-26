@@ -1,0 +1,12 @@
+\begin{tikzpicture}[
+mybox/.style={draw, rectangle, minimum width=4cm, minimum height=1 cm,font=\bfseries}
+]
+
+%\draw (0,0) rectangle (3cm, 1cm) {wat};
+
+\node at (0, -0) [mybox] {Application};
+\node at (0, -1) [mybox] {Transport};
+\node at (0, -2) [mybox] {Internet};
+\node at (0, -3)[mybox] {Network interface};
+
+\end{tikzpicture}

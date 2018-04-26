@@ -1,3 +1,249 @@
+\hypertarget{nodemcu}{%
+\section{NodeMCU}\label{nodemcu}}
+
+\begin{frame}{NodeMCU hardware}
+\protect\hypertarget{nodemcu-hardware}{}
+
+\includegraphics{images/NodeMCU-–-Board-de-desarrollo-con-módulo-ESP8266-WiFi-y-Lua-4.jpg}
+
+\end{frame}
+
+\begin{frame}{NodeMCU hardware}
+\protect\hypertarget{nodemcu-hardware-1}{}
+
+\begin{center}
+\begin{tikzpicture}
+
+\path
+    (0, 0) node(flash)[draw, rectangle,
+    minimum height=1cm, minimum width=2cm] {Flash}
+
+    (0, 1.5) node(esp8266)[draw, rectangle,
+    minimum height=1cm, minimum width=2cm] {ESP8266}
+
+    (3.5, 1.5) node(cp201x)[draw, rectangle,
+    minimum height=0.75cm, minimum width=1cm]
+    {CP201x}
+
+    (5.5, 1.5) node(usb)[]
+    {USB}
+;
+
+\draw[-] (esp8266) -- node[node font=\footnotesize, right]{QSPI} (flash);
+\draw[-] (esp8266) -- node[node font=\footnotesize, above]{UART} (cp201x) -- (usb);
+
+\node[rectangle, draw, fit=(esp8266) (flash), inner sep=2 mm,
+    label={[name=esp12_label,anchor=south]ESP-12}]
+    (esp12){};
+
+\node[rectangle, draw, thick, fit=(esp12_label) (esp12) (cp201x), inner sep=3 mm,
+    label={[anchor=north]south:NodeMCU}]
+    (nodemcu){};
+
+\end{tikzpicture}
+
+\end{center}
+
+\end{frame}
+
+\begin{frame}{ESP8266 software layers}
+\protect\hypertarget{esp8266-software-layers}{}
+
+\begin{center}
+\begin{tikzpicture}
+
+\node (rect_hw) [rectangle, draw, anchor=south west,
+    minimum width=6 cm, minimum height=1 cm,
+    label={[anchor=south]center:ESP8266 Hardware}] at (0, 0) {};
+
+\draw[thick] (-0.5, 1.25) -- (6.5, 1.25) ;
+
+\node  [rectangle, draw, anchor=south west,
+    minimum width=4 cm, minimum height=1 cm,
+    label={[anchor=south]center:ESP SDK}] at (0, 1.5) {};
+
+\node [rectangle, draw, anchor=south west,
+    minimum width=2 cm, minimum height=1 cm,
+    label={[align=center, text width=1cm]center:GCC  libc}] at (4, 1.5) {};
+
+\node [rectangle, draw, anchor=south west,
+    minimum width=6 cm, minimum height=1 cm,
+    label={[anchor=south]center:ESP interface}] at (0, 2.5) {};
+
+\node [rectangle, draw, anchor=south west,
+    minimum width=2 cm, minimum height=1 cm,
+    label={[align=center, text width= 2cm]center:Generic Arduino}] at (0, 3.5) {};
+
+\node [rectangle, draw, anchor=south west,
+    minimum width=2 cm, minimum height=1 cm,
+    label={[align=center, text width= 2cm]center:Ethernet}] at (2, 3.5) {};
+
+\node [rectangle, draw, anchor=south west,
+    minimum width=2 cm, minimum height=1 cm,
+    label={[align=center, text width= 2cm]center:ESP APIs}] at (4, 3.5) {};
+
+\draw [decorate, decoration={brace,amplitude=5pt, raise=-4pt}] (-0.5,2.5) -- (-0.5,4.5) node [black,midway,rotate=90, above] {Arduino};
+
+
+\end{tikzpicture}
+
+\end{center}
+
+\end{frame}
+
+\begin{frame}{ESP8266 + Arduino}
+\protect\hypertarget{esp8266-arduino}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Standard Arduino IDE
+\item
+  ESP8266 Arduino core
+
+  \begin{itemize}
+  \tightlist
+  \item
+    https://github.com/esp8266/Arduino
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Arduino IDE}
+\protect\hypertarget{arduino-ide}{}
+
+\includegraphics{images/arduino-ide.png}
+
+\end{frame}
+
+\begin{frame}[fragile]{Arduino code structure}
+\protect\hypertarget{arduino-code-structure}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{void}\NormalTok{ setup() \{}
+    \CommentTok{// Called once}
+\NormalTok{\}}
+
+\DataTypeTok{void}\NormalTok{ loop() \{}
+    \CommentTok{// Called repeatedly}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\note{MCU programming is often structured into:
+
+\begin{itemize}
+\tightlist
+\item
+  Configure
+
+  \begin{itemize}
+  \tightlist
+  \item
+    CPU
+  \item
+    GPIO ports
+  \item
+    MCU’s peripherals
+  \item
+    The rest of the board
+  \item
+    Configure application and callbacks.
+  \end{itemize}
+\item
+  Sleep
+\end{itemize}
+
+Arduino chooses to run the cpu at 100\% instead of the sleep step..}
+
+\end{frame}
+
+\begin{frame}[fragile]{Arduino file structure}
+\protect\hypertarget{arduino-file-structure}{}
+
+\begin{verbatim}
+foo/
+  foo.ino
+  config.h
+\end{verbatim}
+
+\note{\texttt{foo.ino} must always be in a \texttt{foo} directory.
+
+config.h is created by “new tab”.}
+
+\end{frame}
+
+\begin{frame}[fragile]{Generic Arduino APIs}
+\protect\hypertarget{generic-arduino-apis}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// Pin: D0, D1, etc.}
+\CommentTok{// Mode: OUTPUT, INPUT, INPUT_PULLUP}
+\DataTypeTok{void}\NormalTok{ pinMode(}\DataTypeTok{uint8_t}\NormalTok{ pin, }\DataTypeTok{uint8_t}\NormalTok{ mode);}
+
+\CommentTok{// State: HIGH, LOW, true/false, 1/0}
+\DataTypeTok{void}\NormalTok{ digitalWrite(}\DataTypeTok{uint8_t}\NormalTok{ pin, }\DataTypeTok{uint8_t}\NormalTok{ state);}
+\DataTypeTok{int}\NormalTok{ digitalRead(}\DataTypeTok{uint8_t}\NormalTok{ pin);}
+
+\DataTypeTok{unsigned} \DataTypeTok{long}\NormalTok{ now millis();}
+\DataTypeTok{unsigned} \DataTypeTok{long}\NormalTok{ now micros();}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{ESP Arduino APIs}
+\protect\hypertarget{esp-arduino-apis}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ \{}
+    \DataTypeTok{void}\NormalTok{ restart();}
+    \DataTypeTok{uint32_t}\NormalTok{ getFreeHeap();}
+    \DataTypeTok{uint32_t}\NormalTok{ getChipId();}
+
+\NormalTok{    ...}
+\NormalTok{\} ESP;}
+
+\CommentTok{// Usage}
+\NormalTok{ESP.restart();}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{ESP Arduino APIs}
+\protect\hypertarget{esp-arduino-apis-1}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ \{}
+\NormalTok{    String macAddress();}
+
+    \DataTypeTok{wl_status_t}\NormalTok{ status();}
+    \DataTypeTok{int32_t}\NormalTok{ RSSI();}
+
+\NormalTok{    IPAddress localIP();}
+\NormalTok{    IPAddress subnetMask();}
+\NormalTok{    IPAddress gatewayIP();}
+\NormalTok{    IPAddress dnsIP(}\DataTypeTok{uint8_t}\NormalTok{ dns_no = }\DecValTok{0}\NormalTok{);}
+
+\NormalTok{    ...}
+\NormalTok{\} WiFi;}
+
+\CommentTok{// Usage:}
+
+\NormalTok{Serial.println(WiFi.localIP().toString());}
+\end{Highlighting}
+\end{Shaded}
+
+\note{http://arduino-esp8266.readthedocs.io/en/latest/libraries.html}
+
+\end{frame}
+
 \hypertarget{what-is-iot}{%
 \section{What is IoT}\label{what-is-iot}}
 
@@ -289,52 +535,82 @@ TX\strut
 
 \end{frame}
 
-\begin{frame}{OSI model}
-\protect\hypertarget{osi-model}{}
+\begin{frame}{TCP/IP Layers}
+\protect\hypertarget{tcpip-layers}{}
 
-\begin{enumerate}
-[1.]
-\tightlist
-\item
-  Physical Layer
-\item
-  Data Link Layer
-\item
-  Network Layer
-\item
-  Transport Layer
-\item
-  Session Layer
-\item
-  Presentation Layer
-\item
-  Application Layer
-\end{enumerate}
+\begin{center}
+\begin{tikzpicture}[
+mybox/.style={draw, rectangle, minimum width=4cm, minimum height=1 cm,font=\bfseries}
+]
 
-\begin{itemize}
-\tightlist
-\item
-  \href{https://en.wikipedia.org/wiki/OSI_model}{Wikipedia: OSI model}
-\item
-  \href{https://en.wikipedia.org/wiki/OSI_model\#Examples}{Wikipedia:
-  OSI model\#Examples}
-\end{itemize}
+%\draw (0,0) rectangle (3cm, 1cm) {wat};
 
-\note{Does not match the TCP/IP stack very closely.}
+\node at (0, -0) [mybox] {Application};
+\node at (0, -1) [mybox] {Transport};
+\node at (0, -2) [mybox] {Internet};
+\node at (0, -3)[mybox] {Network interface};
+
+\end{tikzpicture}
+
+\end{center}
 
 \end{frame}
 
-\begin{frame}{Layer 1: Physical Layer}
-\protect\hypertarget{layer-1-physical-layer}{}
+\begin{frame}{Packet encapsulation}
+\protect\hypertarget{packet-encapsulation}{}
+
+\begin{center}
+\begin{tikzpicture}[
+mybox/.style={
+    draw,
+    rectangle,
+    minimum height=1 cm,
+    anchor=west,
+    align=center,
+    font=\bfseries}
+]
+
+%\draw (0,0) rectangle (3cm, 1cm) {wat};
+
+\node at (0 cm, 0 cm) [mybox, minimum width=2cm, text width=1.7cm] {Frame header};
+\node at (2 cm, 0 cm) [mybox, minimum width=6cm] {Frame data};
+\node at (8 cm, 0 cm) [mybox, minimum width=2cm, text width=1.7cm] {Frame footer};
+
+\node at (2 cm, 1.1 cm) [mybox, minimum width=2cm] {IP header};
+\node at (4 cm, 1.1 cm) [mybox, minimum width=4cm] {IP Data};
+
+\node at (4 cm, 2.2 cm) [mybox, minimum width=2cm, text width=1.7 cm] {UDP header};
+\node at (6 cm, 2.2 cm) [mybox, minimum width=2cm, text width=1.7 cm] {UDP Data};
+
+\node at (6 cm, 3.3 cm) [mybox, minimum width=2cm, text width=1.7 cm] {Data};
+
+\end{tikzpicture}
+
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Network interface}
+\protect\hypertarget{network-interface}{}
 
 \begin{itemize}
 \tightlist
 \item
-  10BASE5, 10BASE2
+  Ethernet
+
+  \begin{itemize}
+  \tightlist
+  \item
+    10BASE5, 10BASE2, 10BASE-T / 100BASE-TX / 1000BASE-TX
+  \end{itemize}
 \item
-  10BASE-T / 100BASE-TX / 1000BASE-TX
-\item
-  802.11a/b/g/n PHY
+  Wi-Fi
+
+  \begin{itemize}
+  \tightlist
+  \item
+    802.11a/b/g/n
+  \end{itemize}
 \item
   RS-232
 \end{itemize}
@@ -354,25 +630,8 @@ The signaling does not specify any max data rate, very high rates
 
 \end{frame}
 
-\begin{frame}{Layer 2: Data Link Layer}
-\protect\hypertarget{layer-2-data-link-layer}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Ethernet
-\item
-  WiFi
-\item
-  Bluetooth
-\item
-  Token Ring
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Layer 3: Network Layer}
-\protect\hypertarget{layer-3-network-layer}{}
+\begin{frame}{Internet}
+\protect\hypertarget{internet}{}
 
 \begin{itemize}
 \tightlist
@@ -380,14 +639,12 @@ The signaling does not specify any max data rate, very high rates
   IP
 \item
   ICMP
-\item
-  IPX
 \end{itemize}
 
 \end{frame}
 
-\begin{frame}{Layer 4: Transport Layer}
-\protect\hypertarget{layer-4-transport-layer}{}
+\begin{frame}{Transport}
+\protect\hypertarget{transport}{}
 
 \begin{itemize}
 \tightlist
@@ -395,33 +652,11 @@ The signaling does not specify any max data rate, very high rates
   TCP
 \item
   UDP
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Layer 5: Session Layer}
-\protect\hypertarget{layer-5-session-layer}{}
-
-\begin{itemize}
-\tightlist
 \item
-  “sockets”
+  SCTP
 \item
-  NetBIOS
+  QUIC
 \end{itemize}
-
-\end{frame}
-
-\begin{frame}{Layer 6: Presentation Layer}
-\protect\hypertarget{layer-6-presentation-layer}{}
-
-\begin{itemize}
-\tightlist
-\item
-  SSL
-\end{itemize}
-
-\note{This layer is not really much used in the IP stack}
 
 \end{frame}
 
@@ -538,252 +773,6 @@ every node/.style={font=\bfseries}
 }
 
 \end{center}
-
-\end{frame}
-
-\hypertarget{lecture-esp8266}{%
-\section{Lecture: ESP8266}\label{lecture-esp8266}}
-
-\begin{frame}{NodeMCU hardware}
-\protect\hypertarget{nodemcu-hardware}{}
-
-\includegraphics{images/NodeMCU-–-Board-de-desarrollo-con-módulo-ESP8266-WiFi-y-Lua-4.jpg}
-
-\end{frame}
-
-\begin{frame}{NodeMCU hardware}
-\protect\hypertarget{nodemcu-hardware-1}{}
-
-\begin{center}
-\begin{tikzpicture}
-
-\path
-    (0, 0) node(flash)[draw, rectangle,
-    minimum height=1cm, minimum width=2cm] {Flash}
-
-    (0, 1.5) node(esp8266)[draw, rectangle,
-    minimum height=1cm, minimum width=2cm] {ESP8266}
-
-    (3.5, 1.5) node(cp201x)[draw, rectangle,
-    minimum height=0.75cm, minimum width=1cm]
-    {CP201x}
-
-    (5.5, 1.5) node(usb)[]
-    {USB}
-;
-
-\draw[-] (esp8266) -- node[node font=\footnotesize, right]{QSPI} (flash);
-\draw[-] (esp8266) -- node[node font=\footnotesize, above]{UART} (cp201x) -- (usb);
-
-\node[rectangle, draw, fit=(esp8266) (flash), inner sep=2 mm,
-    label={[name=esp12_label,anchor=south]ESP-12}]
-    (esp12){};
-
-\node[rectangle, draw, thick, fit=(esp12_label) (esp12) (cp201x), inner sep=3 mm,
-    label={[anchor=north]south:NodeMCU}]
-    (nodemcu){};
-
-\end{tikzpicture}
-
-\end{center}
-
-\end{frame}
-
-\begin{frame}{ESP8266 software layers}
-\protect\hypertarget{esp8266-software-layers}{}
-
-\begin{center}
-\begin{tikzpicture}
-
-\node (rect_hw) [rectangle, draw, anchor=south west,
-    minimum width=6 cm, minimum height=1 cm,
-    label={[anchor=south]center:ESP8266 Hardware}] at (0, 0) {};
-
-\draw[thick] (-0.5, 1.25) -- (6.5, 1.25) ;
-
-\node  [rectangle, draw, anchor=south west,
-    minimum width=4 cm, minimum height=1 cm,
-    label={[anchor=south]center:ESP SDK}] at (0, 1.5) {};
-
-\node [rectangle, draw, anchor=south west,
-    minimum width=2 cm, minimum height=1 cm,
-    label={[align=center, text width=1cm]center:GCC  libc}] at (4, 1.5) {};
-
-\node [rectangle, draw, anchor=south west,
-    minimum width=6 cm, minimum height=1 cm,
-    label={[anchor=south]center:ESP interface}] at (0, 2.5) {};
-
-\node [rectangle, draw, anchor=south west,
-    minimum width=2 cm, minimum height=1 cm,
-    label={[align=center, text width= 2cm]center:Generic Arduino}] at (0, 3.5) {};
-
-\node [rectangle, draw, anchor=south west,
-    minimum width=2 cm, minimum height=1 cm,
-    label={[align=center, text width= 2cm]center:Ethernet}] at (2, 3.5) {};
-
-\node [rectangle, draw, anchor=south west,
-    minimum width=2 cm, minimum height=1 cm,
-    label={[align=center, text width= 2cm]center:ESP APIs}] at (4, 3.5) {};
-
-\draw [decorate, decoration={brace,amplitude=5pt, raise=-4pt}] (-0.5,2.5) -- (-0.5,4.5) node [black,midway,rotate=90, above] {Arduino};
-
-
-\end{tikzpicture}
-
-\end{center}
-
-\end{frame}
-
-\begin{frame}{ESP8266 + Arduino}
-\protect\hypertarget{esp8266-arduino}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Standard Arduino IDE
-\item
-  ESP8266 Arduino core
-
-  \begin{itemize}
-  \tightlist
-  \item
-    https://github.com/esp8266/Arduino
-  \end{itemize}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Arduino IDE}
-\protect\hypertarget{arduino-ide}{}
-
-\includegraphics{images/arduino-ide.png}
-
-\end{frame}
-
-\begin{frame}[fragile]{Arduino code structure}
-\protect\hypertarget{arduino-code-structure}{}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{void}\NormalTok{ setup() \{}
-    \CommentTok{// Called once}
-\NormalTok{\}}
-
-\DataTypeTok{void}\NormalTok{ loop() \{}
-    \CommentTok{// Called repeatedly}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\note{MCU programming is often structured into:
-
-\begin{itemize}
-\tightlist
-\item
-  Configure
-
-  \begin{itemize}
-  \tightlist
-  \item
-    CPU
-  \item
-    GPIO ports
-  \item
-    MCU’s peripherals
-  \item
-    The rest of the board
-  \item
-    Configure application and callbacks.
-  \end{itemize}
-\item
-  Sleep
-\end{itemize}
-
-Arduino chooses to run the cpu at 100\% instead of the sleep step..}
-
-\end{frame}
-
-\begin{frame}[fragile]{Arduino file structure}
-\protect\hypertarget{arduino-file-structure}{}
-
-\begin{verbatim}
-foo/
-  foo.ino
-  config.h
-\end{verbatim}
-
-\note{\texttt{foo.ino} must always be in a \texttt{foo} directory.
-
-config.h is created by “new tab”.}
-
-\end{frame}
-
-\begin{frame}[fragile]{Generic Arduino APIs}
-\protect\hypertarget{generic-arduino-apis}{}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{// Pin: D0, D1, etc.}
-\CommentTok{// Mode: OUTPUT, INPUT, INPUT_PULLUP}
-\DataTypeTok{void}\NormalTok{ pinMode(}\DataTypeTok{uint8_t}\NormalTok{ pin, }\DataTypeTok{uint8_t}\NormalTok{ mode);}
-
-\CommentTok{// State: HIGH, LOW, true/false, 1/0}
-\DataTypeTok{void}\NormalTok{ digitalWrite(}\DataTypeTok{uint8_t}\NormalTok{ pin, }\DataTypeTok{uint8_t}\NormalTok{ state);}
-\DataTypeTok{int}\NormalTok{ digitalRead(}\DataTypeTok{uint8_t}\NormalTok{ pin);}
-
-\DataTypeTok{unsigned} \DataTypeTok{long}\NormalTok{ now millis();}
-\DataTypeTok{unsigned} \DataTypeTok{long}\NormalTok{ now micros();}
-\end{Highlighting}
-\end{Shaded}
-
-\end{frame}
-
-\begin{frame}[fragile]{ESP Arduino APIs}
-\protect\hypertarget{esp-arduino-apis}{}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{class}\NormalTok{ \{}
-    \DataTypeTok{void}\NormalTok{ restart();}
-    \DataTypeTok{uint32_t}\NormalTok{ getFreeHeap();}
-    \DataTypeTok{uint32_t}\NormalTok{ getChipId();}
-
-\NormalTok{    ...}
-\NormalTok{\} ESP;}
-
-\CommentTok{// Usage}
-\NormalTok{ESP.restart();}
-\end{Highlighting}
-\end{Shaded}
-
-\end{frame}
-
-\begin{frame}[fragile]{ESP Arduino APIs}
-\protect\hypertarget{esp-arduino-apis-1}{}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{class}\NormalTok{ \{}
-\NormalTok{    String macAddress();}
-
-    \DataTypeTok{wl_status_t}\NormalTok{ status();}
-    \DataTypeTok{int32_t}\NormalTok{ RSSI();}
-
-\NormalTok{    IPAddress localIP();}
-\NormalTok{    IPAddress subnetMask();}
-\NormalTok{    IPAddress gatewayIP();}
-\NormalTok{    IPAddress dnsIP(}\DataTypeTok{uint8_t}\NormalTok{ dns_no = }\DecValTok{0}\NormalTok{);}
-
-\NormalTok{    ...}
-\NormalTok{\} WiFi;}
-
-\CommentTok{// Usage:}
-
-\NormalTok{Serial.println(WiFi.localIP().toString());}
-\end{Highlighting}
-\end{Shaded}
-
-\note{http://arduino-esp8266.readthedocs.io/en/latest/libraries.html}
 
 \end{frame}
 
