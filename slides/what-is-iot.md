@@ -376,16 +376,57 @@ config.h is created by "new tab".
 
 ## Generic Arduino APIs
 
+~~~c++
 // Pin: D0, D1, etc.
 // Mode: OUTPUT, INPUT, INPUT_PULLUP
+void pinMode(uint8_t pin, uint8_t mode);
+
+// State: HIGH, LOW, true/false, 1/0
+void digitalWrite(uint8_t pin, uint8_t state);
+int digitalRead(uint8_t pin);
+
+unsigned long now millis();
+unsigned long now micros();
+~~~
+
+## ESP Arduino APIs
 
 ~~~c++
-pinMode(pin, mode);
-
-digitalWrite(pin, state);
-
-state = digitalRead(pin);
+class {
+    void restart();
+    uint32_t getFreeHeap();
+    uint32_t getChipId();
+} ESP;
 ~~~
+
+// Usage
+ESP.restart();
+
+## ESP Arduino APIs
+
+~~~c++
+class {
+    String macAddress();
+
+    wl_status_t status();
+    int32_t RSSI();
+
+    IPAddress localIP();
+    IPAddress subnetMask();
+    IPAddress gatewayIP();
+    IPAddress dnsIP(uint8_t dns_no = 0);
+} WiFi;
+
+// Usage:
+
+Serial.println(WiFi.localIP().toString());
+~~~
+
+::: notes
+
+http://arduino-esp8266.readthedocs.io/en/latest/libraries.html
+
+:::
 
 # Lecture: MQTT
 
@@ -396,13 +437,17 @@ state = digitalRead(pin);
 
 ::: notes
 
-MQTT is *the* standard for IoT applications (and lots of other useful stuff to). Using HTTP is just silly.
+MQTT is *the* standard for IoT applications (and lots of other useful
+stuff to). Using HTTP is just silly.
 
 Supports SSL, and requires TCP.
 
-Has UDP-like semantics with "fire and forget" but on a higher level (the message always have to be delivered and ACKed by the broker, not it's final recipient.
+Has UDP-like semantics with "fire and forget" but on a higher level
+(the message always have to be delivered and ACKed by the broker, not
+it's final recipient.
 
-Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke (før standardisering).
+Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke
+(før standardisering).
 
 :::
 
@@ -600,15 +645,48 @@ In between are:
 
 :::
 
-# Assignments
+## MQTT on Arduino
 
-## Assignment 1: Blink a led
+PubSubClient is our MQTT client implementation.
 
-## Assignment 2: Connect to Wi-Fi
+~~~c++
+WiFiClient wifiClient;
+PubSubClient mqtt(wifiClient);
 
-## Assignment 3: Connect to MQTT broker
+void callback(char* topic,
+              byte* payload,
+              unsigned int length);
 
-## Assignment 4: Network play time
+void setup() {
+    // Configure WiFi
+    mqtt.setServer(mqtt_server, 1883);
+    mqtt.setCallback(callback);
+}
+~~~
+
+## MQTT on Arduino
+
+~~~c++
+void loop() {
+    if (!mqtt.connected())
+        reconnect();
+    else
+        mqtt.loop();
+    // Do work
+}
+
+void reconnect() {
+    while (!mqtt.connect(client_id));
+
+    mqtt.subscribe(topic_pattern);
+}
+~~~
+
+::: notes
+This is blocking!
+:::
+
+## Assignment: Network play time
 
 * Measure round trip time/latency. Measure UDP, TCP. Measure when the
   packet size is greater than the MTU

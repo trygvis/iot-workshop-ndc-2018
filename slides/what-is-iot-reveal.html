@@ -15,6 +15,71 @@
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
   <link rel="stylesheet" href="./bower_components/reveal.js/css/theme/black.css" id="theme">
   <!-- Printing and PDF exports -->
   <script>
@@ -40,16 +105,7 @@
   <p class="author">Trygve Laugstøl &lt;trygvis@trygvis.io&gt;</p>
 </section>
 
-<section><section id="what-is-iot" class="title-slide slide level1"><h1>What is IoT</h1></section><section id="wat-png" class="slide level2">
-<h2>wat png</h2>
-<p><img data-src="/home/trygvis/Dokumenter/Fritzing/bins/Untitled%20Sketch_bb.png" /></p>
-</section><section id="wat-pdf" class="slide level2">
-<h2>wat pdf</h2>
-<p><embed data-src="/home/trygvis/Dokumenter/Fritzing/bins/Untitled%20Sketch_bb.pdf" /></p>
-</section><section id="wat-svg" class="slide level2">
-<h2>wat svg</h2>
-<p><img data-src="/home/trygvis/Dokumenter/Fritzing/bins/Untitled%20Sketch_bb.svg" /></p>
-</section><section id="what-is-iot-1" class="slide level2">
+<section><section id="what-is-iot" class="title-slide slide level1"><h1>What is IoT</h1></section><section id="what-is-iot-1" class="slide level2">
 <h2>What is IoT</h2>
 <ul>
 <li>Not “a computer connected to the internet”
@@ -97,6 +153,11 @@
 </ul></li>
 </ul>
 <aside class="notes">
+<p>Might not have:</p>
+<ul>
+<li>RTC</li>
+</ul>
+<p>Extra features:</p>
 <ul>
 <li>IR</li>
 <li>UART</li>
@@ -310,9 +371,6 @@
 <aside class="notes">
 <p>Datasheet page 18</p>
 </aside>
-</section><section id="esp8266-details---arduino" class="slide level2">
-<h2>ESP8266 details - Arduino</h2>
-<p>https://github.com/esp8266/Arduino</p>
 </section></section>
 <section><section id="going-back-to-basics" class="title-slide slide level1"><h1>Going back to basics</h1></section><section id="what-is-the-internet-again" class="slide level2">
 <h2>What is the internet again?</h2>
@@ -409,6 +467,91 @@
 </section><section id="esp8266-software-layers" class="slide level2">
 <h2>ESP8266 software layers</h2>
 
+</section><section id="esp8266-arduino" class="slide level2">
+<h2>ESP8266 + Arduino</h2>
+<ul>
+<li>Standard Arduino IDE</li>
+<li>ESP8266 Arduino core
+<ul>
+<li>https://github.com/esp8266/Arduino</li>
+</ul></li>
+</ul>
+</section><section id="arduino-ide" class="slide level2">
+<h2>Arduino IDE</h2>
+<p><img data-src="images/arduino-ide.png" /></p>
+</section><section id="arduino-code-structure" class="slide level2">
+<h2>Arduino code structure</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode .c++"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="dt">void</span> setup() {</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="co">// Called once</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="dt">void</span> loop() {</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="co">// Called repeatedly</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">}</a></code></pre></div>
+<aside class="notes">
+<p>MCU programming is often structured into:</p>
+<ul>
+<li>Configure
+<ul>
+<li>CPU</li>
+<li>GPIO ports</li>
+<li>MCU’s peripherals</li>
+<li>The rest of the board</li>
+<li>Configure application and callbacks.</li>
+</ul></li>
+<li>Sleep</li>
+</ul>
+<p>Arduino chooses to run the cpu at 100% instead of the sleep step..</p>
+</aside>
+</section><section id="arduino-file-structure" class="slide level2">
+<h2>Arduino file structure</h2>
+<pre><code>foo/
+  foo.ino
+  config.h</code></pre>
+<aside class="notes">
+<p><code>foo.ino</code> must always be in a <code>foo</code> directory.</p>
+<p>config.h is created by “new tab”.</p>
+</aside>
+</section><section id="generic-arduino-apis" class="slide level2">
+<h2>Generic Arduino APIs</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">// Pin: D0, D1, etc.</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">// Mode: OUTPUT, INPUT, INPUT_PULLUP</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="dt">void</span> pinMode(<span class="dt">uint8_t</span> pin, <span class="dt">uint8_t</span> mode);</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">// State: HIGH, LOW, true/false, 1/0</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="dt">void</span> digitalWrite(<span class="dt">uint8_t</span> pin, <span class="dt">uint8_t</span> state);</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="dt">int</span> digitalRead(<span class="dt">uint8_t</span> pin);</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="dt">unsigned</span> <span class="dt">long</span> now millis();</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="dt">unsigned</span> <span class="dt">long</span> now micros();</a></code></pre></div>
+</section><section id="esp-arduino-apis" class="slide level2">
+<h2>ESP Arduino APIs</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">class</span> {</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="dt">void</span> restart();</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="dt">uint32_t</span> getFreeHeap();</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="dt">uint32_t</span> getChipId();</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">} ESP;</a></code></pre></div>
+<p>// Usage ESP.restart();</p>
+</section><section id="esp-arduino-apis-1" class="slide level2">
+<h2>ESP Arduino APIs</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">class</span> {</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">    String macAddress();</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">    <span class="dt">wl_status_t</span> status();</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="dt">int32_t</span> RSSI();</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">    IPAddress localIP();</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">    IPAddress subnetMask();</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">    IPAddress gatewayIP();</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">    IPAddress dnsIP(<span class="dt">uint8_t</span> dns_no = <span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">} WiFi;</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">// Usage:</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">Serial.println(WiFi.localIP().toString());</a></code></pre></div>
+<aside class="notes">
+<p>http://arduino-esp8266.readthedocs.io/en/latest/libraries.html</p>
+</aside>
 </section></section>
 <section><section id="lecture-mqtt" class="title-slide slide level1"><h1>Lecture: MQTT</h1></section><section id="mqtt" class="slide level2">
 <h2>MQTT</h2>
@@ -625,15 +768,41 @@
 <li>Generic bridges</li>
 </ul>
 </aside>
-</section></section>
-<section><section id="assignments" class="title-slide slide level1"><h1>Assignments</h1></section><section id="assignment-1-blink-a-led" class="slide level2">
-<h2>Assignment 1: Blink a led</h2>
-</section><section id="assignment-2-connect-to-wi-fi" class="slide level2">
-<h2>Assignment 2: Connect to Wi-Fi</h2>
-</section><section id="assignment-3-connect-to-mqtt-broker" class="slide level2">
-<h2>Assignment 3: Connect to MQTT broker</h2>
-</section><section id="assignment-4-network-play-time" class="slide level2">
-<h2>Assignment 4: Network play time</h2>
+</section><section id="mqtt-on-arduino" class="slide level2">
+<h2>MQTT on Arduino</h2>
+<p>PubSubClient is our MQTT client implementation.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb6-1" data-line-number="1">WiFiClient wifiClient;</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">PubSubClient mqtt(wifiClient);</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="dt">void</span> callback(<span class="dt">char</span>* topic,</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">              byte* payload,</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">              <span class="dt">unsigned</span> <span class="dt">int</span> length);</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="dt">void</span> setup() {</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">    <span class="co">// Configure WiFi</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">    mqtt.setServer(mqtt_server, <span class="dv">1883</span>);</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">    mqtt.setCallback(callback);</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">}</a></code></pre></div>
+</section><section id="mqtt-on-arduino-1" class="slide level2">
+<h2>MQTT on Arduino</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="dt">void</span> loop() {</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">    <span class="cf">if</span> (!mqtt.connected())</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">        reconnect();</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="cf">else</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">        mqtt.loop();</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="co">// Do work</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="dt">void</span> reconnect() {</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">    <span class="cf">while</span> (!mqtt.<span class="fu">connect</span>(client_id));</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">    mqtt.subscribe(topic_pattern);</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">}</a></code></pre></div>
+<aside class="notes">
+<p>This is blocking!</p>
+</aside>
+</section><section id="assignment-network-play-time" class="slide level2">
+<h2>Assignment: Network play time</h2>
 <ul>
 <li><p>Measure round trip time/latency. Measure UDP, TCP. Measure when the packet size is greater than the MTU</p></li>
 <li><p>Notice variations in RTT</p></li>

@@ -502,15 +502,17 @@ maximum value is 64k, 65536.}
 \begin{frame}[fragile]{Arduino code structure}
 \protect\hypertarget{arduino-code-structure}{}
 
-\begin{verbatim}
-void setup() {
-    // Called once
-}
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{void}\NormalTok{ setup() \{}
+    \CommentTok{// Called once}
+\NormalTok{\}}
 
-void loop() {
-    // Called repeatedly
-}
-\end{verbatim}
+\DataTypeTok{void}\NormalTok{ loop() \{}
+    \CommentTok{// Called repeatedly}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
 \note{MCU programming is often structured into:
 
@@ -558,15 +560,64 @@ config.h is created by “new tab”.}
 \begin{frame}[fragile]{Generic Arduino APIs}
 \protect\hypertarget{generic-arduino-apis}{}
 
-// Pin: D0, D1, etc. // Mode: OUTPUT, INPUT, INPUT\_PULLUP
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// Pin: D0, D1, etc.}
+\CommentTok{// Mode: OUTPUT, INPUT, INPUT_PULLUP}
+\DataTypeTok{void}\NormalTok{ pinMode(}\DataTypeTok{uint8_t}\NormalTok{ pin, }\DataTypeTok{uint8_t}\NormalTok{ mode);}
 
-\begin{verbatim}
-pinMode(pin, mode);
+\CommentTok{// State: HIGH, LOW, true/false, 1/0}
+\DataTypeTok{void}\NormalTok{ digitalWrite(}\DataTypeTok{uint8_t}\NormalTok{ pin, }\DataTypeTok{uint8_t}\NormalTok{ state);}
+\DataTypeTok{int}\NormalTok{ digitalRead(}\DataTypeTok{uint8_t}\NormalTok{ pin);}
 
-digitalWrite(pin, state);
+\DataTypeTok{unsigned} \DataTypeTok{long}\NormalTok{ now millis();}
+\DataTypeTok{unsigned} \DataTypeTok{long}\NormalTok{ now micros();}
+\end{Highlighting}
+\end{Shaded}
 
-state = digitalRead(pin);
-\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{ESP Arduino APIs}
+\protect\hypertarget{esp-arduino-apis}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ \{}
+    \DataTypeTok{void}\NormalTok{ restart();}
+    \DataTypeTok{uint32_t}\NormalTok{ getFreeHeap();}
+    \DataTypeTok{uint32_t}\NormalTok{ getChipId();}
+\NormalTok{\} ESP;}
+\end{Highlighting}
+\end{Shaded}
+
+// Usage ESP.restart();
+
+\end{frame}
+
+\begin{frame}[fragile]{ESP Arduino APIs}
+\protect\hypertarget{esp-arduino-apis-1}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ \{}
+\NormalTok{    String macAddress();}
+
+    \DataTypeTok{wl_status_t}\NormalTok{ status();}
+    \DataTypeTok{int32_t}\NormalTok{ RSSI();}
+
+\NormalTok{    IPAddress localIP();}
+\NormalTok{    IPAddress subnetMask();}
+\NormalTok{    IPAddress gatewayIP();}
+\NormalTok{    IPAddress dnsIP(}\DataTypeTok{uint8_t}\NormalTok{ dns_no = }\DecValTok{0}\NormalTok{);}
+\NormalTok{\} WiFi;}
+
+\CommentTok{// Usage:}
+
+\NormalTok{Serial.println(WiFi.localIP().toString());}
+\end{Highlighting}
+\end{Shaded}
+
+\note{http://arduino-esp8266.readthedocs.io/en/latest/libraries.html}
 
 \end{frame}
 
@@ -998,26 +1049,82 @@ releases at the same time.}
 
 \end{frame}
 
+\begin{frame}[fragile]{MQTT on Arduino}
+\protect\hypertarget{mqtt-on-arduino}{}
+
+PubSubClient is our MQTT client implementation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{WiFiClient wifiClient;}
+\NormalTok{PubSubClient mqtt(wifiClient);}
+
+\DataTypeTok{void}\NormalTok{ callback(}\DataTypeTok{char}\NormalTok{* topic,}
+\NormalTok{              byte* payload,}
+              \DataTypeTok{unsigned} \DataTypeTok{int}\NormalTok{ length);}
+
+\DataTypeTok{void}\NormalTok{ setup() \{}
+    \CommentTok{// Configure WiFi}
+\NormalTok{    mqtt.setServer(mqtt_server, }\DecValTok{1883}\NormalTok{);}
+\NormalTok{    mqtt.setCallback(callback);}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{MQTT on Arduino}
+\protect\hypertarget{mqtt-on-arduino-1}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{void}\NormalTok{ loop() \{}
+    \ControlFlowTok{if}\NormalTok{ (!mqtt.connected())}
+\NormalTok{        reconnect();}
+    \ControlFlowTok{else}
+\NormalTok{        mqtt.loop();}
+    \CommentTok{// Do work}
+\NormalTok{\}}
+
+\DataTypeTok{void}\NormalTok{ reconnect() \{}
+    \ControlFlowTok{while}\NormalTok{ (!mqtt.}\FunctionTok{connect}\NormalTok{(client_id));}
+
+\NormalTok{    mqtt.subscribe(topic_pattern);}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\note{This is blocking!}
+
+\end{frame}
+
+\begin{frame}{Assignment: MQTT}
+\protect\hypertarget{assignment-mqtt}{}
+
+\end{frame}
+
 \hypertarget{assignments}{%
 \section{Assignments}\label{assignments}}
 
-\begin{frame}{Assignment 1: Blink a led}
-\protect\hypertarget{assignment-1-blink-a-led}{}
+\begin{frame}{Assignment: Arduino}
+\protect\hypertarget{assignment-arduino}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Hello world on serial console
+\item
+  Blink a led
+\item
+  Read the temperature every second, print to serial console
+\item
+  Print available heap
+\end{itemize}
 
 \end{frame}
 
-\begin{frame}{Assignment 2: Connect to Wi-Fi}
-\protect\hypertarget{assignment-2-connect-to-wi-fi}{}
-
-\end{frame}
-
-\begin{frame}{Assignment 3: Connect to MQTT broker}
-\protect\hypertarget{assignment-3-connect-to-mqtt-broker}{}
-
-\end{frame}
-
-\begin{frame}{Assignment 4: Network play time}
-\protect\hypertarget{assignment-4-network-play-time}{}
+\begin{frame}{Assignment: Network play time}
+\protect\hypertarget{assignment-network-play-time}{}
 
 \begin{itemize}
 \item

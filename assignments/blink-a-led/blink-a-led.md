@@ -1,13 +1,19 @@
 # Assignment: Blink a led
 
-
 ## Goal
 
 Check that your local environment is working properly.
 
+## Configure the Arduino IDE
+
+Under *Tools* -> *Board* make sure that "NodeMCU 1.0 (ESP-12E Module)"
+is available and selected.
+
+Create a new sketch with *File* -> *New* and compile it with *ctrl-R*.
+
 ## Step 1
 
-Create this schematic:
+Wire up this schematic on the bread board:
 
 ![](schematic/assignment-1_schem.pdf)
 
@@ -23,14 +29,12 @@ Implement `setup()` and `loop()`. In `setup()` configure the LED pin and blink t
 Use these functions:
 
 ~~~ .c++
-
 Serial.begin(115200);
 Serial.println(string);
 
 pinMode(pin, mode);
 digitalWrite(pin, state); // HIGH or LOW
 delay();
-
 ~~~
 
 ## Tips

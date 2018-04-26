@@ -3,10 +3,13 @@
     * IoT is just a concept
     * What is an IoT Device?
     * What is an IoT Device?
-    * Typical IoT chips - Bluetooth 4/5
-    * Typical IoT chips - Wi-Fi
+    * IoT Devices - Bluetooth 4/5 chips
+    * IoT Devices - LoRA
+### Modules
+### Chips
+    * IoT Devices - NB-IoT
+    * IoT Devices - Wi-Fi
     * ESP8266 details - Power usage
-    * ESP8266 details - Arduino
 * Going back to basics
     * What is the internet again?
     * OSI model
@@ -21,7 +24,15 @@
     * Details: IP
 * Lecture: ESP8266
     * NodeMCU hardware
+    * NodeMCU hardware
     * ESP8266 software layers
+    * ESP8266 + Arduino
+    * Arduino IDE
+    * Arduino code structure
+    * Arduino file structure
+    * Generic Arduino APIs
+    * ESP Arduino APIs
+    * ESP Arduino APIs
 * Lecture: MQTT
     * MQTT
     * MQTT - The protocol
@@ -34,8 +45,6 @@
     * MQTT - Patterns
     * MQTT - Implementations
     * MQTT Cloud Connectors
-* Assignments
-    * Assignment 1: Blink a led
-    * Assignment 2: Connect to Wi-Fi
-    * Assignment 3: Connect to MQTT broker
-    * Assignment 4: Network play time
+    * MQTT on Arduino
+    * MQTT on Arduino
+    * Assignment: Network play time

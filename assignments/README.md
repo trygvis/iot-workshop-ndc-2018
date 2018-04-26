@@ -1,5 +1,7 @@
 # Assignment preparations
 
+# Drivers
+
 ## Install Arduino IDE
 
 Download and install from https://www.arduino.cc/en/Main/Software. The
@@ -20,6 +22,7 @@ which should include "NodeMCU 1.0 (ESP-12E Module)".
 * PubSubClient
 * Time
 * TimeAlarms
+* WifiManager
 
 ## Install Python 3
 
