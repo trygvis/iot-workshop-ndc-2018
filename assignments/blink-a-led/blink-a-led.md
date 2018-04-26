@@ -15,9 +15,9 @@ Create a new sketch with *File* -> *New* and compile it with *ctrl-R*.
 
 Wire up this schematic on the bread board:
 
-![](schematic/assignment-1_schem.pdf)
+![](schematic/blink-a-led_schem.pdf)
 
-![](schematic/assignment-1_bb.pdf)
+![](schematic/blink-a-led_bb.pdf)
 
 The colors on the wires used does not matter. The resistors
 orientation is not important, but the LED's orientation is important.

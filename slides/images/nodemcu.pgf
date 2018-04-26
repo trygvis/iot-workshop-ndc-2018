@@ -1,13 +1,13 @@
 \begin{tikzpicture}
 
 \path
-	(0, 0) node(flash)[draw, rectangle, 
+	(0, 0) node(flash)[draw, rectangle,
 	minimum height=1cm, minimum width=2cm] {Flash}
 
-	(0, 1.5) node(esp8266)[draw, rectangle, 
+	(0, 1.5) node(esp8266)[draw, rectangle,
 	minimum height=1cm, minimum width=2cm] {ESP8266}
 
-	(3.5, 1.5) node(cp201x)[draw, rectangle, 
+	(3.5, 1.5) node(cp201x)[draw, rectangle,
 	minimum height=0.75cm, minimum width=1cm]
 	{CP201x}
 

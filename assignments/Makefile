@@ -1,4 +1,7 @@
-AS=blink-a-led mqtt
+AS = 
+AS += blink-a-led
+AS += read-temperature
+AS += mqtt
 
 PDFS=$(foreach A,$(AS),$(A)/$(A).pdf)
 
@@ -9,6 +12,9 @@ define A_PATTERN
 $(1)/$(1).pdf: $(1)/$(1).md
 endef
 $(eval $(foreach A,$(AS),$(call $(A_PATTERN),$(A))))
+
+clean:
+	@rm $(wildcard $(PDFS))
 
 %.pdf: %.md
 	@echo pandoc $<

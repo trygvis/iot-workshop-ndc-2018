@@ -45,7 +45,7 @@ $(P).md: Makefile
 include $(P).beamer.md.d
 include $(P).revealjs.md.d
 
-%.beamer.md: %.md# %.beamer.md.d
+%.beamer.md: %.md .var/QUICK
 	$(RUN_PP_BEAMER) < $< > $@
 
 %.beamer.md.d: %.md
@@ -75,7 +75,7 @@ images/%.pdf: images/%.tex | images/pp-template Makefile
 	mv $(patsubst %.pdf,%-full.pdf,$@) $@
 
 
-VARS=SLIDE_THEME
+VARS=SLIDE_THEME QUICK
 
 define refresh =
 .var/$(1)::

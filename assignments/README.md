@@ -23,6 +23,8 @@ which should include "NodeMCU 1.0 (ESP-12E Module)".
 * Time
 * TimeAlarms
 * WifiManager
+* *DHT sensor library* by Adafruit
+* *Adafruit sensor library* by Adafruit
 
 ## Install Python 3
 
