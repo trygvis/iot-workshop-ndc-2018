@@ -129,10 +129,10 @@ Sparkfun and Adafruit etc sell modules with all of these technologies.}
 Chip & CPU & Freq & RAM & Flash & Price\tabularnewline
 \midrule
 \endhead
-nRF52810 & Cortex-M4 & 64 M & Hz 24k & 192k & \$1.88\tabularnewline
-nRF52832 & Cortex-M4 & F & 32k & 256k & \$2.54\tabularnewline
+nRF52810 & Cortex-M4 & 64 MHz & 24k & 192k & \$1.88\tabularnewline
+nRF52832 & Cortex-M4F & & 32k & 256k & \$2.54\tabularnewline
 & & & 64k & 512k & \$2.59\tabularnewline
-nRF52840 & Cortex-M4 & F & 256k & 1024k & \$3.85\tabularnewline
+nRF52840 & Cortex-M4F & & 256k & 1024k & \$3.85\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -447,21 +447,7 @@ The signaling does not specify any max data rate, very high rates
 \begin{frame}{Details: IP}
 \protect\hypertarget{details-ip}{}
 
-\includegraphics{images/ip-header.pdf}
-
-\note{Note that the “total length” field is 16 bits, 2 bytes, it’s
-maximum value is 64k, 65536.}
-
-\end{frame}
-
-\begin{frame}{Details: IP}
-\protect\hypertarget{details-ip-1}{}
-
 \begin{center}
-\iffalse
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-\fi
-
 \begin{tikzpicture}[scale=0.30]
     \sffamily
     \foreach \x in {0,7,8,15,16,31} % {0,...,32}
@@ -500,11 +486,56 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     \draw[thick, draw=black, fill=white] (16,18) rectangle (32,17); \node (li) at (24,17.5) {\scriptsize header checksum};
     \filldraw[thick,draw=black, fill=white] (0,17) rectangle (32,16); \node (mode) at (16,16.5) {\scriptsize source IP address};
     \filldraw[thick,draw=black, fill=white] (0,16) rectangle (32,15); \node (mode) at (16,15.5) {\scriptsize destination IP address};
-    \draw[thick,draw=black, fill=white] (0,15) rectangle (31.5,14);
-    \draw[fill=white, draw=white] (31.4,14.96) rectangle (31.6,14.05);
-    \draw[thick]  (31.5,14.97)  decorate [decoration=saw] { -- (31.5,14.02)};
+    \draw[thick,draw=black, fill=white] (0,15) rectangle (32,14);
+%   \draw[thick,draw=black, fill=white] (0,15) rectangle (31.5,14);
+%   \draw[fill=white, draw=white] (31.4,15) rectangle (31.6,16);
+%   \draw[thick]  (31.5,14.97)  decorate [decoration=saw] { -- (31.5,14.02)};
     \node (mode) at (16,14.5) {\scriptsize IP options (variable length)};
+
+    \filldraw[thick,draw=black, fill=white] (0,12) rectangle (32,14); \node (mode) at (16,13) {\scriptsize payload};
+
 \end{tikzpicture}
+
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Details: UDP}
+\protect\hypertarget{details-udp}{}
+
+\begin{center}
+\scalebox{0.5}{
+
+\begin{tikzpicture}[
+every node/.style={font=\bfseries}
+]
+
+\path 
+(-6.5em, 2em) node[draw, rectangle, minimum width=5em, minimum height=2em] {Offsets}
+(-6.5em, 0em) node[draw, rectangle, minimum width=5em, minimum height=2em] {Octet}
+(-2em, 2em) node[draw, rectangle, minimum width=4em, minimum height=2em] {Octet}
+(-2em, 0em) node[draw, rectangle, minimum width=4em, minimum height=2em] {Bit}
+
+(16em, -2em) node[draw, rectangle, minimum width=32em, minimum height=2em] {source port}
+(48em, -2em) node[draw, rectangle, minimum width=32em, minimum height=2em] {destination port}
+(16em, -4em) node[draw, rectangle, minimum width=32em, minimum height=2em] {length}
+(48em, -4em) node[draw, rectangle, minimum width=32em, minimum height=2em] {checksum}
+;
+
+\foreach \x in {0,...,3}
+    \node[draw, rectangle, minimum width=16em, minimum height=2em] at (\x * 16em + 8em, 2em) {\scriptsize \x};
+\foreach \x in {0,...,31}
+    \node[draw, rectangle, minimum width=2em, minimum height=2em] at (\x * 2em + 1em, 0em) {\scriptsize \x};
+
+\node[draw, rectangle, minimum width=4em, minimum height=2em] at (-2em, -2em) {\scriptsize 0};
+\node[draw, rectangle, minimum width=4em, minimum height=2em] at (-2em, -4em) {\scriptsize 32};
+
+\node[draw, rectangle, minimum width=5em, minimum height=2em] at (-6.5em, -2em) {\scriptsize 0};
+\node[draw, rectangle, minimum width=5em, minimum height=2em] at (-6.5em, -4em) {\scriptsize 4};
+
+\end{tikzpicture}
+
+}
 
 \end{center}
 
@@ -527,13 +558,13 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 \begin{tikzpicture}
 
 \path
-    (0, 0) node(flash)[draw, rectangle, 
+    (0, 0) node(flash)[draw, rectangle,
     minimum height=1cm, minimum width=2cm] {Flash}
 
-    (0, 1.5) node(esp8266)[draw, rectangle, 
+    (0, 1.5) node(esp8266)[draw, rectangle,
     minimum height=1cm, minimum width=2cm] {ESP8266}
 
-    (3.5, 1.5) node(cp201x)[draw, rectangle, 
+    (3.5, 1.5) node(cp201x)[draw, rectangle,
     minimum height=0.75cm, minimum width=1cm]
     {CP201x}
 
@@ -716,11 +747,14 @@ config.h is created by “new tab”.}
     \DataTypeTok{void}\NormalTok{ restart();}
     \DataTypeTok{uint32_t}\NormalTok{ getFreeHeap();}
     \DataTypeTok{uint32_t}\NormalTok{ getChipId();}
+
+\NormalTok{    ...}
 \NormalTok{\} ESP;}
+
+\CommentTok{// Usage}
+\NormalTok{ESP.restart();}
 \end{Highlighting}
 \end{Shaded}
-
-// Usage ESP.restart();
 
 \end{frame}
 
@@ -739,6 +773,8 @@ config.h is created by “new tab”.}
 \NormalTok{    IPAddress subnetMask();}
 \NormalTok{    IPAddress gatewayIP();}
 \NormalTok{    IPAddress dnsIP(}\DataTypeTok{uint8_t}\NormalTok{ dns_no = }\DecValTok{0}\NormalTok{);}
+
+\NormalTok{    ...}
 \NormalTok{\} WiFi;}
 
 \CommentTok{// Usage:}
@@ -776,6 +812,70 @@ final recipient.
 
 Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke
 (før standardisering).}
+
+\end{frame}
+
+\begin{frame}{MQTT - Implementations}
+\protect\hypertarget{mqtt---implementations}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Mosquitto
+\item
+  Eclipse Paho
+\item
+  RabbitMQ
+\item
+  ActiveMQ
+\end{itemize}
+
+\note{RabbitMQ has a separate connector that must be installed Not sure
+about ActiveMQ but it is at least a part of the project so it is
+releases at the same time.}
+
+\end{frame}
+
+\begin{frame}{MQTT Cloud Connectors}
+\protect\hypertarget{mqtt-cloud-connectors}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Cloud
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Amazon IoT
+  \item
+    Google Cloud IoT
+  \item
+    Microsoft Azure IoT
+  \item
+    CloudMQTT (at Heroku)
+  \end{itemize}
+\item
+  DIY
+
+  \begin{itemize}
+  \tightlist
+  \item
+    ThingMQ
+  \item
+    HiveMQ
+  \end{itemize}
+\end{itemize}
+
+\note{In between are:
+
+\begin{itemize}
+\tightlist
+\item
+  self hosted
+\item
+  Generic bridges
+\end{itemize}}
 
 \end{frame}
 
@@ -829,89 +929,9 @@ Subscriptions are not permanent. The connection is (unlike HTTP)
 stateful.
 
 Some messages may be persistent, but only one per topic. You will often
-end up with a “proper” mq on the backend if queuing is needed.}
+end up with a “proper” mq on the backend if queuing is needed.
 
-\end{frame}
-
-\begin{frame}[fragile]{MQTT - The protocol - MQTT Topic}
-\protect\hypertarget{mqtt---the-protocol---mqtt-topic}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Topic name: \texttt{foo/bar/baz}
-\item
-  Topic filter
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \texttt{foo/bar/?}
-  \item
-    \texttt{foo/\#}
-  \end{itemize}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]{MQTT - The protocol - MQTT Topic}
-\protect\hypertarget{mqtt---the-protocol---mqtt-topic-1}{}
-
-The temperature sensor:
-
-\begin{itemize}
-\tightlist
-\item
-  Publishes on:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \texttt{myapp/\$device-id/temperature}
-  \item
-    \texttt{myapp/\$device-id/humidity}
-  \item
-    \texttt{myapp/\$device-id/altert}
-  \end{itemize}
-\item
-  Subscribes to:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \texttt{myapp/\$device-id/command}
-  \end{itemize}
-\end{itemize}
-
-The central application:
-
-\begin{itemize}
-\tightlist
-\item
-  Subscribes to:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \texttt{myapp/\#/temperature}
-  \item
-    \texttt{myapp/\#/humidity}
-  \end{itemize}
-\item
-  Publishes on:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \texttt{myapp/\$device-id/command}
-  \end{itemize}
-\end{itemize}
-
-\note{Typical first round of implementation.
-
-Commands can be: * load new firmware (maybe an URL and firmware
-signature). * Set new calibration values * Change reading interval,
-altert levels (autonomous operation)}
+Push vs pull, central applications can push to clients}
 
 \end{frame}
 
@@ -944,45 +964,31 @@ The size field is variable length encoded, 0-127 bytes is 1 byte,
 
 \end{frame}
 
-\begin{frame}[fragile]{MQTT - The protocol - MQTT Topic - more}
-\protect\hypertarget{mqtt---the-protocol---mqtt-topic---more}{}
+\begin{frame}{MQTT - The protocol - Keep alive}
+\protect\hypertarget{mqtt---the-protocol---keep-alive}{}
 
-Enten må den holdes rett etter “\#\# MQTT - The protocol - MQTT Topic”
-ellers kanskje flyttes etter “patterns”.
+TODO
 
-The central application is split:
+\end{frame}
+
+\begin{frame}[fragile]{MQTT - The protocol - MQTT Topic}
+\protect\hypertarget{mqtt---the-protocol---mqtt-topic}{}
 
 \begin{itemize}
 \tightlist
 \item
-  An aggregating agent:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \texttt{myapp/\#/temperature}
-  \item
-    \texttt{myapp/\#/humidity}
-  \end{itemize}
+  Topic name: \texttt{foo/bar/baz}
 \item
-  Emailing agent
+  Topic filter
 
   \begin{itemize}
   \tightlist
   \item
-    \texttt{myapp/\$device-id/altert}
-  \end{itemize}
-\item
-  Publishes on:
-
-  \begin{itemize}
-  \tightlist
+    \texttt{foo/bar/?}
   \item
-    \texttt{myapp/\$device-id/command}
+    \texttt{foo/\#}
   \end{itemize}
 \end{itemize}
-
-\note{}
 
 \end{frame}
 
@@ -1092,90 +1098,103 @@ Broker
 
 \end{frame}
 
-\begin{frame}{MQTT - Patterns}
-\protect\hypertarget{mqtt---patterns}{}
+\begin{frame}{MQTT - The protocol - Client id}
+\protect\hypertarget{mqtt---the-protocol---client-id}{}
 
-Må utvides
-
-Explain:
-
-\begin{itemize}
-\tightlist
-\item
-  Push vs pull, central applications can push to clients
-\item
-  mostly mqtt, some http
-\item
-  Client id - sparker ut gamle koblinger
-\item
-  Keep alive / ping meldinger
-\item
-  Alternative transporter - websockets(!)
-\end{itemize}
+TODO
 
 \end{frame}
 
-\begin{frame}{MQTT - Implementations}
-\protect\hypertarget{mqtt---implementations}{}
+\begin{frame}{Device and application architecture with MQTT}
+\protect\hypertarget{device-and-application-architecture-with-mqtt}{}
 
-\begin{itemize}
-\tightlist
-\item
-  Mosquitto
-\item
-  Eclipse Paho
-\item
-  RabbitMQ
-\item
-  ActiveMQ
-\end{itemize}
+\begin{center}
+\begin{tikzpicture}
 
-\note{RabbitMQ has a separate connector that must be installed Not sure
-about ActiveMQ but it is at least a part of the project so it is
-releases at the same time.}
+\path
+    (-3 cm, 0) node (c1_label) {Device \#1}
+    ( 0 cm, 0) node (c2_label) {Device \#2}
+    ( 3 cm, 0) node (c3_label) {Device \#3}
+
+    (0, -3 cm) node (broker_label) {Broker}
+    (0, -6 cm) node (central_label) {Central}
+;
+
+\node (c1)[draw, circle, fit=(c1_label)] {};
+\node (c2)[draw, circle, fit=(c2_label)] {};
+\node (c3)[draw, circle, fit=(c3_label)] {};
+\node (central)[draw, circle, fit=(central_label)] {};
+\node (broker)[draw, rectangle, thick, inner ysep=5 mm, inner xsep=10 mm, fit=(broker_label)] {};
+
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c1) to [bend right] (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c2) -- (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c3) to [bend left] (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (central) -- (broker);
+
+\end{tikzpicture}
+
+\end{center}
 
 \end{frame}
 
-\begin{frame}{MQTT Cloud Connectors}
-\protect\hypertarget{mqtt-cloud-connectors}{}
+\begin{frame}[fragile]{MQTT Topic}
+\protect\hypertarget{mqtt-topic}{}
+
+The temperature sensor:
 
 \begin{itemize}
 \tightlist
 \item
-  Cloud
+  Publishes on:
 
   \begin{itemize}
   \tightlist
   \item
-    Amazon IoT
+    \texttt{myapp/\$device-id/temperature}
   \item
-    Google Cloud IoT
+    \texttt{myapp/\$device-id/humidity}
   \item
-    Microsoft Azure IoT
-  \item
-    CloudMQTT (at Heroku)
+    \texttt{myapp/\$device-id/altert}
   \end{itemize}
 \item
-  DIY
+  Subscribes to:
 
   \begin{itemize}
   \tightlist
   \item
-    ThingMQ
-  \item
-    HiveMQ
+    \texttt{myapp/\$device-id/command}
   \end{itemize}
 \end{itemize}
 
-\note{In between are:
+The central application:
 
 \begin{itemize}
 \tightlist
 \item
-  self hosted
+  Subscribes to:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\#/temperature}
+  \item
+    \texttt{myapp/\#/humidity}
+  \end{itemize}
 \item
-  Generic bridges
-\end{itemize}}
+  Publishes on:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\$device-id/command}
+  \end{itemize}
+\end{itemize}
+
+\note{Typical first round of implementation.
+
+Commands can be: * load new firmware (maybe an URL and firmware
+signature). * Set new calibration values * Change reading interval,
+altert levels (autonomous operation)}
 
 \end{frame}
 
@@ -1228,15 +1247,89 @@ PubSubClient is our MQTT client implementation.
 
 \end{frame}
 
-\begin{frame}{Assignment: Network play time}
-\protect\hypertarget{assignment-network-play-time}{}
+\begin{frame}[fragile]{Assignment}
+\protect\hypertarget{assignment}{}
 
 \begin{itemize}
+\tightlist
 \item
-  Measure round trip time/latency. Measure UDP, TCP. Measure when the
-  packet size is greater than the MTU
-\item
-  Notice variations in RTT
+  \texttt{mqtt}
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{MQTT topic architecture}
+\protect\hypertarget{mqtt-topic-architecture}{}
+
+The central application is split:
+
+\begin{itemize}
+\tightlist
+\item
+  An aggregating agent:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\#/temperature}
+  \item
+    \texttt{myapp/\#/humidity}
+  \end{itemize}
+\item
+  Emailing agent
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\$device-id/altert}
+  \end{itemize}
+\item
+  Publishes on:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{myapp/\$device-id/command}
+  \end{itemize}
+\end{itemize}
+
+\note{}
+
+\end{frame}
+
+\begin{frame}{MQTT - Patterns}
+\protect\hypertarget{mqtt---patterns}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Combining MQTT and HTTP
+\item
+  Using web sockets transport
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Assignment}
+\protect\hypertarget{assignment-1}{}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{mqtt2}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Assignment}
+\protect\hypertarget{assignment-2}{}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{mqtt3}
+\end{itemize}
+
+\note{discussion: how to connect these two devices?}
 
 \end{frame}

@@ -22,6 +22,7 @@
     * Layer 7: Application Layer
     * Details: IP
     * Details: IP
+    * Details: UDP
 * Lecture: ESP8266
     * NodeMCU hardware
     * NodeMCU hardware
@@ -35,16 +36,21 @@
     * ESP Arduino APIs
 * Lecture: MQTT
     * MQTT
-    * MQTT - The protocol
-    * MQTT - The protocol - MQTT Topic
-    * MQTT - The protocol - MQTT Topic
-    * MQTT - The protocol - MQTT Packet
-    * MQTT - The protocol - MQTT Topic - more
-    * MQTT - The protocol - Retained message
-    * MQTT - The protocol - Will message
-    * MQTT - Patterns
     * MQTT - Implementations
     * MQTT Cloud Connectors
+    * MQTT - The protocol
+    * MQTT - The protocol - MQTT Packet
+    * MQTT - The protocol - Keep alive
+    * MQTT - The protocol - MQTT Topic
+    * MQTT - The protocol - Retained message
+    * MQTT - The protocol - Will message
+    * MQTT - The protocol - Client id
+    * Device and application architecture with MQTT
+    * MQTT Topic
     * MQTT on Arduino
     * MQTT on Arduino
-    * Assignment: Network play time
+    * Assignment
+    * MQTT topic architecture
+    * MQTT - Patterns
+    * Assignment 
+    * Assignment 

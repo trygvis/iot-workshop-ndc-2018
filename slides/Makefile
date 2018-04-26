@@ -6,7 +6,7 @@ HTMLS=$(P)-reveal.html
 
 ifeq (1,$(QUICK))
 PP_DEFS+=QUICK
-PDF_ENGINE   = pdflatex
+PDF_ENGINE   = xelatex
 #PANDOC_ARGS += --no-highlight
 PANDOC_ARGS += --highlight-style=pygments
 else

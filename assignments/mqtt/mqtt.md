@@ -11,9 +11,6 @@ Get aquainted with MQTT.
 
 1. Connect to MQTT broker
 1. Publish temperature
-1. Implement last will to indicate online status
-1. Implement subscription to reconfigure device
-    1. Change temperature report interval
 
 ## Tips
 
@@ -32,7 +29,7 @@ char *cStr = myString.c_str();
 
 ## Bonus
 
-**1:** Print the heap at regular intervals.
+**1:** Print the heap free size at regular intervals.
 
 **2:** Implement min, max and average temperature over configured interval.
 

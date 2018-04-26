@@ -172,9 +172,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="header">
 <th style="text-align: left;">Chip</th>
 <th style="text-align: left;">CPU</th>
-<th>Freq</th>
+<th style="text-align: left;">Freq</th>
 <th style="text-align: left;">RAM</th>
-<th style="text-align: left;">Flash</th>
+<th>Flash</th>
 <th style="text-align: left;">Price</th>
 </tr>
 </thead>
@@ -182,33 +182,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: left;">nRF52810</td>
 <td style="text-align: left;">Cortex-M4</td>
-<td>64 M</td>
-<td style="text-align: left;">Hz 24k</td>
-<td style="text-align: left;">192k</td>
+<td style="text-align: left;">64 MHz</td>
+<td style="text-align: left;">24k</td>
+<td>192k</td>
 <td style="text-align: left;">$1.88</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">nRF52832</td>
-<td style="text-align: left;">Cortex-M4</td>
-<td>F</td>
+<td style="text-align: left;">Cortex-M4F</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">32k</td>
-<td style="text-align: left;">256k</td>
+<td>256k</td>
 <td style="text-align: left;">$2.54</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td></td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">64k</td>
-<td style="text-align: left;">512k</td>
+<td>512k</td>
 <td style="text-align: left;">$2.59</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">nRF52840</td>
-<td style="text-align: left;">Cortex-M4</td>
-<td>F</td>
+<td style="text-align: left;">Cortex-M4F</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">256k</td>
-<td style="text-align: left;">1024k</td>
+<td>1024k</td>
 <td style="text-align: left;">$3.85</td>
 </tr>
 </tbody>
@@ -451,12 +451,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </section><section id="details-ip" class="slide level2">
 <h2>Details: IP</h2>
-<aside class="notes">
-<p>Note that the “total length” field is 16 bits, 2 bytes, it’s maximum value is 64k, 65536.</p>
-</aside>
-</section><section id="details-ip-1" class="slide level2">
-<h2>Details: IP</h2>
 
+</section><section id="details-udp" class="slide level2">
+<h2>Details: UDP</h2>
+
+<p>TODO: add payload to “ip packets”</p>
 </section></section>
 <section><section id="lecture-esp8266" class="title-slide slide level1"><h1>Lecture: ESP8266</h1></section><section id="nodemcu-hardware" class="slide level2">
 <h2>NodeMCU hardware</h2>
@@ -530,8 +529,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="dt">void</span> restart();</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="dt">uint32_t</span> getFreeHeap();</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="dt">uint32_t</span> getChipId();</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">} ESP;</a></code></pre></div>
-<p>// Usage ESP.restart();</p>
+<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">    ...</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">} ESP;</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">// Usage</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">ESP.restart();</a></code></pre></div>
 </section><section id="esp-arduino-apis-1" class="slide level2">
 <h2>ESP Arduino APIs</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">class</span> {</a>
@@ -544,11 +547,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb5-8" data-line-number="8">    IPAddress subnetMask();</a>
 <a class="sourceLine" id="cb5-9" data-line-number="9">    IPAddress gatewayIP();</a>
 <a class="sourceLine" id="cb5-10" data-line-number="10">    IPAddress dnsIP(<span class="dt">uint8_t</span> dns_no = <span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">} WiFi;</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">// Usage:</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">    ...</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">} WiFi;</a>
 <a class="sourceLine" id="cb5-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">Serial.println(WiFi.localIP().toString());</a></code></pre></div>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">// Usage:</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">Serial.println(WiFi.localIP().toString());</a></code></pre></div>
 <aside class="notes">
 <p>http://arduino-esp8266.readthedocs.io/en/latest/libraries.html</p>
 </aside>
@@ -564,6 +569,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Supports SSL, and requires TCP.</p>
 <p>Has UDP-like semantics with “fire and forget” but on a higher level (the message always have to be delivered and ACKed by the broker, not it’s final recipient.</p>
 <p>Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke (før standardisering).</p>
+</aside>
+</section><section id="mqtt---implementations" class="slide level2">
+<h2>MQTT - Implementations</h2>
+<ul>
+<li>Mosquitto</li>
+<li>Eclipse Paho</li>
+<li>RabbitMQ</li>
+<li>ActiveMQ</li>
+</ul>
+<aside class="notes">
+<p>RabbitMQ has a separate connector that must be installed Not sure about ActiveMQ but it is at least a part of the project so it is releases at the same time.</p>
+</aside>
+</section><section id="mqtt-cloud-connectors" class="slide level2">
+<h2>MQTT Cloud Connectors</h2>
+<ul>
+<li>Cloud
+<ul>
+<li>Amazon IoT</li>
+<li>Google Cloud IoT</li>
+<li>Microsoft Azure IoT</li>
+<li>CloudMQTT (at Heroku)</li>
+</ul></li>
+<li>DIY
+<ul>
+<li>ThingMQ</li>
+<li>HiveMQ</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>In between are:</p>
+<ul>
+<li>self hosted</li>
+<li>Generic bridges</li>
+</ul>
 </aside>
 </section><section id="mqtt---the-protocol" class="slide level2">
 <h2>MQTT - The protocol</h2>
@@ -591,47 +630,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html</p>
 <p>Subscriptions are not permanent. The connection is (unlike HTTP) stateful.</p>
 <p>Some messages may be persistent, but only one per topic. You will often end up with a “proper” mq on the backend if queuing is needed.</p>
-</aside>
-</section><section id="mqtt---the-protocol---mqtt-topic" class="slide level2">
-<h2>MQTT - The protocol - MQTT Topic</h2>
-<ul>
-<li>Topic name: <code>foo/bar/baz</code></li>
-<li>Topic filter
-<ul>
-<li><code>foo/bar/?</code></li>
-<li><code>foo/#</code></li>
-</ul></li>
-</ul>
-</section><section id="mqtt---the-protocol---mqtt-topic-1" class="slide level2">
-<h2>MQTT - The protocol - MQTT Topic</h2>
-<p>The temperature sensor:</p>
-<ul>
-<li>Publishes on:
-<ul>
-<li><code>myapp/$device-id/temperature</code></li>
-<li><code>myapp/$device-id/humidity</code></li>
-<li><code>myapp/$device-id/altert</code></li>
-</ul></li>
-<li>Subscribes to:
-<ul>
-<li><code>myapp/$device-id/command</code></li>
-</ul></li>
-</ul>
-<p>The central application:</p>
-<ul>
-<li>Subscribes to:
-<ul>
-<li><code>myapp/#/temperature</code></li>
-<li><code>myapp/#/humidity</code></li>
-</ul></li>
-<li>Publishes on:
-<ul>
-<li><code>myapp/$device-id/command</code></li>
-</ul></li>
-</ul>
-<aside class="notes">
-<p>Typical first round of implementation.</p>
-<p>Commands can be: * load new firmware (maybe an URL and firmware signature). * Set new calibration values * Change reading interval, altert levels (autonomous operation)</p>
+<p>Push vs pull, central applications can push to clients</p>
 </aside>
 </section><section id="mqtt---the-protocol---mqtt-packet" class="slide level2">
 <h2>MQTT - The protocol - MQTT Packet</h2>
@@ -648,28 +647,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Only packet type + flags (1 byte) is required, everything else is optional.</p>
 <p>The size field is variable length encoded, 0-127 bytes is 1 byte, 128-16383 use 2 bytes etc, up to 4 bytes for 256MB payload.</p>
 </aside>
-</section><section id="mqtt---the-protocol---mqtt-topic---more" class="slide level2">
-<h2>MQTT - The protocol - MQTT Topic - more</h2>
-<p>Enten må den holdes rett etter “## MQTT - The protocol - MQTT Topic” ellers kanskje flyttes etter “patterns”.</p>
-<p>The central application is split:</p>
+</section><section id="mqtt---the-protocol---keep-alive" class="slide level2">
+<h2>MQTT - The protocol - Keep alive</h2>
+<p>TODO</p>
+</section><section id="mqtt---the-protocol---mqtt-topic" class="slide level2">
+<h2>MQTT - The protocol - MQTT Topic</h2>
 <ul>
-<li>An aggregating agent:
+<li>Topic name: <code>foo/bar/baz</code></li>
+<li>Topic filter
 <ul>
-<li><code>myapp/#/temperature</code></li>
-<li><code>myapp/#/humidity</code></li>
-</ul></li>
-<li>Emailing agent
-<ul>
-<li><code>myapp/$device-id/altert</code></li>
-</ul></li>
-<li>Publishes on:
-<ul>
-<li><code>myapp/$device-id/command</code></li>
+<li><code>foo/bar/?</code></li>
+<li><code>foo/#</code></li>
 </ul></li>
 </ul>
-<aside class="notes">
-
-</aside>
 </section><section id="mqtt---the-protocol---retained-message" class="slide level2">
 <h2>MQTT - The protocol - Retained message</h2>
 <p>Message is kept by the server even after disconnect</p>
@@ -723,50 +713,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>0</code></li>
 </ul></li>
 </ol>
-</section><section id="mqtt---patterns" class="slide level2">
-<h2>MQTT - Patterns</h2>
-<p>Må utvides</p>
-<p>Explain:</p>
+</section><section id="mqtt---the-protocol---client-id" class="slide level2">
+<h2>MQTT - The protocol - Client id</h2>
+<p>TODO</p>
+</section><section id="device-and-application-architecture-with-mqtt" class="slide level2">
+<h2>Device and application architecture with MQTT</h2>
+
+</section><section id="mqtt-topic" class="slide level2">
+<h2>MQTT Topic</h2>
+<p>The temperature sensor:</p>
 <ul>
-<li>Push vs pull, central applications can push to clients</li>
-<li>mostly mqtt, some http</li>
-<li>Client id - sparker ut gamle koblinger</li>
-<li>Keep alive / ping meldinger</li>
-<li>Alternative transporter - websockets(!)</li>
-</ul>
-</section><section id="mqtt---implementations" class="slide level2">
-<h2>MQTT - Implementations</h2>
+<li>Publishes on:
 <ul>
-<li>Mosquitto</li>
-<li>Eclipse Paho</li>
-<li>RabbitMQ</li>
-<li>ActiveMQ</li>
-</ul>
-<aside class="notes">
-<p>RabbitMQ has a separate connector that must be installed Not sure about ActiveMQ but it is at least a part of the project so it is releases at the same time.</p>
-</aside>
-</section><section id="mqtt-cloud-connectors" class="slide level2">
-<h2>MQTT Cloud Connectors</h2>
-<ul>
-<li>Cloud
-<ul>
-<li>Amazon IoT</li>
-<li>Google Cloud IoT</li>
-<li>Microsoft Azure IoT</li>
-<li>CloudMQTT (at Heroku)</li>
+<li><code>myapp/$device-id/temperature</code></li>
+<li><code>myapp/$device-id/humidity</code></li>
+<li><code>myapp/$device-id/altert</code></li>
 </ul></li>
-<li>DIY
+<li>Subscribes to:
 <ul>
-<li>ThingMQ</li>
-<li>HiveMQ</li>
+<li><code>myapp/$device-id/command</code></li>
+</ul></li>
+</ul>
+<p>The central application:</p>
+<ul>
+<li>Subscribes to:
+<ul>
+<li><code>myapp/#/temperature</code></li>
+<li><code>myapp/#/humidity</code></li>
+</ul></li>
+<li>Publishes on:
+<ul>
+<li><code>myapp/$device-id/command</code></li>
 </ul></li>
 </ul>
 <aside class="notes">
-<p>In between are:</p>
-<ul>
-<li>self hosted</li>
-<li>Generic bridges</li>
-</ul>
+<p>Typical first round of implementation.</p>
+<p>Commands can be: * load new firmware (maybe an URL and firmware signature). * Set new calibration values * Change reading interval, altert levels (autonomous operation)</p>
 </aside>
 </section><section id="mqtt-on-arduino" class="slide level2">
 <h2>MQTT on Arduino</h2>
@@ -801,12 +783,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <aside class="notes">
 <p>This is blocking!</p>
 </aside>
-</section><section id="assignment-network-play-time" class="slide level2">
-<h2>Assignment: Network play time</h2>
+</section><section id="assignment" class="slide level2">
+<h2>Assignment</h2>
 <ul>
-<li><p>Measure round trip time/latency. Measure UDP, TCP. Measure when the packet size is greater than the MTU</p></li>
-<li><p>Notice variations in RTT</p></li>
+<li><code>mqtt</code></li>
 </ul>
+</section><section id="mqtt-topic-architecture" class="slide level2">
+<h2>MQTT topic architecture</h2>
+<p>The central application is split:</p>
+<ul>
+<li>An aggregating agent:
+<ul>
+<li><code>myapp/#/temperature</code></li>
+<li><code>myapp/#/humidity</code></li>
+</ul></li>
+<li>Emailing agent
+<ul>
+<li><code>myapp/$device-id/altert</code></li>
+</ul></li>
+<li>Publishes on:
+<ul>
+<li><code>myapp/$device-id/command</code></li>
+</ul></li>
+</ul>
+<aside class="notes">
+
+</aside>
+</section><section id="mqtt---patterns" class="slide level2">
+<h2>MQTT - Patterns</h2>
+<ul>
+<li>Combining MQTT and HTTP</li>
+<li>Using web sockets transport</li>
+</ul>
+</section><section id="assignment-1" class="slide level2">
+<h2>Assignment</h2>
+<ul>
+<li><code>mqtt2</code></li>
+</ul>
+</section><section id="assignment-2" class="slide level2">
+<h2>Assignment</h2>
+<ul>
+<li><code>mqtt3</code></li>
+</ul>
+<aside class="notes">
+<p>discussion: how to connect these two devices?</p>
+</aside>
 </section></section>
 <section class="footnotes">
 <hr />

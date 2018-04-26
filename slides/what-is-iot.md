@@ -6,7 +6,7 @@ header-includes:
             allbordercolors={0 0 0},
             pdfborderstyle={/S/U/W 1}}
   - \usepackage{tikz}
-    \usetikzlibrary{angles,arrows,backgrounds,calc,chains,decorations,decorations.pathmorphing,decorations.pathreplacing,decorations.text,fit,positioning, quotes,shapes.arrows,shapes.geometric,shapes.symbols}
+    \usetikzlibrary{angles,arrows,arrows.meta,backgrounds,calc,chains,decorations,decorations.pathmorphing,decorations.pathreplacing,decorations.text,fit,matrix,positioning,quotes,shapes.arrows,shapes.geometric,shapes.symbols}
 !ifndef(QUICK)
 ~~~~~~
   - \usepackage{fontspec}
@@ -79,12 +79,12 @@ Sparkfun and Adafruit etc sell modules with all of these technologies.
 
 ## IoT Devices - Bluetooth 4/5 chips
 
-Chip     CPU      Freq RAM      Flash  Price
--------- -------- ---- -------- ------ ------
-nRF52810 Cortex-M4 64 MHz    24k   192k  $1.88
-nRF52832 Cortex-M4F          32k   256k  $2.54
-                             64k   512k  $2.59
-nRF52840 Cortex-M4F         256k  1024k  $3.85
+Chip     CPU        Freq   RAM  Flash Price
+-------- ---------- ------ ---- ----- ------
+nRF52810 Cortex-M4  64 MHz  24k  192k  $1.88
+nRF52832 Cortex-M4F         32k  256k  $2.54
+                            64k  512k  $2.59
+nRF52840 Cortex-M4F        256k 1024k  $3.85
 
 * nRF52810: High performance, entry-level Bluetooth 4/ANT/2.4GHz SoC
 * nRF52832: High performance Bluetooth 4/ANT/2.4GHz SoC
@@ -264,6 +264,8 @@ This layer is not really much used in the IP stack
 * CoAP
 * (everything else..)
 
+!comment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## Details: IP
 
 !ifdef(REVEAL)
@@ -280,19 +282,23 @@ This layer is not really much used in the IP stack
 Note that the "total length" field is 16 bits, 2 bytes, it's maximum value is 64k, 65536.
 
 :::
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## Details: IP
 
 !ifndef(QUICK)(
 \begin{center}
-!include(images/IP-Header_eng.tex)
+!include(images/ip-packet.pgf)
 \end{center}
 )
 
-!comment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-![](images/IP-Header_eng.pdf)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Details: UDP
+
+!ifndef(QUICK)(
+\begin{center}
+!include(images/udp-packet.pgf)
+\end{center}
+)
 
 # Lecture: ESP8266
 
@@ -396,11 +402,13 @@ class {
     void restart();
     uint32_t getFreeHeap();
     uint32_t getChipId();
+
+    ...
 } ESP;
-~~~
 
 // Usage
 ESP.restart();
+~~~
 
 ## ESP Arduino APIs
 
@@ -415,6 +423,8 @@ class {
     IPAddress subnetMask();
     IPAddress gatewayIP();
     IPAddress dnsIP(uint8_t dns_no = 0);
+
+    ...
 } WiFi;
 
 // Usage:
@@ -451,6 +461,41 @@ Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke
 
 :::
 
+## MQTT - Implementations
+
+* Mosquitto
+* Eclipse Paho
+* RabbitMQ
+* ActiveMQ
+
+::: notes
+
+RabbitMQ has a separate connector that must be installed
+Not sure about ActiveMQ but it is at least a part of the project so it is releases at the same time.
+
+:::
+
+## MQTT Cloud Connectors
+
+* Cloud
+    * Amazon IoT
+    * Google Cloud IoT
+    * Microsoft Azure IoT
+    * CloudMQTT (at Heroku)
+
+* DIY
+    * ThingMQ
+    * HiveMQ
+
+::: notes
+
+In between are:
+
+* self hosted
+* Generic bridges
+
+:::
+
 ## MQTT - The protocol
 
 Agents have one of two roles:
@@ -479,42 +524,7 @@ stateful.
 Some messages may be persistent, but only one per topic. You will
 often end up with a "proper" mq on the backend if queuing is needed.
 
-:::
-
-## MQTT - The protocol - MQTT Topic
-
-* Topic name: `foo/bar/baz`
-* Topic filter
-    * `foo/bar/?`
-    * `foo/#`
-
-## MQTT - The protocol - MQTT Topic
-
-The temperature sensor:
-
-* Publishes on:
-    * `myapp/$device-id/temperature`
-    * `myapp/$device-id/humidity`
-    * `myapp/$device-id/altert`
-* Subscribes to:
-    * `myapp/$device-id/command`
-
-The central application:
-
-* Subscribes to:
-    * `myapp/#/temperature`
-    * `myapp/#/humidity`
-* Publishes on:
-    * `myapp/$device-id/command`
-
-::: notes
-
-Typical first round of implementation.
-
-Commands can be:
-* load new firmware (maybe an URL and firmware signature).
-* Set new calibration values
-* Change reading interval, altert levels (autonomous operation)
+Push vs pull, central applications can push to clients
 
 :::
 
@@ -534,24 +544,16 @@ The size field is variable length encoded, 0-127 bytes is 1 byte, 128-16383 use 
 
 :::
 
-## MQTT - The protocol - MQTT Topic - more
+## MQTT - The protocol - Keep alive
 
-Enten må den holdes rett etter "## MQTT - The protocol - MQTT Topic" ellers kanskje flyttes etter "patterns".
+TODO
 
-The central application is split:
+## MQTT - The protocol - MQTT Topic
 
-* An aggregating agent:
-    * `myapp/#/temperature`
-    * `myapp/#/humidity`
-* Emailing agent
-    * `myapp/$device-id/altert`
-
-* Publishes on:
-    * `myapp/$device-id/command`
-
-::: notes
-
-:::
+* Topic name: `foo/bar/baz`
+* Topic filter
+    * `foo/bar/?`
+    * `foo/#`
 
 ## MQTT - The protocol - Retained message
 
@@ -598,50 +600,45 @@ Broker
     * `$app/$device/online`
     * `0`
 
-## MQTT - Patterns
+## MQTT - The protocol - Client id
 
-Må utvides
+TODO
 
-Explain:
+## Device and application architecture with MQTT
 
-* Push vs pull, central applications can push to clients
-* mostly mqtt, some http
-* Client id - sparker ut gamle koblinger
-* Keep alive / ping meldinger
-* Alternative transporter - websockets(!)
+!ifndef(QUICK)(
+\begin{center}
+!include(images/mqtt-example-architecture.pgf)
+\end{center}
+)
 
-## MQTT - Implementations
+## MQTT Topic
 
-* Mosquitto
-* Eclipse Paho
-* RabbitMQ
-* ActiveMQ
+The temperature sensor:
 
-::: notes
+* Publishes on:
+    * `myapp/$device-id/temperature`
+    * `myapp/$device-id/humidity`
+    * `myapp/$device-id/altert`
+* Subscribes to:
+    * `myapp/$device-id/command`
 
-RabbitMQ has a separate connector that must be installed
-Not sure about ActiveMQ but it is at least a part of the project so it is releases at the same time.
+The central application:
 
-:::
-
-## MQTT Cloud Connectors
-
-* Cloud
-    * Amazon IoT
-    * Google Cloud IoT
-    * Microsoft Azure IoT
-    * CloudMQTT (at Heroku)
-
-* DIY
-    * ThingMQ
-    * HiveMQ
+* Subscribes to:
+    * `myapp/#/temperature`
+    * `myapp/#/humidity`
+* Publishes on:
+    * `myapp/$device-id/command`
 
 ::: notes
 
-In between are:
+Typical first round of implementation.
 
-* self hosted
-* Generic bridges
+Commands can be:
+* load new firmware (maybe an URL and firmware signature).
+* Set new calibration values
+* Change reading interval, altert levels (autonomous operation)
 
 :::
 
@@ -686,9 +683,42 @@ void reconnect() {
 This is blocking!
 :::
 
-## Assignment: Network play time
+## Assignment
 
-* Measure round trip time/latency. Measure UDP, TCP. Measure when the
-  packet size is greater than the MTU
+* `mqtt`
 
-* Notice variations in RTT
+## MQTT topic architecture
+
+The central application is split:
+
+* An aggregating agent:
+    * `myapp/#/temperature`
+    * `myapp/#/humidity`
+* Emailing agent
+    * `myapp/$device-id/altert`
+
+* Publishes on:
+    * `myapp/$device-id/command`
+
+::: notes
+
+:::
+
+## MQTT - Patterns
+
+* Combining MQTT and HTTP
+* Using web sockets transport
+
+## Assignment 
+
+* `mqtt2`
+
+## Assignment 
+
+* `mqtt3`
+
+::: notes
+
+discussion: how to connect these two devices?
+
+:::
