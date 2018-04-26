@@ -815,6 +815,38 @@ Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke
 
 \end{frame}
 
+\begin{frame}{Device and application architecture with MQTT}
+\protect\hypertarget{device-and-application-architecture-with-mqtt}{}
+
+\begin{center}
+\begin{tikzpicture}
+
+\path
+    (-3 cm, 0) node (c1_label) {Device \#1}
+    ( 0 cm, 0) node (c2_label) {Device \#2}
+    ( 3 cm, 0) node (c3_label) {Device \#3}
+
+    (0, -3 cm) node (broker_label) {Broker}
+    (0, -6 cm) node (central_label) {Central}
+;
+
+\node (c1)[draw, circle, fit=(c1_label)] {};
+\node (c2)[draw, circle, fit=(c2_label)] {};
+\node (c3)[draw, circle, fit=(c3_label)] {};
+\node (broker)[draw, rectangle, thick, inner ysep=5 mm, inner xsep=10 mm, fit=(broker_label)] {};
+\node (central) at (central_label) [draw, circle, text width=2 cm] {};
+
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c1) to [bend right] (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c2) -- (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c3) to [bend left] (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (central) -- (broker);
+
+\end{tikzpicture}
+
+\end{center}
+
+\end{frame}
+
 \begin{frame}{MQTT - Implementations}
 \protect\hypertarget{mqtt---implementations}{}
 
@@ -964,10 +996,40 @@ The size field is variable length encoded, 0-127 bytes is 1 byte,
 
 \end{frame}
 
-\begin{frame}{MQTT - The protocol - Keep alive}
-\protect\hypertarget{mqtt---the-protocol---keep-alive}{}
+\begin{frame}[fragile]{MQTT Connect}
+\protect\hypertarget{mqtt-connect}{}
 
-TODO
+\begin{itemize}
+\tightlist
+\item
+  \texttt{CONNECT}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{clientId}
+  \item
+    \texttt{username}
+  \item
+    \texttt{password}
+  \item
+    \texttt{keepAlive}
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  Keep alive
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{PINGREQ}
+  \item
+    \texttt{PINGRESP}
+  \end{itemize}
+\end{itemize}
 
 \end{frame}
 
@@ -1095,45 +1157,6 @@ Broker
     \texttt{0}
   \end{itemize}
 \end{enumerate}
-
-\end{frame}
-
-\begin{frame}{MQTT - The protocol - Client id}
-\protect\hypertarget{mqtt---the-protocol---client-id}{}
-
-TODO
-
-\end{frame}
-
-\begin{frame}{Device and application architecture with MQTT}
-\protect\hypertarget{device-and-application-architecture-with-mqtt}{}
-
-\begin{center}
-\begin{tikzpicture}
-
-\path
-    (-3 cm, 0) node (c1_label) {Device \#1}
-    ( 0 cm, 0) node (c2_label) {Device \#2}
-    ( 3 cm, 0) node (c3_label) {Device \#3}
-
-    (0, -3 cm) node (broker_label) {Broker}
-    (0, -6 cm) node (central_label) {Central}
-;
-
-\node (c1)[draw, circle, fit=(c1_label)] {};
-\node (c2)[draw, circle, fit=(c2_label)] {};
-\node (c3)[draw, circle, fit=(c3_label)] {};
-\node (central)[draw, circle, fit=(central_label)] {};
-\node (broker)[draw, rectangle, thick, inner ysep=5 mm, inner xsep=10 mm, fit=(broker_label)] {};
-
-\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c1) to [bend right] (broker);
-\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c2) -- (broker);
-\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c3) to [bend left] (broker);
-\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (central) -- (broker);
-
-\end{tikzpicture}
-
-\end{center}
 
 \end{frame}
 
@@ -1293,7 +1316,73 @@ The central application is split:
   \end{itemize}
 \end{itemize}
 
-\note{}
+\end{frame}
+
+\begin{frame}{MQTT topic architecture}
+\protect\hypertarget{mqtt-topic-architecture-1}{}
+
+\begin{center}
+\begin{tikzpicture}
+
+\path
+    (-3 cm, 0) node (c1_label) {Device \#1}
+    ( 0 cm, 0) node (c2_label) {Device \#2}
+    ( 3 cm, 0) node (c3_label) {Device \#3}
+
+    (0, -3 cm) node (broker_label) {Broker}
+    (0, -6 cm) node (central_label) {Central}
+;
+
+\node (c1)[draw, circle, fit=(c1_label)] {};
+\node (c2)[draw, circle, fit=(c2_label)] {};
+\node (c3)[draw, circle, fit=(c3_label)] {};
+\node (broker)[draw, rectangle, thick, inner ysep=5 mm, inner xsep=10 mm, fit=(broker_label)] {};
+\node (central) at (central_label) [draw, circle, text width=2 cm] {};
+
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c1) to [bend right] (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c2) -- (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c3) to [bend left] (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (central) -- (broker);
+
+\end{tikzpicture}
+
+\end{center}
+
+\end{frame}
+
+\begin{frame}{MQTT topic architecture}
+\protect\hypertarget{mqtt-topic-architecture-2}{}
+
+\begin{center}
+\begin{tikzpicture}
+
+\path
+    (-3 cm, 0) node (c1_label) {Device \#1}
+    ( 0 cm, 0) node (c2_label) {Device \#2}
+    ( 3 cm, 0) node (c3_label) {Device \#3}
+
+    (0, -3 cm) node (broker_label) {Broker}
+
+    (-2 cm, -6 cm) node (agg_label) {Aggregator}
+    ( 2 cm, -6 cm) node (email_label) {Email}
+;
+
+\node (c1)[draw, circle, fit=(c1_label)] {};
+\node (c2)[draw, circle, fit=(c2_label)] {};
+\node (c3)[draw, circle, fit=(c3_label)] {};
+\node (broker)[draw, rectangle, thick, inner ysep=5 mm, inner xsep=10 mm, fit=(broker_label)] {};
+\node (agg) at (agg_label) [draw, circle, text width=2 cm] {};
+\node (email) at (email_label) [draw, circle, text width=2 cm] {};
+
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c1) to [bend right] (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c2) -- (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c3) to [bend left] (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (agg) -- (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (email) -- (broker);
+
+\end{tikzpicture}
+
+\end{center}
 
 \end{frame}
 

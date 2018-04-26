@@ -6,18 +6,22 @@
 	( 3 cm, 0) node (c3_label) {Device \#3}
 
 	(0, -3 cm) node (broker_label) {Broker}
-	(0, -6 cm) node (central_label) {Central}
+
+	(-2 cm, -6 cm) node (agg_label) {Aggregator}
+	( 2 cm, -6 cm) node (email_label) {Email}
 ;
 
 \node (c1)[draw, circle, fit=(c1_label)] {};
 \node (c2)[draw, circle, fit=(c2_label)] {};
 \node (c3)[draw, circle, fit=(c3_label)] {};
 \node (broker)[draw, rectangle, thick, inner ysep=5 mm, inner xsep=10 mm, fit=(broker_label)] {};
-\node (central) at (central_label) [draw, circle, text width=2 cm] {};
+\node (agg) at (agg_label) [draw, circle, text width=2 cm] {};
+\node (email) at (email_label) [draw, circle, text width=2 cm] {};
 
 \draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c1) to [bend right] (broker);
 \draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c2) -- (broker);
 \draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (c3) to [bend left] (broker);
-\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (central) -- (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (agg) -- (broker);
+\draw[{Latex[length=4mm, round]}-{Latex[length=4mm, round]}] (email) -- (broker);
 
 \end{tikzpicture}

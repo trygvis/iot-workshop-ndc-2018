@@ -461,6 +461,14 @@ Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke
 
 :::
 
+## Device and application architecture with MQTT
+
+!ifndef(QUICK)(
+\begin{center}
+!include(images/mqtt-example-architecture.pgf)
+\end{center}
+)
+
 ## MQTT - Implementations
 
 * Mosquitto
@@ -544,9 +552,19 @@ The size field is variable length encoded, 0-127 bytes is 1 byte, 128-16383 use 
 
 :::
 
-## MQTT - The protocol - Keep alive
+## MQTT Connect
 
-TODO
+* `CONNECT`
+    * `clientId`
+    * `username`
+    * `password`
+    * `keepAlive`
+
+<!-- -->
+
+* Keep alive
+    * `PINGREQ`
+    * `PINGRESP`
 
 ## MQTT - The protocol - MQTT Topic
 
@@ -599,18 +617,6 @@ Broker
 1. *To all subscribers* `PUBLISH`
     * `$app/$device/online`
     * `0`
-
-## MQTT - The protocol - Client id
-
-TODO
-
-## Device and application architecture with MQTT
-
-!ifndef(QUICK)(
-\begin{center}
-!include(images/mqtt-example-architecture.pgf)
-\end{center}
-)
 
 ## MQTT Topic
 
@@ -700,9 +706,21 @@ The central application is split:
 * Publishes on:
     * `myapp/$device-id/command`
 
-::: notes
+## MQTT topic architecture
 
-:::
+!ifndef(QUICK)(
+\begin{center}
+!include(images/mqtt-example-architecture.pgf)
+\end{center}
+)
+
+## MQTT topic architecture
+
+!ifndef(QUICK)(
+\begin{center}
+!include(images/mqtt-example-architecture2.pgf)
+\end{center}
+)
 
 ## MQTT - Patterns
 
