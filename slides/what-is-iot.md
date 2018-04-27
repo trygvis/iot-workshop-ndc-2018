@@ -397,19 +397,19 @@ Note that the "total length" field is 16 bits, 2 bytes, it's maximum value is 64
 :::
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-## Details: IP
+## Details: IP Header
 
 !ifndef(QUICK)(
 \begin{center}
-!include(images/ip-packet.pgf)
+!include(images/ip-header.pgf)
 \end{center}
 )
 
-## Details: UDP
+## Details: UDP Header
 
 !ifndef(QUICK)(
 \begin{center}
-!include(images/udp-packet.pgf)
+!include(images/udp-header.pgf)
 \end{center}
 )
 

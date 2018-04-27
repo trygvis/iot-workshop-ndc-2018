@@ -1,0 +1,37 @@
+\scalebox{0.5}{
+\begin{tikzpicture}[
+every node/.style={font=\bfseries},
+basebox/.style={anchor=west, minimum height=2em, draw, rectangle},
+bitbox/.style={basebox, minimum width=2em},
+bytebox/.style={basebox, minimum width=16em},
+wordbox/.style={basebox, minimum width=32em},
+qwordbox/.style={basebox, minimum width=64em},
+]
+
+\path
+(-9em, 2em) node[basebox, minimum width=5em] {Offsets}
+(-9em, 0em) node[basebox, minimum width=5em] {Octet}
+(-4em, 2em) node[basebox, minimum width=4em] {Octet}
+(-4em, 0em) node[basebox, minimum width=4em] {Bit}
+;
+
+\foreach \x in {0,...,3}
+	\node[bytebox] at (\x * 16em, 2em) {\scriptsize \x};
+\foreach \x in {0,...,31}
+	\node[bitbox] at (\x * 2em, 0em) {\scriptsize \x};
+
+\node[basebox, minimum width=4em] at (-4em, -2em) {\scriptsize 0};
+\node[basebox, minimum width=4em] at (-4em, -4em) {\scriptsize 32};
+
+\node[basebox, minimum width=5em] at (-9em, -2em) {\scriptsize 0};
+\node[basebox, minimum width=5em] at (-9em, -4em) {\scriptsize 4};
+
+\path
+( 0 * 2em, -1 * 2em) node[wordbox] {source port}
+(16 * 2em, -1 * 2em) node[wordbox] {destination port}
+( 0 * 2em, -2 * 2em) node[wordbox] {length}
+(16 * 2em, -2 * 2em) node[wordbox] {checksum}
+;
+
+\end{tikzpicture}
+}

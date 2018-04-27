@@ -1,0 +1,53 @@
+\scalebox{0.5}{
+\begin{tikzpicture}[
+every node/.style={font=\bfseries},
+basebox/.style={anchor=north west, minimum height=2em, draw, rectangle},
+bitbox/.style={basebox, minimum width=2em},
+bytebox/.style={basebox, minimum width=16em},
+wordbox/.style={basebox, minimum width=32em},
+qwordbox/.style={basebox, minimum width=64em},
+]
+
+\path
+(-9em, 2em) node[basebox, minimum width=5em] {Offsets}
+(-9em, 0em) node[basebox, minimum width=5em] {Octet}
+(-4em, 2em) node[basebox, minimum width=4em] {Octet}
+(-4em, 0em) node[basebox, minimum width=4em] {Bit}
+;
+
+\foreach \x in {0,...,3}
+	\node[bytebox] at (\x * 16em, 2em) {\scriptsize \x};
+\foreach \x in {0,...,31}
+	\node[bitbox] at (\x * 2em, 0em) {\scriptsize \x};
+
+\foreach \x in {0,32,...,160}
+	\node[basebox, minimum width=4em] at (-4em, \x * -1/16*1em - 2em) {\scriptsize \x};
+
+\foreach \x in {0,4,...,20}
+	\node[basebox, minimum width=5em] at (-9em, \x * -0.5em - 2em) {\scriptsize \x};
+
+\path
+(0em, -1 * 2em) node[basebox, minimum width=8em] {Version}
+(8em, -1 * 2em) node[basebox, minimum width=8em] {IHL}
+(16em, -1 * 2em) node[basebox, minimum width=16em] {TOS}
+(32em, -1 * 2em) node[wordbox] {Packet length}
+
+(0em, -2 * 2em) node[wordbox] {Identification}
+(32em, -2 * 2em) node[bitbox] {X}
+(34em, -2 * 2em) node[bitbox] {D}
+(36em, -2 * 2em) node[bitbox] {M}
+(38em, -2 * 2em) node[basebox, minimum width=26em] {Fragement offset}
+
+(0em, -3 * 2em) node[bytebox] {TTL}
+(16em, -3 * 2em) node[bytebox] {Protocol}
+(32em, -3 * 2em) node[wordbox] {Header checksum}
+
+(0em, -4 * 2em) node[qwordbox] {Source ip address}
+(0em, -5 * 2em) node[qwordbox] {Destination ip address}
+(0em, -6 * 2em) node[qwordbox] {Options (variable length)}
+
+%(0em, -7 * 2em) node[qwordbox, minimum height=4 em] {Payload}
+;
+
+\end{tikzpicture}
+}

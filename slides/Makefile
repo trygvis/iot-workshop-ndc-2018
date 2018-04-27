@@ -84,8 +84,3 @@ define refresh =
 endef
 
 $(foreach var,$(VARS),$(eval $(call refresh,$(var))))
-
-# Dependencies
-$(P).md: images/IP-Header_eng.tex
-$(P).md: images/ip-header.pdf
-$(P).md: images/ip-header.svg

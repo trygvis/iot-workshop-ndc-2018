@@ -23,17 +23,15 @@
     * ESP8266 details - Power usage
 * Going back to basics
     * What is the internet again?
-    * OSI model
-    * Layer 1: Physical Layer
-    * Layer 2: Data Link Layer
-    * Layer 3: Network Layer
-    * Layer 4: Transport Layer
-    * Layer 5: Session Layer
-    * Layer 6: Presentation Layer
+    * TCP/IP Layers
+    * Packet encapsulation
+    * Network interface
+    * Internet
+    * Transport
     * Layer 7: Application Layer
     * Details: IP
-    * Details: IP
-    * Details: UDP
+    * Details: IP Header
+    * Details: UDP Header
 * Lecture: MQTT
     * MQTT
     * Device and application architecture with MQTT

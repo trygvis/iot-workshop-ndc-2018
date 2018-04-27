@@ -679,97 +679,108 @@ The signaling does not specify any max data rate, very high rates
 
 \end{frame}
 
-\begin{frame}{Details: IP}
-\protect\hypertarget{details-ip}{}
+\begin{frame}{Details: IP Header}
+\protect\hypertarget{details-ip-header}{}
 
 \begin{center}
-\begin{tikzpicture}[scale=0.30]
-    \sffamily
-    \foreach \x in {0,7,8,15,16,31} % {0,...,32}
-        \node at (\x+0.5,20.5) {\scriptsize \x};
-%   \foreach \x in {0,...,31}
-%       \node at (\x+0.5,13.5) {\scriptsize \x};
-    \foreach \x in {0,8,16,32} % {0,...,32}
-        \draw[thick] (\x,20) -- (\x,21);
-    \foreach \x in {0,...,32}
-        \draw[thick] (\x,14) -- (\x,20);
-%   \foreach \x in {0,...,32}
-%       \draw[thick] (\x,13) -- (\x,14);
-    \node[thick] (bit1) at (-0.6,20.5) {\scriptsize bit};
-%   \node[thick] (bit2) at (-0.6,13.5) {\scriptsize bit};
-        
-\iffalse
-    \draw [<->, thick] (-0.6, 19.9) -- (-0.6,15.1);
-    \draw [thick] (-1, 20) -- (-0.1,20);
-    \draw [thick] (-1, 15) -- (-0.1,15);
-    \node[fill=white] at (-1.1,17.5) {\tiny 20 bytes};
-\fi
-    \foreach \y/\v in {0,4,8,12,16,20}
-        \node at (-0.6,{19.5-(\v / 4)}) {\scriptsize \v};
+\scalebox{0.5}{
+\begin{tikzpicture}[
+every node/.style={font=\bfseries},
+basebox/.style={anchor=north west, minimum height=2em, draw, rectangle},
+bitbox/.style={basebox, minimum width=2em},
+bytebox/.style={basebox, minimum width=16em},
+wordbox/.style={basebox, minimum width=32em},
+qwordbox/.style={basebox, minimum width=64em},
+]
 
-    \filldraw[thick,draw=black, fill=white] (0,20) rectangle (4,19); \node (mode) at (2,19.5) {\scriptsize version};
-    \filldraw[thick,draw=black, fill=white] (4,20) rectangle (8,19); \node (mode) at (6,19.5) {\scriptsize len};
-%   \draw[thick, draw=black, fill=white] (8,20) rectangle (16,19); \node (stratum) at (11.5,19.5) {\scriptsize type of service (TOS)};
-    \draw[thick, draw=black, fill=white] (8,20) rectangle (16,19); \node (stratum) at (11.5,19.5) {\scriptsize TOS};
-    \draw[thick, draw=black, fill=white] (16,20) rectangle (32,19); \node (li) at (24,19.5) {\scriptsize full length of packet};
-    \filldraw[thick,draw=black, fill=white] (0,19) rectangle (16,18); \node (mode) at (8,18.5) {\scriptsize identification};
-%   \draw[thick, draw=black] (16,19) rectangle (19,18); \filldraw[white] (16.5,18.43) rectangle (19,18.88); \node [](li) at (17.5,18.67) {\tiny IP flags}; \node at (16.5,18.25) {\tiny x};\node at (17.5,18.25) {\tiny D};\node at (18.5,18.25) {\tiny M};
-    \draw[thick, draw=black] (16,19) rectangle (19,18); \filldraw[white] (16.5,18.43) rectangle (19,18.88); \node at (16.5,18.5) {\scriptsize X};\node at (17.5,18.5) {\scriptsize D};\node at (18.5,18.5) {\scriptsize M};
-    \draw[thick, draw=black, fill=white] (19,19) rectangle (32,18); \node (li) at (24,18.5) {\scriptsize fragment Offset};
-    \filldraw[thick,draw=black, fill=white] (0,18) rectangle (8,17); \node (mode) at (4,17.5) {\scriptsize time to live (TTL)};
-    \draw[thick, draw=black, fill=white] (8,18) rectangle (16,17); \node (stratum) at (11.5,17.5) {\scriptsize protocol};
-    \draw[thick, draw=black, fill=white] (16,18) rectangle (32,17); \node (li) at (24,17.5) {\scriptsize header checksum};
-    \filldraw[thick,draw=black, fill=white] (0,17) rectangle (32,16); \node (mode) at (16,16.5) {\scriptsize source IP address};
-    \filldraw[thick,draw=black, fill=white] (0,16) rectangle (32,15); \node (mode) at (16,15.5) {\scriptsize destination IP address};
-    \draw[thick,draw=black, fill=white] (0,15) rectangle (32,14);
-%   \draw[thick,draw=black, fill=white] (0,15) rectangle (31.5,14);
-%   \draw[fill=white, draw=white] (31.4,15) rectangle (31.6,16);
-%   \draw[thick]  (31.5,14.97)  decorate [decoration=saw] { -- (31.5,14.02)};
-    \node (mode) at (16,14.5) {\scriptsize IP options (variable length)};
+\path
+(-9em, 2em) node[basebox, minimum width=5em] {Offsets}
+(-9em, 0em) node[basebox, minimum width=5em] {Octet}
+(-4em, 2em) node[basebox, minimum width=4em] {Octet}
+(-4em, 0em) node[basebox, minimum width=4em] {Bit}
+;
 
-    \filldraw[thick,draw=black, fill=white] (0,12) rectangle (32,14); \node (mode) at (16,13) {\scriptsize payload};
+\foreach \x in {0,...,3}
+    \node[bytebox] at (\x * 16em, 2em) {\scriptsize \x};
+\foreach \x in {0,...,31}
+    \node[bitbox] at (\x * 2em, 0em) {\scriptsize \x};
+
+\foreach \x in {0,32,...,160}
+    \node[basebox, minimum width=4em] at (-4em, \x * -1/16*1em - 2em) {\scriptsize \x};
+
+\foreach \x in {0,4,...,20}
+    \node[basebox, minimum width=5em] at (-9em, \x * -0.5em - 2em) {\scriptsize \x};
+
+\path
+(0em, -1 * 2em) node[basebox, minimum width=8em] {Version}
+(8em, -1 * 2em) node[basebox, minimum width=8em] {IHL}
+(16em, -1 * 2em) node[basebox, minimum width=16em] {TOS}
+(32em, -1 * 2em) node[wordbox] {Packet length}
+
+(0em, -2 * 2em) node[wordbox] {Identification}
+(32em, -2 * 2em) node[bitbox] {X}
+(34em, -2 * 2em) node[bitbox] {D}
+(36em, -2 * 2em) node[bitbox] {M}
+(38em, -2 * 2em) node[basebox, minimum width=26em] {Fragement offset}
+
+(0em, -3 * 2em) node[bytebox] {TTL}
+(16em, -3 * 2em) node[bytebox] {Protocol}
+(32em, -3 * 2em) node[wordbox] {Header checksum}
+
+(0em, -4 * 2em) node[qwordbox] {Source ip address}
+(0em, -5 * 2em) node[qwordbox] {Destination ip address}
+(0em, -6 * 2em) node[qwordbox] {Options (variable length)}
+
+%(0em, -7 * 2em) node[qwordbox, minimum height=4 em] {Payload}
+;
 
 \end{tikzpicture}
+}
 
 \end{center}
 
 \end{frame}
 
-\begin{frame}{Details: UDP}
-\protect\hypertarget{details-udp}{}
+\begin{frame}{Details: UDP Header}
+\protect\hypertarget{details-udp-header}{}
 
 \begin{center}
 \scalebox{0.5}{
-
 \begin{tikzpicture}[
-every node/.style={font=\bfseries}
+every node/.style={font=\bfseries},
+basebox/.style={anchor=west, minimum height=2em, draw, rectangle},
+bitbox/.style={basebox, minimum width=2em},
+bytebox/.style={basebox, minimum width=16em},
+wordbox/.style={basebox, minimum width=32em},
+qwordbox/.style={basebox, minimum width=64em},
 ]
 
-\path 
-(-6.5em, 2em) node[draw, rectangle, minimum width=5em, minimum height=2em] {Offsets}
-(-6.5em, 0em) node[draw, rectangle, minimum width=5em, minimum height=2em] {Octet}
-(-2em, 2em) node[draw, rectangle, minimum width=4em, minimum height=2em] {Octet}
-(-2em, 0em) node[draw, rectangle, minimum width=4em, minimum height=2em] {Bit}
-
-(16em, -2em) node[draw, rectangle, minimum width=32em, minimum height=2em] {source port}
-(48em, -2em) node[draw, rectangle, minimum width=32em, minimum height=2em] {destination port}
-(16em, -4em) node[draw, rectangle, minimum width=32em, minimum height=2em] {length}
-(48em, -4em) node[draw, rectangle, minimum width=32em, minimum height=2em] {checksum}
+\path
+(-9em, 2em) node[basebox, minimum width=5em] {Offsets}
+(-9em, 0em) node[basebox, minimum width=5em] {Octet}
+(-4em, 2em) node[basebox, minimum width=4em] {Octet}
+(-4em, 0em) node[basebox, minimum width=4em] {Bit}
 ;
 
 \foreach \x in {0,...,3}
-    \node[draw, rectangle, minimum width=16em, minimum height=2em] at (\x * 16em + 8em, 2em) {\scriptsize \x};
+    \node[bytebox] at (\x * 16em, 2em) {\scriptsize \x};
 \foreach \x in {0,...,31}
-    \node[draw, rectangle, minimum width=2em, minimum height=2em] at (\x * 2em + 1em, 0em) {\scriptsize \x};
+    \node[bitbox] at (\x * 2em, 0em) {\scriptsize \x};
 
-\node[draw, rectangle, minimum width=4em, minimum height=2em] at (-2em, -2em) {\scriptsize 0};
-\node[draw, rectangle, minimum width=4em, minimum height=2em] at (-2em, -4em) {\scriptsize 32};
+\node[basebox, minimum width=4em] at (-4em, -2em) {\scriptsize 0};
+\node[basebox, minimum width=4em] at (-4em, -4em) {\scriptsize 32};
 
-\node[draw, rectangle, minimum width=5em, minimum height=2em] at (-6.5em, -2em) {\scriptsize 0};
-\node[draw, rectangle, minimum width=5em, minimum height=2em] at (-6.5em, -4em) {\scriptsize 4};
+\node[basebox, minimum width=5em] at (-9em, -2em) {\scriptsize 0};
+\node[basebox, minimum width=5em] at (-9em, -4em) {\scriptsize 4};
+
+\path
+( 0 * 2em, -1 * 2em) node[wordbox] {source port}
+(16 * 2em, -1 * 2em) node[wordbox] {destination port}
+( 0 * 2em, -2 * 2em) node[wordbox] {length}
+(16 * 2em, -2 * 2em) node[wordbox] {checksum}
+;
 
 \end{tikzpicture}
-
 }
 
 \end{center}
