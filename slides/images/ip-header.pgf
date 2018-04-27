@@ -44,7 +44,7 @@ qwordbox/.style={basebox, minimum width=64em},
 
 (0em, -4 * 2em) node[qwordbox] {Source ip address}
 (0em, -5 * 2em) node[qwordbox] {Destination ip address}
-(0em, -6 * 2em) node[qwordbox] {Options (variable length)}
+(0em, -6 * 2em) node[qwordbox] {Options (variable length). If IHL > 5}
 
 %(0em, -7 * 2em) node[qwordbox, minimum height=4 em] {Payload}
 ;
