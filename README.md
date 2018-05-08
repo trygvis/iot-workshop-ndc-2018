@@ -9,3 +9,14 @@
 * Fritzing model of NodeMCU: https://github.com/roman-minyaylov/fritzing-parts/tree/master/esp8266-nodemcu-v3
 * Arduino ESP8266 documentation: https://media.readthedocs.org/pdf/arduino-esp8266/latest/arduino-esp8266.pdf
 * DHT11/DHT22 documentation: https://cdn-learn.adafruit.com/downloads/pdf/dht.pdf
+
+ekstra:
+* scope
+* logikkanalysator
+  - måle hvor lang tid operasjoner tar
+* diskusjoner
+  - signup
+  - reconfiguration
+  - factory reset/clear configuration
+    - når noen selger devicen sin
+

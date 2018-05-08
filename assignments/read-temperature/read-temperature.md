@@ -1,3 +1,4 @@
+# Read the temperature and humidity sensor DHT22
 
 ## Step 1
 
