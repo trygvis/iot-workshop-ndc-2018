@@ -2,19 +2,17 @@
 
 This is the materials for a 1 hour workshop on IoT.
 
-Title: Connect your Arduino to the internet.
-
-Abstract:
-
+> *Connect your Arduino to the internet.*
+>
 > In this workshop we will use a production quality device in a
 > developer friendly package and connect it to the internet. We will
 > cover the Arduino APIs for wifi and MQTT and use these to get the
 > device to send and react on messages.
-
+>
 > Basic programming knowledge and some Arduino experience is assumed.
 > We will not focus much on the electronics aspects of the board, but
 > that will be covered in the "Getting Started With Arduino" workshop.
-
+>
 > Requirements: 
 > You will need an Arduino-kit to attend this workshop. The kit can be
 > purchased for 300NOK at the Bitraf stand.
