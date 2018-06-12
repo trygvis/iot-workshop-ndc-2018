@@ -14,24 +14,8 @@
     * IoT is just a concept
     * What is an IoT Device?
     * What is an IoT Device?
-    * IoT Devices - Bluetooth 4/5 chips
-    * IoT Devices - LoRA
-### Modules
-### Chips
-    * IoT Devices - NB-IoT
-    * IoT Devices - Wi-Fi
+    * IoT Devices - Example chips
     * ESP8266 details - Power usage
-* Going back to basics
-    * What is the internet again?
-    * TCP/IP Layers
-    * Packet encapsulation
-    * Network interface
-    * Internet
-    * Transport
-    * Layer 7: Application Layer
-    * Details: IP
-    * Details: IP Header
-    * Details: UDP Header
 * Lecture: MQTT
     * MQTT
     * Device and application architecture with MQTT

@@ -7,6 +7,7 @@ header-includes:
             pdfborderstyle={/S/U/W 1}}
   - \usepackage{tikz}
     \usetikzlibrary{angles,arrows,arrows.meta,backgrounds,calc,chains,decorations,decorations.pathmorphing,decorations.pathreplacing,decorations.text,fit,matrix,positioning,quotes,shapes.arrows,shapes.geometric,shapes.symbols}
+
 !ifndef(QUICK)
 ~~~~~~
   - \usepackage{fontspec}
@@ -196,7 +197,7 @@ What differentiates a computer from an IoT device?
     * Wi-Fi
     * NB-IoT
     * LTE Cat-M
-    * LoRA
+    * LoRa
     * Proprietary radio
 
 ::: notes
@@ -215,80 +216,27 @@ Sparkfun and Adafruit etc sell modules with all of these technologies.
 
 :::
 
-## IoT Devices - Bluetooth 4/5 chips
+## IoT Devices - Example chips
 
-Chip     CPU        Freq   RAM  Flash Price
--------- ---------- ------ ---- ----- ------
-nRF52810 Cortex-M4  64 MHz  24k  192k  $1.88
-nRF52832 Cortex-M4F         32k  256k  $2.54
-                            64k  512k  $2.59
-nRF52840 Cortex-M4F        256k 1024k  $3.85
+Protocol      Chip          Specs
+------------- ----          -----
+Bluetooth 4/5 nRF52x        32-64 MHz, Cortex-M0/M4F,
+                            24-256k RAM, 192-1024 k Flash,
+                            $1.88-$3.85
+WiFi          ESP8266/ESP32 80MHz-160MHz, 1-2 cores,
+                            ~80k RAM, < $1 - $4.53
+LoRa          Semtech       $3.23 - $4.74
 
-* nRF52810: High performance, entry-level Bluetooth 4/ANT/2.4GHz SoC
-* nRF52832: High performance Bluetooth 4/ANT/2.4GHz SoC
-* nRF52840: Advanced multi-protocol System-on-Chip Supporting: Bluetooth 5, ANT/ANT+, 802.15.4 and 2.4GHz proprietary
-
-::: notes
-
-All quantities are 1000 pieces
-
-nRF51: https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?k=nrf51822
-
-nRF52832: these have different packagings, not only difference price
-
-https://www.digikey.no/products/en/rf-if-and-rfid/rf-transceiver-ics/879?FV=1c0001%2Cffe0036f&quantity=3000&ColumnSort=1000011&page=1&k=nrf52832&pageSize=500&pkeyword=nrf52810
-
-nRF52810: High performance, entry-level Bluetooth 4/ANT/2.4GHz SoC
-nRF52832: High performance Bluetooth 4/ANT/2.4GHz SoC
-nRF52840: Advanced multi-protocol System-on-Chip Supporting: Bluetooth 5, ANT/ANT+, 802.15.4 and 2.4GHz proprietary
-
-:::
-
-## IoT Devices - LoRA
-
-### Modules
-
-Module          Data Rate Price
------           --------- ------
-RN2483A-I/RM104           $12.05 @ 250
-CMWX1ZZABZ-078  SX1276    $10.74 @ 1000
-RF-LORA-868-SO  SX1272	  $16.55 @ 1000
-
-### Chips
-
-Chip            Price
-----            -------
-SX1281          $3.23
-SX1272          $4.25
-SX1276          $4.25
-SX1279          $4.74
 
 ::: notes
 
-These modules require an external MCU, so does the chips.
+BT and Wi-Fi has many, many more chips. Technologies based on
+open/accessible standards. LoRa is much more closed and driven by a
+single company.
 
-:::
+4.53 is quantity=10
 
-## IoT Devices - NB-IoT
-
-Module                         Price
-------                         -----
-uBlox SARA-N210                ~$10 @ 100
-Sierra Wireless HL7800_1103933 $15.72
-
-## IoT Devices - Wi-Fi
-
-Chip    CPU            Freq     ROM   RAM    Price
------   -------        -------  ----- ------ ------
-ESP8266 Tensilica L106 160 MHz    N/A ~50 kB   < $1
-
-ESP32 - dual cpu, Wi-Fi, Bluetooth 4
-ESP32-D0WDQ6 2x Xtensa @ 160MHz  $ 4.53 @ 10
-
-::: notes
-
-The ESP8266's RAM depends on which firmware stack is used. Physical is probably 128k or most likely 64k.
-
+LoRa chips are just trancievers, an MCU with LoRa stack is required.
 :::
 
 ## ESP8266 details - Power usage
@@ -312,106 +260,6 @@ The ESP8266's RAM depends on which firmware stack is used. Physical is probably 
 Datasheet page 18
 
 :::
-
-# Going back to basics
-
-## What is the internet again?
-
-## TCP/IP Layers
-
-!ifndef(QUICK)(
-\begin{center}
-!include(images/tcpip.pgf)
-\end{center}
-)
-
-## Packet encapsulation
-
-!ifndef(QUICK)(
-\begin{center}
-!include(images/ip-encapsulation.pgf)
-\end{center}
-)
-
-## Network interface
-
-* Ethernet
-    * 10BASE5, 10BASE2, 10BASE-T / 100BASE-TX / 1000BASE-TX
-* Wi-Fi
-    * 802.11a/b/g/n
-* RS-232
-
-::: notes
-
-Ethernet: Hubs and switches (that act on this level) is not on it's own
-layer. It is more of a implementation detail in the architecture diagram.
-
-RS-232 signaling is used in *all* MCUs, many have several ports
-available. It is extremely flexible, both used for implementing
-applications and debugging. Frequently an easy way to hack embedded
-devices. "USB dongles", "USB TTL" all use RS-232 signaling.
-
-Note that this only applies to its logical signals, not voltage
-levels. The signaling does not specify any max data rate, very high rates
-(>= 1Mbps) is often supported.
-
-:::
-
-## Internet
-
-* IP
-* ICMP
-
-## Transport
-
-* TCP
-* UDP
-* SCTP
-* QUIC
-
-## Layer 7: Application Layer
-
-* HTTP
-* DNS
-* MQTT
-* CoAP
-* (everything else..)
-
-!comment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## Details: IP
-
-!ifdef(REVEAL)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-![](images/ip-header.svg)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!ifdef(BEAMER)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!ifndef(QUICK)(![](images/ip-header.pdf))
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::: notes
-
-Note that the "total length" field is 16 bits, 2 bytes, it's maximum value is 64k, 65536.
-
-:::
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-## Details: IP Header
-
-!ifndef(QUICK)(
-\begin{center}
-!include(images/ip-header.pgf)
-\end{center}
-)
-
-## Details: UDP Header
-
-!ifndef(QUICK)(
-\begin{center}
-!include(images/udp-header.pgf)
-\end{center}
-)
 
 # Lecture: MQTT
 
