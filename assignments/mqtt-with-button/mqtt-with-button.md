@@ -30,10 +30,12 @@ Wire up this schematic on the bread board:
 * Publish a message on button press on the topic
   `ndc/$device-id/button`
 
-# Step 5
+# Step 5 (Bonus)
 
-* Subscribe to the topic `ndc/$device-id/led` and turn the LED on/off
-  based on the contents of the message.
+* Subscribe to the topic `ndc/$device-id/led`.
+ 
+* Use the value to for example turn the LED on/off, or change the
+  LED's blinking pattern.
 
 ## Tips
 
