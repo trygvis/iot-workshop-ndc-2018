@@ -20,7 +20,7 @@ This is the materials for a 1 hour workshop on IoT.
 > There are some software that you should have installed, check with
 > the person at the Bitraf stand.
 
-**Preparations**
+# Preparations
 
 * Install Arduino IDE
 * Install the "ESP8266 core" for Arduino, follow the guide on
@@ -28,7 +28,7 @@ This is the materials for a 1 hour workshop on IoT.
 * Install PubSubClient library with Library manager from within the
   Arduino IDE.
 
-**Documents**
+# Documents
 
 * [Assignment: Blink a LED](https://cdn.rawgit.com/trygvis/iot-workshop-ndc-2018/master/assignments/blink-a-led/blink-a-led.pdf)
 * [Assignment: MQTT with button](https://cdn.rawgit.com/trygvis/iot-workshop-ndc-2018/master/assignments/mqtt-with-button/mqtt-with-button.pdf)
