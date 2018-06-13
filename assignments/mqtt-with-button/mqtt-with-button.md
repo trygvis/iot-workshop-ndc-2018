@@ -1,16 +1,32 @@
-# Assignment: MQTT
+# Assignment: MQTT with button
 
-## Goal
+## Goals
 
-Get aquainted with MQTT.
+* Get aquainted with MQTT.
+* Publish a message when a button is pressed.
 
-## Steps
+## Step 1
 
-1. Connect to the Wi-Fi network
+Wire up this schematic on the bread board:
+
+![](schematic/mqtt-with-button_schem.pdf)
+
+![](schematic/mqtt-with-button_bb.pdf)
+
+# Step 2
+
+* Read button, print message on terminal
+
+# Step 3
+
+* Connect to the Wi-Fi network
     * Use `WiFi.localIP()`
 
-1. Connect to MQTT broker
-1. Publish temperature
+* Connect to MQTT broker
+
+# Step 4
+
+* Publish a message on button press
 
 ## Tips
 

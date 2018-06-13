@@ -20,6 +20,11 @@ This is the materials for a 1 hour workshop on IoT.
 > There are some software that you should have installed, check with
 > the person at the Bitraf stand.
 
+## Assignments
+
+* [Blink a LED](assignments/blink-a-led/blink-a-led.pdf)
+* [MQTT with button](assignments/mqtt-with-button/mqtt-with-button.pdf)
+
 # Credits
 
 * Some TikZ diagrams where taken from:

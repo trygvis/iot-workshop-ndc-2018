@@ -1,10 +1,6 @@
 AS = 
 AS += blink-a-led
-AS += mqtt
-AS += mqtt2
-AS += mqtt3
-AS += read-a-button
-AS += read-temperature
+AS += mqtt-with-button
 
 PDFS=$(foreach A,$(AS),$(A)/$(A).pdf)
 
