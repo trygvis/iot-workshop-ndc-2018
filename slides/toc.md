@@ -8,6 +8,8 @@
     * Arduino file structure
     * Generic Arduino APIs
     * ESP Arduino APIs
+    * ESP
+#include <ESP8266WiFi.h>
     * ESP Arduino APIs
 * What is IoT
     * What is IoT
@@ -19,16 +21,15 @@
 * Lecture: MQTT
     * MQTT
     * Device and application architecture with MQTT
+    * MQTT Topic
     * MQTT - Implementations
     * MQTT Cloud Connectors
     * MQTT - The protocol
-    * MQTT - The protocol - MQTT Packet
-    * MQTT Connect
     * MQTT - The protocol - MQTT Topic
     * MQTT - The protocol - Retained message
     * MQTT - The protocol - Will message
-    * MQTT Topic
     * MQTT on Arduino
+#include <PubSubClient.h>
     * MQTT on Arduino
     * Assignment
     * MQTT topic architecture

@@ -16,13 +16,17 @@ Wire up this schematic on the bread board:
 
 # Step 2
 
-* Read button, print message on terminal
+* Tip: change upload speed to max.
+
+* Read button in `loop()`. If the button's state changes, print a
+  message.
+
+*Note:* reading the button in a busy loop is not really a best
+practice as it uses lots of energy. Instead use the `attachInterrupt`.
 
 # Step 3
 
 * Connect to the Wi-Fi network
-    * Use `WiFi.localIP()`
-
 * Connect to MQTT broker
 
 # Step 4
@@ -31,6 +35,10 @@ Wire up this schematic on the bread board:
   `ndc/$device-id/button`
 
 # Step 5 (Bonus)
+
+Subscripe to a topic and do something with the led.
+
+* Subscribe to the topic you're publishing to.
 
 * Subscribe to the topic `ndc/$device-id/led`.
  

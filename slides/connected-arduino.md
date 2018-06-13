@@ -126,6 +126,27 @@ class {
 ESP.restart();
 ~~~
 
+## ESP
+
+~~~c++
+// Top of file
+#include <ESP8266WiFi.h>
+
+// In setup()
+WiFi.mode(WIFI_STA);
+WiFi.begin(ssid, password);
+
+while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+}
+
+Serial.println("");
+Serial.println("WiFi connected");
+Serial.println("IP address: ");
+Serial.println(WiFi.localIP());
+~~~
+
 ## ESP Arduino APIs
 
 ~~~c++
@@ -447,6 +468,8 @@ Broker
 PubSubClient is our MQTT client implementation.
 
 ~~~c++
+#include <PubSubClient.h>
+
 WiFiClient wifiClient;
 PubSubClient mqtt(wifiClient);
 
@@ -465,16 +488,24 @@ void setup() {
 
 ~~~c++
 void loop() {
-    if (!mqtt.connected())
+    if (!mqtt.connected()) {
         reconnect();
-    else
+    }
+    else {
         mqtt.loop();
+    }
+
     // Do work
 }
 
 void reconnect() {
-    while (!mqtt.connect(client_id));
+    do {
+        Serial.println("Connecting to MQTT");
+        delay(1000);
+    } while (!mqtt.connect(client_id));
+    Serial.println("Connected to MQTT server");
 
+    // Subscribe to any topics you need
     mqtt.subscribe(topic_pattern);
 }
 ~~~
