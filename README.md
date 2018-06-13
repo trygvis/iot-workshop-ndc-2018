@@ -30,9 +30,9 @@ This is the materials for a 1 hour workshop on IoT.
 
 **Documents**
 
-* [Assignment: Blink a LED](assignments/blink-a-led/blink-a-led.pdf)
-* [Assignment: MQTT with button](assignments/mqtt-with-button/mqtt-with-button.pdf)
-* [Slides](../raw/master/slides/connected-arduino-slides.pdf)
+* [Assignment: Blink a LED](https://cdn.rawgit.com/trygvis/iot-workshop-ndc-2018/master/assignments/blink-a-led/blink-a-led.pdf)
+* [Assignment: MQTT with button](https://cdn.rawgit.com/trygvis/iot-workshop-ndc-2018/master/assignments/mqtt-with-button/mqtt-with-button.pdf)
+* [Slides](https://cdn.rawgit.com/trygvis/iot-workshop-ndc-2018/master/slides/connected-arduino-slides.pdf)
 
 # Credits
 
