@@ -28,10 +28,11 @@ This is the materials for a 1 hour workshop on IoT.
 * Install PubSubClient library with Library manager from within the
   Arduino IDE.
 
-**Assignments**
+**Documents**
 
-* [Blink a LED](assignments/blink-a-led/blink-a-led.pdf)
-* [MQTT with button](assignments/mqtt-with-button/mqtt-with-button.pdf)
+* [Assignment: Blink a LED](assignments/blink-a-led/blink-a-led.pdf)
+* [Assignment: MQTT with button](assignments/mqtt-with-button/mqtt-with-button.pdf)
+* [Slides](../raw/master/slides/connected-arduino-slides.pdf)
 
 # Credits
 
