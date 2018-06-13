@@ -1,0 +1,46 @@
+\begin{tikzpicture}
+\begin{umlseqdiag}
+
+\umlactor{Device}
+\umlactor{Broker}
+\umlactor{Central}
+
+\begin{umlcall}[op={sub(dev/\#/online)}]{Central}{Broker}
+\end{umlcall}
+
+\begin{umlcall}[dt=15, op={con(dev/123/online, 0)}]{Device}{Broker} \end{umlcall}
+\begin{umlcall}[dt=5, name=pub,op={pub(dev/123/online, 1)}]{Device}{Broker} \end{umlcall}
+
+%\begin{umlcallself}[dt=5, op={terminate()}]{Device}\end{umlcallself}
+
+%\umlnote{death}{woop}
+\umlnote[x=-3,y=-2]{sb-pub}{After this the device drops off the Wi-Fi}
+
+
+\begin{umlcall}[dt=10, op={pub(dev/123/online, 0)}]{Broker}{Central} \end{umlcall}
+
+%\umlsdnode[dt=20]{Central}
+%\umlsdnode[dt=5]{Broker}
+%\begin{umlcall}
+%\end{umlcall}
+
+\iffalse
+\begin{umlcall}{A}{C}
+	\begin{umlcall}{C}{A}
+	\end{umlcall}
+
+	\begin{umlcall}[dt=10]{B}{C}
+		\begin{umlcall}{C}{B}
+		\end{umlcall}
+
+		\begin{umlcall}[return=1]{B}{C}
+		\end{umlcall}
+	\end{umlcall}
+
+	\begin{umlcall}[dt=20, return=1]{A}{C}
+	\end{umlcall}
+
+\end{umlcall}
+\fi
+\end{umlseqdiag}
+\end{tikzpicture}

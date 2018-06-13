@@ -72,6 +72,13 @@ $(BUILD_DIR)/%.revealjs.md.d: %.md | $(BUILD_DIR)
 %-reveal.html: %.revealjs.md
 	$(RUN_PANDOC_REVEALJS) -o $@ $<
 
+images/%.pdf: images/%.pgf | images/pp-template Makefile
+	images/pp-template $< > $(patsubst %.pgf,%.tmp.tex,$<)
+	TEXINPUTS=./:images/tikzuml-v1.0-2016-03-29: \
+		xelatex -output-directory=images \
+		-jobname $(notdir $(basename $@)) \
+		$(patsubst %.pgf,%.tmp.tex,$<)
+
 images/%.pdf: images/%.tex | images/pp-template Makefile
 	images/pp-template < $< > $(patsubst %.tex,%-full.tex,$<)
 	xelatex -output-directory=images $(patsubst %.tex,%-full.tex,$<)

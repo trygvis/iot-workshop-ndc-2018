@@ -292,6 +292,36 @@ Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke
 \end{center}
 )
 
+## MQTT Topic
+
+The temperature sensor:
+
+* Publishes on:
+    * `myapp/$device-id/temperature`
+    * `myapp/$device-id/humidity`
+    * `myapp/$device-id/altert`
+* Subscribes to:
+    * `myapp/$device-id/command`
+
+The central application:
+
+* Subscribes to:
+    * `myapp/#/temperature`
+    * `myapp/#/humidity`
+* Publishes on:
+    * `myapp/$device-id/command`
+
+::: notes
+
+Typical first round of implementation.
+
+Commands can be:
+* load new firmware (maybe an URL and firmware signature).
+* Set new calibration values
+* Change reading interval, altert levels (autonomous operation)
+
+:::
+
 ## MQTT - Implementations
 
 * Mosquitto
@@ -334,12 +364,13 @@ Agents have one of two roles:
 * *Client*
     * Publishes *messages*
     * Subscribes / unsubscribes to *topics*
+    * Keep alive
 
 * *Broker* (aka Server)
     * Handles network connections
     * Keeps subscriptions
     * Manages client
-        * Disconnects
+        * Timeouts and disconnects
         * *(last) will*
     * Persistence of retained messages
 
@@ -358,36 +389,6 @@ often end up with a "proper" mq on the backend if queuing is needed.
 Push vs pull, central applications can push to clients
 
 :::
-
-## MQTT - The protocol - MQTT Packet
-
-* Size oriented
-* Flags indicate type of remaining bytes
-  * Packet type
-  * Topic name
-  * Payload
-
-::: notes
-
-Only packet type + flags (1 byte) is required, everything else is optional.
-
-The size field is variable length encoded, 0-127 bytes is 1 byte, 128-16383 use 2 bytes etc, up to 4 bytes for 256MB payload.
-
-:::
-
-## MQTT Connect
-
-* `CONNECT`
-    * `clientId`
-    * `username`
-    * `password`
-    * `keepAlive`
-
-<!-- -->
-
-* Keep alive
-    * `PINGREQ`
-    * `PINGRESP`
 
 ## MQTT - The protocol - MQTT Topic
 
@@ -440,36 +441,6 @@ Broker
 1. *To all subscribers* `PUBLISH`
     * `$app/$device/online`
     * `0`
-
-## MQTT Topic
-
-The temperature sensor:
-
-* Publishes on:
-    * `myapp/$device-id/temperature`
-    * `myapp/$device-id/humidity`
-    * `myapp/$device-id/altert`
-* Subscribes to:
-    * `myapp/$device-id/command`
-
-The central application:
-
-* Subscribes to:
-    * `myapp/#/temperature`
-    * `myapp/#/humidity`
-* Publishes on:
-    * `myapp/$device-id/command`
-
-::: notes
-
-Typical first round of implementation.
-
-Commands can be:
-* load new firmware (maybe an URL and firmware signature).
-* Set new calibration values
-* Change reading interval, altert levels (autonomous operation)
-
-:::
 
 ## MQTT on Arduino
 

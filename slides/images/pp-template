@@ -1,8 +1,12 @@
 #!/bin/bash
+set -e
+
 echo '\documentclass[preview]{standalone}
 \usepackage{blindtext}
-\usepackage[utf8]{inputenc}
+%\usepackage[utf8]{inputenc}
 \usepackage{tikz}
+\usepackage{tikz-uml}
+%\usepackage{pgf-umlsd}
 \usetikzlibrary{
   angles,
   arrows,
@@ -24,5 +28,5 @@ echo '\documentclass[preview]{standalone}
 \usepackage{fontspec}
 \setsansfont{Verdana}
 \begin{document}'
-cat -
+cat "$1"
 echo '\end{document}'

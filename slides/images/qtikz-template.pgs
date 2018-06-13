@@ -2,7 +2,10 @@
 \documentclass[preview]{standalone}
 \usepackage{blindtext}
 \usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
 \usepackage{tikz}
+\usepackage{tikz-uml}
+\usepackage{pgf-umlsd}
 \usetikzlibrary{
   angles,
   arrows,
