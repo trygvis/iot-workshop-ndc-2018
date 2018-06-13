@@ -1,9 +1,10 @@
-# Assignment: MQTT with button
+# Assignment: MQTT with button and LED
 
 ## Goals
 
 * Get aquainted with MQTT.
 * Publish a message when a button is pressed.
+* Subscribe to a topic to control the LED
 
 ## Step 1
 
@@ -26,7 +27,13 @@ Wire up this schematic on the bread board:
 
 # Step 4
 
-* Publish a message on button press
+* Publish a message on button press on the topic
+  `ndc/$device-id/button`
+
+# Step 5
+
+* Subscribe to the topic `ndc/$device-id/led` and turn the LED on/off
+  based on the contents of the message.
 
 ## Tips
 
@@ -37,21 +44,9 @@ Creating a `String` from a number:
 * `String(123) => "123"`{.cpp}
 * Hex formatted: `String(0x123abc, HEX) => "123abc"`{.cpp}
 
-Some APIs require "plain C strings" aka a `char *`{.cpp}. They can be converted with `String::c_str()`:
+Some APIs require "plain C strings" aka a `char *`{.cpp}. They can be
+converted with `String::c_str()`:
 
 ~~~.c++
 char *cStr = myString.c_str();
 ~~~
-
-## Bonus
-
-**1:** Print the heap free size at regular intervals.
-
-**2:** Implement min, max and average temperature over configured interval.
-
-Suggested parameters:
-
-* Sample interval: 2 seconds
-* Publish interval: 10 seconds
-
-**3:** Make sure the values are calculated even if we're reconnecting to the Wi-Fi or MQTT server.

@@ -20,7 +20,13 @@ This is the materials for a 1 hour workshop on IoT.
 > There are some software that you should have installed, check with
 > the person at the Bitraf stand.
 
-## Assignments
+**Preparations**
+
+* Install Arduino IDE
+* Install the "ESP8266 core" for Arduino, follow the guide on
+  https://github.com/esp8266/Arduino#installing-with-boards-manager.
+
+**Assignments**
 
 * [Blink a LED](assignments/blink-a-led/blink-a-led.pdf)
 * [MQTT with button](assignments/mqtt-with-button/mqtt-with-button.pdf)
