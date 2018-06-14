@@ -1,40 +1,33 @@
-* NodeMCU
-    * NodeMCU hardware
-    * NodeMCU hardware
-    * ESP8266 software layers
-    * ESP8266 + Arduino
-    * Arduino IDE
-    * Arduino code structure
-    * Arduino file structure
-    * Generic Arduino APIs
-    * ESP Arduino APIs
-    * ESP
-#include <ESP8266WiFi.h>
-    * ESP Arduino APIs
 * What is IoT
     * What is IoT
     * IoT is just a concept
     * What is an IoT Device?
     * What is an IoT Device?
     * IoT Devices - Example chips
-    * ESP8266 details - Power usage
+    * ESP8266 Specifications
+    * ESP8266 Power usage
+* NodeMCU
+    * NodeMCU hardware
+    * NodeMCU hardware
+    * ESP8266 software layers
+    * ESP8266 + Arduino
+    * Arduino IDE
+    * Generic Arduino APIs
+* Assignment: `blink-a-led`
 * Lecture: MQTT
     * MQTT
     * Device and application architecture with MQTT
-    * MQTT Topic
-    * MQTT - Implementations
-    * MQTT Cloud Connectors
+    * MQTT Example
     * MQTT - The protocol
     * MQTT - The protocol - MQTT Topic
-    * MQTT - The protocol - Retained message
-    * MQTT - The protocol - Will message
+    * ESP Arduino APIs
+    * Connecting to a Wi-Fi
+#include <ESP8266WiFi.h>
     * MQTT on Arduino
+#include <ESP8266WiFi.h>
 #include <PubSubClient.h>
     * MQTT on Arduino
-    * Assignment
-    * MQTT topic architecture
-    * MQTT topic architecture
-    * MQTT topic architecture
-    * MQTT - Patterns
-    * Assignment 
-    * Assignment 
+    * MQTT on Arduino
+    * MQTT on Arduino
+    * MQTT on Arduino
+* Assignment: `mqtt-with-button`

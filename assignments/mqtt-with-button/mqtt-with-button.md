@@ -6,6 +6,11 @@
 * Publish a message when a button is pressed.
 * Subscribe to a topic to control the LED
 
+## Preparation
+
+* Install the *PubSubClient* library. Use the library manager under
+  *Sketch -> Include library -> Library Manager* to install it.
+
 ## Step 1
 
 Wire up this schematic on the bread board:
@@ -16,10 +21,8 @@ Wire up this schematic on the bread board:
 
 # Step 2
 
-* Tip: change upload speed to max.
-
-* Read button in `loop()`. If the button's state changes, print a
-  message.
+* Read button's value inside `loop()`. If the button's state changes,
+  print a message.
 
 *Note:* reading the button in a busy loop is not really a best
 practice as it uses lots of energy. Instead use the `attachInterrupt`.
@@ -29,34 +32,35 @@ practice as it uses lots of energy. Instead use the `attachInterrupt`.
 * Connect to the Wi-Fi network
 * Connect to MQTT broker
 
+See the slides for example code.
+
 # Step 4
 
-* Publish a message on button press on the topic
+* Create a subscription for `ndc/$device-id/#` with HiveMQ's web ui:
+  http://www.hivemq.com/demos/websocket-client/
+* Publish a message when the button is pressed on the topic
   `ndc/$device-id/button`
 
 # Step 5 (Bonus)
 
-Subscripe to a topic and do something with the led.
+*Feel free to be creative here.*
 
-* Subscribe to the topic you're publishing to.
+The other useful half of MQTT is subscribing to topics and reacting to
+messages. Here are some example things you can do:
 
-* Subscribe to the topic `ndc/$device-id/led`.
- 
-* Use the value to for example turn the LED on/off, or change the
-  LED's blinking pattern.
+* Subscribe to the topic you're publishing to and change the state of
+  the LED when the button is pressed. This will give you a very
+  complicated and brittle way of toggling a LED.
 
-## Tips
+* In `loop` blink the led. Subscribe to another topic (for example
+  `ndc/$device-id/frequency`), and use the value as a way to control
+  the blink rate.
 
-To generate a client id make something with `ESP.getChipId()`{.cpp}
+# Step 6 (Strech goal)
 
-Creating a `String` from a number:
+Use a last will message to indicate if the device is online or not.
 
-* `String(123) => "123"`{.cpp}
-* Hex formatted: `String(0x123abc, HEX) => "123abc"`{.cpp}
-
-Some APIs require "plain C strings" aka a `char *`{.cpp}. They can be
-converted with `String::c_str()`:
-
-~~~.c++
-char *cStr = myString.c_str();
-~~~
+* When connecting, include a last will message with topic
+  `ndc/$device-id/online` and payload `0`.
+* After a successfull connection, publish a similar message with the
+  payload `1`. Observe what happens when you unplug the device.

@@ -16,167 +16,10 @@ header-includes:
 
 ---
 
-# NodeMCU
-
-!comment(aka NodeMCU aka ESP-12)
-
-## NodeMCU hardware
-
-!ifndef(QUICK)(
-![](images/NodeMCU-–-Board-de-desarrollo-con-módulo-ESP8266-WiFi-y-Lua-4.jpg)
-)
-
-## NodeMCU hardware
-
-!ifndef(QUICK)(
-\begin{center}
-!include(images/nodemcu.pgf)
-\end{center}
-)
-
-## ESP8266 software layers
-
-!ifndef(QUICK)(
-\begin{center}
-!include(images/esp+arduino-sdks.pgf)
-\end{center}
-)
-
-## ESP8266 + Arduino
-
-* Standard Arduino IDE
-* ESP8266 Arduino core
-    * https://github.com/esp8266/Arduino
-
-## Arduino IDE
-
-!ifndef(QUICK)(
-![](images/arduino-ide.png)
-)
-
-## Arduino code structure
-
-~~~ .c++
-void setup() {
-    // Called once
-}
-
-void loop() {
-    // Called repeatedly
-}
-~~~
-
-::: notes
-
-MCU programming is often structured into:
-
-* Configure
-    * CPU
-    * GPIO ports
-    * MCU's peripherals
-    * The rest of the board
-    * Configure application and callbacks.
-* Sleep
-
-Arduino chooses to run the cpu at 100% instead of the sleep step..
-
-:::
-
-## Arduino file structure
-
-    foo/
-      foo.ino
-      config.h
-
-::: notes
-
-`foo.ino` must always be in a `foo` directory.
-
-config.h is created by "new tab".
-
-:::
-
-## Generic Arduino APIs
-
-~~~c++
-// Pin: D0, D1, etc.
-// Mode: OUTPUT, INPUT, INPUT_PULLUP
-void pinMode(uint8_t pin, uint8_t mode);
-
-// State: HIGH, LOW, true/false, 1/0
-void digitalWrite(uint8_t pin, uint8_t state);
-int digitalRead(uint8_t pin);
-
-unsigned long now millis();
-unsigned long now micros();
-~~~
-
-## ESP Arduino APIs
-
-~~~c++
-class {
-    void restart();
-    uint32_t getFreeHeap();
-    uint32_t getChipId();
-
-    ...
-} ESP;
-
-// Usage
-ESP.restart();
-~~~
-
-## ESP
-
-~~~c++
-// Top of file
-#include <ESP8266WiFi.h>
-
-// In setup()
-WiFi.mode(WIFI_STA);
-WiFi.begin(ssid, password);
-
-while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-}
-
-Serial.println("");
-Serial.println("WiFi connected");
-Serial.println("IP address: ");
-Serial.println(WiFi.localIP());
-~~~
-
-## ESP Arduino APIs
-
-~~~c++
-class {
-    String macAddress();
-
-    wl_status_t status();
-    int32_t RSSI();
-
-    IPAddress localIP();
-    IPAddress subnetMask();
-    IPAddress gatewayIP();
-    IPAddress dnsIP(uint8_t dns_no = 0);
-
-    ...
-} WiFi;
-
-// Usage:
-
-Serial.println(WiFi.localIP().toString());
-~~~
-
-::: notes
-
-http://arduino-esp8266.readthedocs.io/en/latest/libraries.html
-
-:::
-
 # What is IoT
 
+!comment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## What is IoT
 
 * Not "a computer connected to the internet"
@@ -205,6 +48,7 @@ As for their definition.
 What differentiates a computer from an IoT device?
 
 :::
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## What is an IoT Device?
 
@@ -214,12 +58,17 @@ What differentiates a computer from an IoT device?
     * Network bandwidth and/or latency
     * Storage
 * Has connectivity
+
+!comment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Has connectivity
     * Bluetooth
     * Wi-Fi
     * NB-IoT
     * LTE Cat-M
     * LoRa
     * Proprietary radio
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::: notes
 
@@ -260,7 +109,26 @@ single company.
 LoRa chips are just trancievers, an MCU with LoRa stack is required.
 :::
 
-## ESP8266 details - Power usage
+## ESP8266 Specifications
+
++-------------+-----------------------------+
+| CPU         | Tensilica Xtensa L106       |
++-------------+-----------------------------+
+| Frequency   | 80MHz (160MHz possible      |
++-------------+-----------------------------+
+| RAM         | 32 kB instruction RAM       |
+|             | 80 kB user RAM              |
+|             | 16 kB system RAM            |
++-------------+-----------------------------+
+| Flash       | None, integrated SPI driver |
++-------------+-----------------------------+
+| Peripherals | 16 x GPIO                   |
+|             | I²C, SPI, I²S, UART         |
+|             | 10 bit ADC                  |
+|             | Wi-Fi                       |
++-------------+-----------------------------+
+
+## ESP8266 Power usage
 
 +--------------------------+----------------+
 | State                    | Current usage  |
@@ -281,6 +149,61 @@ LoRa chips are just trancievers, an MCU with LoRa stack is required.
 Datasheet page 18
 
 :::
+
+# NodeMCU
+
+!comment(aka NodeMCU aka ESP-12)
+
+## NodeMCU hardware
+
+!ifndef(QUICK)(
+\begin{center}
+!include(images/nodemcu.pgf)
+\end{center}
+)
+
+## NodeMCU hardware
+
+!ifndef(QUICK)(
+![](images/NodeMCU-–-Board-de-desarrollo-con-módulo-ESP8266-WiFi-y-Lua-4.jpg)
+)
+
+## ESP8266 software layers
+
+!ifndef(QUICK)(
+\begin{center}
+!include(images/esp+arduino-sdks.pgf)
+\end{center}
+)
+
+## ESP8266 + Arduino
+
+* Standard Arduino IDE
+* ESP8266 Arduino core
+    * https://github.com/esp8266/Arduino
+
+## Arduino IDE
+
+!ifndef(QUICK)(
+![](images/arduino-ide.png)
+)
+
+## Generic Arduino APIs
+
+~~~c++
+// Pin: D0, D1, etc.
+// Mode: OUTPUT, INPUT, INPUT_PULLUP
+// State: HIGH, LOW, 1/0
+
+void pinMode(pin, mode);
+void digitalWrite(pin, state);
+int digitalRead(pin);
+
+unsigned long now = millis();
+unsigned long now = micros();
+~~~
+
+# Assignment: `blink-a-led`
 
 # Lecture: MQTT
 
@@ -313,7 +236,7 @@ Version 3.1.1 er den som gjelder, V 3.1 er rar, de andre finnes ikke
 \end{center}
 )
 
-## MQTT Topic
+## MQTT Example
 
 The temperature sensor:
 
@@ -343,41 +266,6 @@ Commands can be:
 
 :::
 
-## MQTT - Implementations
-
-* Mosquitto
-* Eclipse Paho
-* RabbitMQ
-* ActiveMQ
-
-::: notes
-
-RabbitMQ has a separate connector that must be installed
-Not sure about ActiveMQ but it is at least a part of the project so it is releases at the same time.
-
-:::
-
-## MQTT Cloud Connectors
-
-* Cloud
-    * Amazon IoT
-    * Google Cloud IoT
-    * Microsoft Azure IoT
-    * CloudMQTT (at Heroku)
-
-* DIY
-    * ThingMQ
-    * HiveMQ
-
-::: notes
-
-In between are:
-
-* self hosted
-* Generic bridges
-
-:::
-
 ## MQTT - The protocol
 
 Agents have one of two roles:
@@ -392,8 +280,8 @@ Agents have one of two roles:
     * Keeps subscriptions
     * Manages client
         * Timeouts and disconnects
-        * *(last) will*
-    * Persistence of retained messages
+        * *last will*
+    * Persistence of *retained* messages
 
 ::: notes
 
@@ -418,76 +306,68 @@ Push vs pull, central applications can push to clients
     * `foo/bar/?`
     * `foo/#`
 
-## MQTT - The protocol - Retained message
+## ESP Arduino APIs
 
-Message is kept by the server even after disconnect
+~~~c++
+class {
+    void restart();
+    uint32_t getFreeHeap();
+    uint32_t getChipId();
 
-* `CONNECT`
-* `PUBLISH`
-    * `RETAIN`
-    * `$app/$device/temperature`
-    * `22.3`
-* `DISCONNECT`
+    ...
+} ESP;
 
-Later on:
+// Usage
+ESP.restart();
+~~~
 
-* `SUBSCRIBE`
-    * `$app/#/temperature`
-* `PUBLISH`
-    * `$app/$device/temperature`
-    * `22.3`
+## Connecting to a Wi-Fi
 
-::: notes
+~~~c++
+#include <ESP8266WiFi.h>
 
-The last PUBLISH is an incoming message
+void setup() {
+    WiFi.mode(WIFI_STA);
+    WiFi.begin("NDC2018", NULL);
 
-:::
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
 
-## MQTT - The protocol - Will message
-
-Message sent when you disconnect
-
-Client #1:
-
-1. `CONNECT`
-    * `WILL TOPIC: $app/$device/online`
-    * `WILL PAYLOAD: 0`
-1. `PUBLISH`
-    * `$app/$device/online`
-    * `1`
-1. `DISCONNECT`
-
-Broker
-
-1. *To all subscribers* `PUBLISH`
-    * `$app/$device/online`
-    * `0`
+    Serial.println("");
+    Serial.println("WiFi connected");
+    Serial.println("IP address: ");
+    Serial.println(WiFi.localIP());
+}
+~~~
 
 ## MQTT on Arduino
 
 PubSubClient is our MQTT client implementation.
 
+Preparing to publish messages:
+
 ~~~c++
+#include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
 WiFiClient wifiClient;
 PubSubClient mqtt(wifiClient);
 
-void callback(char* topic,
-              byte* payload,
-              unsigned int length);
+String deviceId = "esp-" + String(ESP.getChipId(), HEX);
 
 void setup() {
-    // Configure WiFi
-    mqtt.setServer(mqtt_server, 1883);
-    mqtt.setCallback(callback);
+    // ...
+    mqtt.setServer("broker.hivemq.com", 1883);
 }
 ~~~
 
 ## MQTT on Arduino
 
 ~~~c++
-void loop() {
+void loop()
+{
     if (!mqtt.connected()) {
         reconnect();
     }
@@ -497,71 +377,52 @@ void loop() {
 
     // Do work
 }
+~~~
 
-void reconnect() {
+## MQTT on Arduino
+
+~~~c++
+void reconnect()
+{
     do {
         Serial.println("Connecting to MQTT");
         delay(1000);
-    } while (!mqtt.connect(client_id));
-    Serial.println("Connected to MQTT server");
+    } while (!mqtt.connect(clientId.c_str()));
 
+    Serial.println("Connected to MQTT server");
+}
+~~~
+
+## MQTT on Arduino
+
+~~~c++
+void sendMessage()
+{
+    String topic = "ndc/" + deviceId + "/led";
+    mqtt.publish(topic.c_str(), "1");
+}
+~~~
+
+## MQTT on Arduino
+
+Preparing for subscriptions:
+
+~~~c++
+void setup() {
+    ...
+    mqtt.setCallback(callback);
+}
+
+void callback(char* topic,
+              byte* payload,
+              unsigned int length) {
+}
+
+void reconnect() {
+    ...
     // Subscribe to any topics you need
     mqtt.subscribe(topic_pattern);
 }
 ~~~
 
-::: notes
-This is blocking!
-:::
-
-## Assignment
-
-* `mqtt`
-
-## MQTT topic architecture
-
-The central application is split:
-
-* An aggregating agent:
-    * `myapp/#/temperature`
-    * `myapp/#/humidity`
-* Emailing agent
-    * `myapp/$device-id/altert`
-
-* Publishes on:
-    * `myapp/$device-id/command`
-
-## MQTT topic architecture
-
-!ifndef(QUICK)(
-\begin{center}
-!include(images/mqtt-example-architecture.pgf)
-\end{center}
-)
-
-## MQTT topic architecture
-
-!ifndef(QUICK)(
-\begin{center}
-!include(images/mqtt-example-architecture2.pgf)
-\end{center}
-)
-
-## MQTT - Patterns
-
-* Combining MQTT and HTTP
-* Using web sockets transport
-
-## Assignment 
-
-* `mqtt2`
-
-## Assignment 
-
-* `mqtt3`
-
-::: notes
-
-discussion: how to connect these two devices?
-
-:::
+# Assignment: `mqtt-with-button`
