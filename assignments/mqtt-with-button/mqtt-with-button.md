@@ -11,6 +11,9 @@
 * Install the *PubSubClient* library. Use the library manager under
   *Sketch -> Include library -> Library Manager* to install it.
 
+* Open http://www.hivemq.com/demos/websocket-client/ and subscribe to
+  `ndc/#` or `ndc/$deviceId/#`.
+
 ## Step 1
 
 Wire up this schematic on the bread board:
@@ -30,7 +33,8 @@ practice as it uses lots of energy. Instead use the `attachInterrupt`.
 # Step 3
 
 * Connect to the Wi-Fi network
-* Connect to MQTT broker
+* Connect to MQTT broker. Use `broker.hivemq.com:1883` as host and
+  port.
 
 See the slides for example code.
 
