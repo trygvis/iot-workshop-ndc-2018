@@ -1,4 +1,5 @@
 * What is IoT
+    * Preparations
     * What is IoT
     * IoT is just a concept
     * What is an IoT Device?
@@ -31,3 +32,4 @@
     * MQTT on Arduino
     * MQTT on Arduino
 * Assignment: `mqtt-with-button`
+* Content

@@ -18,6 +18,12 @@ header-includes:
 
 # What is IoT
 
+## Preparations
+
+* Install Arduino IDE
+* Install the "ESP8266 core" for Arduino, follow the guide on https://github.com/esp8266/Arduino#installing-with-boards-manager.
+* Install PubSubClient library with Library manager from within the Arduino IDE.
+
 !comment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## What is IoT
@@ -328,7 +334,7 @@ ESP.restart();
 
 void setup() {
     WiFi.mode(WIFI_STA);
-    WiFi.begin("NDC2018", NULL);
+    WiFi.begin("NDC 2018", NULL);
 
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
@@ -426,3 +432,7 @@ void reconnect() {
 ~~~
 
 # Assignment: `mqtt-with-button`
+
+# Content
+
+[https://github.com/trygvis/iot-workshop-ndc-2018](https://github.com/trygvis/iot-workshop-ndc-2018)
