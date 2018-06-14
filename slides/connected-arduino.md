@@ -433,6 +433,6 @@ void reconnect() {
 
 # Assignment: `mqtt-with-button`
 
-# Content
+## Content
 
 [https://github.com/trygvis/iot-workshop-ndc-2018](https://github.com/trygvis/iot-workshop-ndc-2018)

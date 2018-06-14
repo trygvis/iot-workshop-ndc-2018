@@ -27,6 +27,7 @@ This is the materials for a 1 hour workshop on IoT.
 * Install Arduino IDE
 * Install the "ESP8266 core" for Arduino, follow the guide on
   https://github.com/esp8266/Arduino#installing-with-boards-manager.
+* *OSX* download drivers for the USB serial chip from: https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers
 * Install PubSubClient library with Library manager from within the
   Arduino IDE.
 
